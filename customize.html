@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPaws - Customize</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header with logo and navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/logo.png" alt="PixelPaws logo with a cute pixelated pet icon">
+                <h1>PixelPaws</h1>
+            </div>
+            <nav role="navigation" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="play.html">Play</a>
+                <a href="customize.html" class="active">Customize</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Resources</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main id="main-content" class="customize-page">
+        <h1 class="customize-title">Use the arrows to customize your pet!</h1>
+        
+        <div class="customize-container">
+            <!-- Customization area with pet and controls -->
+            <div class="customization-area">
+                <!-- Pet preview -->
+                <div class="pet-preview">
+                    <img src="images/pet.png" alt="Your customizable virtual pet - a cute gray cat">
+                </div>
+
+                <!-- Customization controls -->
+                <div class="customization-controls">
+                    <!-- Ears control -->
+                    <div class="control-row">
+                        <button class="arrow-btn" aria-label="Previous ear style">◄</button>
+                        <span class="control-label">Ears</span>
+                        <button class="arrow-btn" aria-label="Next ear style">►</button>
+                    </div>
+
+                    <!-- Eyes control -->
+                    <div class="control-row">
+                        <button class="arrow-btn" aria-label="Previous eye style">◄</button>
+                        <span class="control-label">Eyes</span>
+                        <button class="arrow-btn" aria-label="Next eye style">►</button>
+                    </div>
+
+                    <!-- Face control -->
+                    <div class="control-row">
+                        <button class="arrow-btn" aria-label="Previous face style">◄</button>
+                        <span class="control-label">Face</span>
+                        <button class="arrow-btn" aria-label="Next face style">►</button>
+                    </div>
+
+                    <!-- Color control -->
+                    <div class="control-row">
+                        <button class="arrow-btn" aria-label="Previous color">◄</button>
+                        <span class="control-label">Color</span>
+                        <button class="arrow-btn" aria-label="Next color">►</button>
+                    </div>
+
+                    <!-- Tail control -->
+                    <div class="control-row">
+                        <button class="arrow-btn" aria-label="Previous tail style">◄</button>
+                        <span class="control-label">Tail</span>
+                        <button class="arrow-btn" aria-label="Next tail style">►</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Name input and action buttons -->
+            <form class="customize-form" aria-label="Pet customization form">
+                <div class="name-input-group">
+                    <label for="pet-name">Name:</label>
+                    <input type="text" 
+                           id="pet-name" 
+                           name="pet-name" 
+                           placeholder="Enter your pet's name" 
+                           maxlength="20"
+                           aria-required="false">
+                </div>
+
+                <div class="form-buttons">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Information section -->
+        <section class="info-section">
+            <h2>Customize Your PixelPaws</h2>
+            <p>Make your virtual pet uniquely yours! Use the arrow buttons to cycle through different options for ears, eyes, face expressions, colors, and tail styles.</p>
+            <p>Don't forget to give your pet a special name and click Save when you're happy with your creation!</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 PixelPaws by Bridget Kimball</p>
+    </footer>
+</body>
+</html>

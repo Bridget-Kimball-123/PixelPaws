@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPaws - Resources</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header with logo and navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/logo.png" alt="PixelPaws logo with a cute pixelated pet icon">
+                <h1>PixelPaws</h1>
+            </div>
+            <nav role="navigation" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="play.html">Play</a>
+                <a href="customize.html">Customize</a>
+                <a href="about.html">About</a>
+                <a href="contact.html" class="active">Resources</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main id="main-content" class="contact-page">
+        <h1>Resources & Contact</h1>
+
+        <!-- External resources section -->
+        <section class="resources-section">
+            <h2>Helpful External Resources</h2>
+            <p>Here are some valuable resources related to web development, virtual pets, and student wellness:</p>
+            
+            <h3>Web Development Resources</h3>
+            <ul>
+                <li><a href="https://developer.mozilla.org/" class="resource-link" target="_blank" rel="noopener noreferrer">MDN Web Docs - Comprehensive web development documentation</a></li>
+                <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" class="resource-link" target="_blank" rel="noopener noreferrer">WCAG Quick Reference - Web accessibility guidelines</a></li>
+                <li><a href="https://css-tricks.com/" class="resource-link" target="_blank" rel="noopener noreferrer">CSS-Tricks - CSS tips and techniques</a></li>
+                <li><a href="https://validator.w3.org/" class="resource-link" target="_blank" rel="noopener noreferrer">W3C HTML Validator - Validate your HTML code</a></li>
+            </ul>
+
+            <h3>APIs Used (Planned)</h3>
+            <ul>
+                <li><a href="https://openweathermap.org/api" class="resource-link" target="_blank" rel="noopener noreferrer">OpenWeatherMap API - Real-time weather data</a></li>
+                <li><a href="https://www.weatherapi.com/" class="resource-link" target="_blank" rel="noopener noreferrer">WeatherAPI - Alternative weather data service</a></li>
+            </ul>
+
+            <h3>Student Wellness Resources</h3>
+            <ul>
+                <li><a href="https://www.jmu.edu/counselingctr/" class="resource-link" target="_blank" rel="noopener noreferrer">JMU Counseling Center - Mental health support</a></li>
+                <li><a href="https://www.jmu.edu/healthcenter/" class="resource-link" target="_blank" rel="noopener noreferrer">JMU University Health Center - Healthcare services</a></li>
+                <li><a href="https://www.headspace.com/students" class="resource-link" target="_blank" rel="noopener noreferrer">Headspace for Students - Meditation and mindfulness</a></li>
+            </ul>
+        </section>
+
+        <!-- Contact form section -->
+        <section class="resources-section">
+            <h2>Contact Us</h2>
+            <p>Have questions, feedback, or suggestions? We'd love to hear from you!</p>
+            
+            <form class="customize-form" aria-label="Contact form">
+                <div class="name-input-group">
+                    <label for="contact-name">Name:</label>
+                    <input type="text" 
+                           id="contact-name" 
+                           name="name" 
+                           placeholder="Your name" 
+                           required
+                           aria-required="true">
+                </div>
+
+                <div class="name-input-group">
+                    <label for="contact-email">Email:</label>
+                    <input type="email" 
+                           id="contact-email" 
+                           name="email" 
+                           placeholder="your.email@example.com" 
+                           required
+                           aria-required="true">
+                </div>
+
+                <div class="name-input-group">
+                    <label for="contact-subject">Subject:</label>
+                    <input type="text" 
+                           id="contact-subject" 
+                           name="subject" 
+                           placeholder="What's this about?" 
+                           required
+                           aria-required="true">
+                </div>
+
+                <div class="name-input-group">
+                    <label for="contact-message">Message:</label>
+                    <textarea id="contact-message" 
+                              name="message" 
+                              rows="6" 
+                              placeholder="Your message here..." 
+                              required
+                              aria-required="true"
+                              style="width: 300px; padding: 0.5rem; border: 2px solid var(--border-purple); border-radius: 5px; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="reset" class="btn btn-secondary">Clear</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+
+            <p style="margin-top: 1rem;"><em>Note: This form is currently for display purposes only. Functionality will be added in a future update.</em></p>
+        </section>
+
+        <!-- Additional information -->
+        <section class="resources-section">
+            <h2>Project Information</h2>
+            <p><strong>Course:</strong> CS 343 - Web Development</p>
+            <p><strong>Institution:</strong> James Madison University</p>
+            <p><strong>Semester:</strong> Fall 2025</p>
+            <p><strong>Developer:</strong> Bridget Kimball</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 PixelPaws by Bridget Kimball</p>
+    </footer>
+</body>
+</html>

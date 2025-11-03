@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPaws - Project Report</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header with logo and navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/logo.png" alt="PixelPaws logo with a cute pixelated pet icon">
+                <h1>PixelPaws</h1>
+            </div>
+            <nav role="navigation" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="play.html">Play</a>
+                <a href="customize.html">Customize</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Resources</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main id="main-content" class="report-page">
+        <h1>Project 2 Report - Milestone 2</h1>
+
+        <section class="about-section">
+            <h2>Requirements Checklist</h2>
+            <ol>
+                <li>
+                    <strong>Git Repository:</strong> This project uses the git repository created by the professor.
+                    <br>Repository URL: <a href="https://github.com/REPLACE-WITH-YOUR-REPO" target="_blank" rel="noopener noreferrer">https://github.com/REPLACE-WITH-YOUR-REPO</a>
+                    <br><em>Note: Incremental commits have been made throughout the development process.</em>
+                </li>
+
+                <li>
+                    <strong>Published Site:</strong> The site is published to the w3.cs.jmu.edu server.
+                    <br>Deployed URL: <a href="https://w3stu.cs.jmu.edu/kimbalbx/cs343/project/" target="_blank" rel="noopener noreferrer">https://w3stu.cs.jmu.edu/kimbalbx/cs343/project/</a>
+                </li>
+
+                <li>
+                    <strong>Responsive Design with Media Queries:</strong> The site supports distinct layouts for large and small screens.
+                    <br><em>See <code>styles/style.css</code> starting at line 847 where media queries are implemented with comments.</em>
+                    <br>Key responsive features:
+                    <ul>
+                        <li>Navigation switches from horizontal to wrapped/vertical layout on small screens</li>
+                        <li>Pet container changes from row (desktop) to column (mobile) layout</li>
+                        <li>Customization controls stack vertically on mobile devices</li>
+                        <li>Activity buttons use CSS Grid that adapts from multi-column to single column</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Five Separate Pages:</strong> The site contains six pages (five required + report page), each with meaningful purpose:
+                    <ul>
+                        <li><code>index.html</code> - Home page displaying the pet and weather status</li>
+                        <li><code>play.html</code> - Interactive play activities with the pet</li>
+                        <li><code>customize.html</code> - Pet customization interface</li>
+                        <li><code>about.html</code> - Information about the project and developer</li>
+                        <li><code>contact.html</code> - Resources and contact form</li>
+                        <li><code>report.html</code> - This project report (additional page)</li>
+                    </ul>
+                    All pages are logically linked through the navigation menu.
+                </li>
+
+                <li>
+                    <strong>Header:</strong> Every page includes a consistent header with the PixelPaws logo and site title.
+                    <br><em>The header is sticky and remains visible while scrolling.</em>
+                </li>
+
+                <li>
+                    <strong>Navigation Links:</strong> A navigation menu is present in the header of every page.
+                    <br><em>The active page is highlighted using the <code>.active</code> class.</em>
+                </li>
+
+                <li>
+                    <strong>Images with Alt Attributes:</strong> All images include descriptive alt text:
+                    <ul>
+                        <li>Logo: "PixelPaws logo with a cute pixelated pet icon"</li>
+                        <li>Pet preview: "Your customizable virtual pet - a cute gray cat"</li>
+                    </ul>
+                    <em>Alt text provides meaningful descriptions for screen readers and web crawlers.</em>
+                </li>
+
+                <li>
+                    <strong>HTML and CSS Validation:</strong> All pages and stylesheets validate without errors.
+                    <br><em>Validated using:</em>
+                    <ul>
+                        <li><a href="https://validator.w3.org/nu/" target="_blank" rel="noopener noreferrer">Nu HTML Checker</a></li>
+                        <li><a href="https://wave.webaim.org/" target="_blank" rel="noopener noreferrer">WAVE Accessibility Evaluator</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Multiple Font Faces:</strong> The site uses two different font families:
+                    <ul>
+                        <li><strong>Georgia (serif):</strong> Used for all headings (h1-h6)</li>
+                        <li><strong>Arial (sans-serif):</strong> Used for body text and navigation</li>
+                    </ul>
+                    <em>See CSS variables <code>--font-heading</code> and <code>--font-body</code> in style.css.</em>
+                </li>
+
+                <li>
+                    <strong>User Interaction:</strong> The site includes multiple forms for user interaction:
+                    <ul>
+                        <li><strong>Customization form</strong> (customize.html): Text input for pet name, reset and save buttons</li>
+                        <li><strong>Contact form</strong> (contact.html): Name, email, subject, and message inputs with validation</li>
+                        <li><strong>Interactive buttons</strong>: Arrow buttons for customization, activity buttons for play</li>
+                    </ul>
+                    <em>Note: JavaScript functionality will be implemented in Milestone 3. Forms currently display properly with proper HTML structure and validation attributes.</em>
+                </li>
+
+                <li>
+                    <strong>External Links:</strong> The site includes links to multiple external sites:
+                    <ul>
+                        <li><a href="https://developer.mozilla.org/" target="_blank" rel="noopener noreferrer">MDN Web Docs</a> - Web development documentation</li>
+                        <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">WCAG Quick Reference</a> - Accessibility guidelines</li>
+                        <li><a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer">OpenWeatherMap API</a> - Weather API (planned integration)</li>
+                        <li><a href="https://www.jmu.edu/counselingctr/" target="_blank" rel="noopener noreferrer">JMU Counseling Center</a> - Student wellness resource</li>
+                        <li>Additional resources on the Resources page</li>
+                    </ul>
+                    <em>All external links use <code>target="_blank"</code> and <code>rel="noopener noreferrer"</code> for security.</em>
+                </li>
+            </ol>
+        </section>
+
+        <section class="about-section">
+            <h2>Professional Practices</h2>
+            <ul>
+                <li><strong>Code Formatting:</strong> All HTML and CSS follows consistent formatting standards using VS Code's built-in formatter.</li>
+                <li><strong>File Organization:</strong> Resources are properly organized into <code>images/</code>, <code>styles/</code>, <code>scripts/</code>, and <code>design/</code> directories.</li>
+                <li><strong>Aesthetics:</strong> The site uses a consistent purple color scheme based on the design mockups, with proper spacing, alignment, and visual hierarchy.</li>
+                <li><strong>Coherent Style:</strong> Shared styles are in <code>styles/style.css</code>, maintaining consistency across all pages.</li>
+                <li><strong>Content Alignment:</strong> Content uses left-alignment with clear axes. Flexbox and Grid layouts ensure proper spacing.</li>
+                <li><strong>Readable Code:</strong> Uses semantic HTML5 elements, kebab-case naming conventions, and CSS custom properties for maintainability.</li>
+                <li><strong>Accessibility:</strong> Implements ARIA labels, skip links, semantic markup, and follows WCAG Level A guidelines.</li>
+                <li><strong>File Naming:</strong> All filenames are lowercase with only alphanumeric characters and hyphens.</li>
+                <li><strong>Comments:</strong> Code includes meaningful comments explaining major sections and responsive breakpoints.</li>
+            </ul>
+        </section>
+
+        <section class="about-section">
+            <h2>Additional Progress Notes</h2>
+            <p><strong>Design Implementation:</strong> The static site closely follows the design mockups provided in the <code>design/</code> directory, including the desktop customization page and mobile home page layouts.</p>
+            
+            <p><strong>Pet Graphics:</strong> The pet is styled using CSS for a charming, customizable appearance. The design uses CSS shapes and positioning to create the cat character.</p>
+            
+            <p><strong>Weather Theming:</strong> Weather-based background styling is implemented (sunny, rainy, cloudy themes) ready for API integration in Milestone 3.</p>
+            
+            <p><strong>Accessibility Features:</strong>
+                <ul>
+                    <li>Skip to main content link for keyboard navigation</li>
+                    <li>ARIA labels on all interactive elements</li>
+                    <li>Proper heading hierarchy</li>
+                    <li>Focus indicators for keyboard users</li>
+                    <li>High contrast mode support</li>
+                    <li>Reduced motion preferences respected</li>
+                </ul>
+            </p>
+
+            <p><strong>Next Steps (Milestone 3):</strong>
+                <ul>
+                    <li>Implement JavaScript for form handling and customization controls</li>
+                    <li>Integrate Weather API for real-time weather data</li>
+                    <li>Add localStorage for saving pet customizations</li>
+                    <li>Create interactive pet animations and responses</li>
+                    <li>Implement activity button functionality</li>
+                </ul>
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 PixelPaws by Bridget Kimball</p>
+    </footer>
+</body>
+</html>
