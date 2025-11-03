@@ -1,5 +1,4 @@
 # PixelPaws
-Rubber Duckie – Bridget Kimball
 
 ## Purpose
 The main idea for my web application is to create an interactive web pet that serves as an online friend for users to take care of and to personalize. In simple terms, my application addresses the problem of stress, isolation, and poor mental health that many people tend to
