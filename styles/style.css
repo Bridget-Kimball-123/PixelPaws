@@ -734,6 +734,21 @@ main {
     color: var(--nav-active);
 }
 
+/* Contact form textarea */
+.contact-textarea {
+    width: 300px;
+    padding: 0.5rem;
+    border: 2px solid var(--border-purple);
+    border-radius: 5px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+/* Form note */
+.form-note {
+    margin-top: 1rem;
+}
+
 /* ===================================
    REPORT PAGE
    =================================== */
