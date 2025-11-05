@@ -19,7 +19,7 @@ const colorOptions = {
     orange: '#FF8C00',
     brown: '#8B4513',
     black: '#2C2C2C',
-    white: '#F5F5F5'
+    white: 'white'
 };
 
 // Initialize customization when page loads
@@ -193,6 +193,11 @@ function updateColor() {
     if (body) {
         body.style.backgroundColor = color;
         body.style.borderColor = 'transparent';
+        
+        // Set belly color based on pet color
+        // If white pet, use light grey belly; otherwise use white belly
+        const bellyColor = petCustomization.color === 'white' ? '#D3D3D3' : 'white';
+        body.style.setProperty('--belly-color', bellyColor);
     }
     
     if (tail) {
