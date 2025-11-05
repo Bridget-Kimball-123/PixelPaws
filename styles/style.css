@@ -279,13 +279,14 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid transparent;
 }
 
 /* Eyes */
 .eyes {
     position: absolute;
     top: 25px;
-    width: 50px;
+    width: 55px;
     display: flex;
     justify-content: space-between;
 }
@@ -300,7 +301,7 @@ main {
 /* Nose */
 .nose {
     position: absolute;
-    top: 50px;
+    top: 55px;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
@@ -359,8 +360,8 @@ main {
 .mouth::after {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 10px;
+    width: 10px;
+    height: 7px;
     border: 2px solid #000;
     border-top: none;
     border-radius: 0 0 15px 15px;
@@ -368,13 +369,13 @@ main {
 }
 
 .mouth::before {
-    left: 25px;
-    top: 65px;
+    left: 24px;
+    top: 70px;
 }
 
 .mouth::after {
-    right: 25px;
-    top: 65px;
+    right: 24px;
+    top: 70px;
 }
 
 /* Pet Body */
@@ -384,6 +385,7 @@ main {
     background-color: var(--pet-gray);
     border-radius: 50%;
     margin-top: -10px;
+    border: 2px solid transparent;
 }
 
 /* Pet Tail */
@@ -397,6 +399,137 @@ main {
     border-color: var(--pet-gray) transparent transparent var(--pet-gray);
     border-radius: 55% 45% 70% 30%;
     rotate: -40deg;
+}
+
+/* ===================================
+   CUSTOMIZATION STYLES
+   =================================== */
+
+/* Round Ears */
+.ear-round {
+    width: 30px !important;
+    height: 30px !important;
+    background-color: var(--pet-gray);
+    border-radius: 50%;
+    border: none !important;
+}
+
+.ear-round::before {
+    content: none !important;
+}
+
+/* Floppy Ears - Long and droopy like Basset Hound/Cocker Spaniel */
+.ear-floppy {
+    width: 30px !important;
+    height: 70px !important;
+    background-color: var(--pet-gray);
+    border-radius: 45% 45% 50% 50%;
+    border: none !important;
+    position: absolute;
+    top: 15px;
+}
+
+.ear-floppy::before {
+    content: none !important;
+}
+
+.ear-floppy:first-child {
+    left: -18px;
+    top: 25px;
+    transform: rotate(10deg);
+}
+
+.ear-floppy:last-child {
+    right: -18px;
+    top: 25px;
+    transform: rotate(-10deg);
+}
+
+/* Adjust ears container for floppy ears */
+.ears.has-floppy {
+    width: 120px;
+    height: 90px;
+    margin-bottom: -70px;
+    position: relative;
+}
+
+/* Cat Eyes */
+.eye-cat {
+    width: 24px;
+    height: 14px;
+    background: linear-gradient(to right, #90EE90 0%, #32CD32 50%, #90EE90 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+}
+
+.eye-slit {
+    position: absolute;
+    width: 2px;
+    height: 10px;
+    background-color: #000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+}
+
+/* Cutesy Eyes */
+.eye-cutesy {
+    width: 24px;
+    height: 24px;
+    background-color: #000;
+    border-radius: 50%;
+    position: relative;
+}
+
+.eye-highlight {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.eye-highlight-top {
+    width: 9px;
+    height: 9px;
+    top: 4px;
+    right: 4px;
+}
+
+.eye-highlight-bottom {
+    width: 5px;
+    height: 5px;
+    bottom: 5px;
+    left: 5px;
+}
+
+/* Dog Dots */
+.dog-dots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+}
+
+.dog-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+/* Bushy Tail */
+.tail-bushy {
+    background-color: var(--pet-gray);
+    border: none !important;
+    box-shadow: 
+        0 0 0 5px var(--pet-gray),
+        0 0 0 8px var(--pet-gray);
+    opacity: 0.95;
+    width: 40px !important;
+    height: 70px !important;
+    left: 10px !important;
 }
 
 /* Speech Bubble */
@@ -908,6 +1041,32 @@ footer p {
         border-bottom: 25px solid var(--pet-gray);
     }
     
+    /* Mobile customization ear styles */
+    .ear-round {
+        width: 25px !important;
+        height: 25px !important;
+    }
+    
+    .ear-floppy {
+        width: 25px !important;
+        height: 55px !important;
+        top: 12px;
+    }
+    
+    .ear-floppy:first-child {
+        left: -20px;
+    }
+    
+    .ear-floppy:last-child {
+        right: -20px;
+    }
+    
+    .ears.has-floppy {
+        width: 100px;
+        height: 70px;
+        margin-bottom: -55px;
+    }
+    
     /* Face */
     .face {
         width: 100px;
@@ -917,7 +1076,7 @@ footer p {
     /* Eyes */
     .eyes {
         top: 20px;
-        width: 40px;
+        width: 45px;
     }
     
     .eye {
@@ -927,7 +1086,7 @@ footer p {
     
     /* Nose */
     .nose {
-        top: 45px;
+        top: 45px !important;
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         border-top: 12px solid var(--pet-pink);
@@ -961,7 +1120,7 @@ footer p {
     
     /* Mouth */
     .mouth {
-        top: -10px;
+        top: -13px;
         width: 10px;
         height: 15px;
         border-width: 1.5px;
@@ -991,6 +1150,7 @@ footer p {
     /* Tail */
     .tail {
         left: -5px;
+        top: 90px;
         bottom: 15px;
         width: 60px;
         height: 100px;
@@ -1051,6 +1211,88 @@ footer p {
     /* Activity buttons stack better on mobile */
     .activity-buttons {
         grid-template-columns: 1fr;
+    }
+    
+    /* Mobile Customization Styles */
+    
+    /* Dog Nose - override JS inline style for mobile proportions */
+    .nose[style*="border-bottom"] {
+        top: 40px !important;
+    }
+    
+    /* Cat Eyes - mobile sizing */
+    .eye-cat {
+        width: 20px;
+        height: 12px;
+    }
+    
+    .eye-slit {
+        height: 8px;
+    }
+    
+    /* Cutesy Eyes - make bigger on mobile to match desktop proportion */
+    .eye-cutesy {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .eye-highlight-top {
+        width: 7px;
+        height: 7px;
+        top: 3px;
+        right: 3px;
+    }
+    
+    .eye-highlight-bottom {
+        width: 4px;
+        height: 4px;
+        bottom: 4px;
+        left: 4px;
+    }
+    
+    /* Dog Dots - adjust spacing for mobile face size */
+    .dog-dot:nth-child(1) {
+        left: 20px !important;
+        top: 45px !important;
+    }
+    
+    .dog-dot:nth-child(2) {
+        left: 25px !important;
+        top: 52px !important;
+    }
+    
+    .dog-dot:nth-child(3) {
+        left: 30px !important;
+        top: 45px !important;
+    }
+    
+    .dog-dot:nth-child(4) {
+        right: 20px !important;
+        left: auto !important;
+        top: 45px !important;
+    }
+    
+    .dog-dot:nth-child(5) {
+        right: 25px !important;
+        left: auto !important;
+        top: 52px !important;
+    }
+    
+    .dog-dot:nth-child(6) {
+        right: 30px !important;
+        left: auto !important;
+        top: 45px !important;
+    }
+    
+    /* Bushy Tail - thinner on mobile */
+    .tail-bushy {
+        box-shadow: 
+            0 0 0 4px var(--pet-gray),
+            0 0 0 6px var(--pet-gray);
+        width: 30px !important;
+        height: 40px !important;
+        top: 120px !important;
+        left: 0px !important;
     }
 }
 

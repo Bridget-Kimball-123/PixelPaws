@@ -1,0 +1,409 @@
+// ===================================
+// PixelPaws - Customization JavaScript
+// Author: Bridget Kimball
+// ===================================
+
+// Customization state
+const petCustomization = {
+    color: 'gray',
+    ears: 'triangles',
+    face: 'default',
+    eyes: 'default',
+    tail: 'default',
+    name: 'Pixel'
+};
+
+// Color options with their CSS color values
+const colorOptions = {
+    gray: '#C0C0C0',
+    orange: '#FF8C00',
+    brown: '#8B4513',
+    black: '#2C2C2C',
+    white: '#F5F5F5'
+};
+
+// Initialize customization when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadCustomization();
+    setupArrowButtons();
+    setupFormButtons();
+    updatePetDisplay();
+});
+
+// Load customization from localStorage
+function loadCustomization() {
+    const saved = localStorage.getItem('petCustomization');
+    if (saved) {
+        Object.assign(petCustomization, JSON.parse(saved));
+        // Update name input if it exists
+        const nameInput = document.getElementById('pet-name');
+        if (nameInput) {
+            nameInput.value = petCustomization.name;
+        }
+    }
+}
+
+// Save customization to localStorage
+function saveCustomization() {
+    localStorage.setItem('petCustomization', JSON.stringify(petCustomization));
+}
+
+// Setup arrow button controls
+function setupArrowButtons() {
+    // Color controls
+    const colorLeft = document.querySelector('[data-control="color-left"]');
+    const colorRight = document.querySelector('[data-control="color-right"]');
+    if (colorLeft) colorLeft.addEventListener('click', () => cycleOption('color', -1));
+    if (colorRight) colorRight.addEventListener('click', () => cycleOption('color', 1));
+
+    // Ears controls
+    const earsLeft = document.querySelector('[data-control="ears-left"]');
+    const earsRight = document.querySelector('[data-control="ears-right"]');
+    if (earsLeft) earsLeft.addEventListener('click', () => cycleOption('ears', -1));
+    if (earsRight) earsRight.addEventListener('click', () => cycleOption('ears', 1));
+
+    // Face controls
+    const faceLeft = document.querySelector('[data-control="face-left"]');
+    const faceRight = document.querySelector('[data-control="face-right"]');
+    if (faceLeft) faceLeft.addEventListener('click', () => cycleOption('face', -1));
+    if (faceRight) faceRight.addEventListener('click', () => cycleOption('face', 1));
+
+    // Eyes controls
+    const eyesLeft = document.querySelector('[data-control="eyes-left"]');
+    const eyesRight = document.querySelector('[data-control="eyes-right"]');
+    if (eyesLeft) eyesLeft.addEventListener('click', () => cycleOption('eyes', -1));
+    if (eyesRight) eyesRight.addEventListener('click', () => cycleOption('eyes', 1));
+
+    // Tail controls
+    const tailLeft = document.querySelector('[data-control="tail-left"]');
+    const tailRight = document.querySelector('[data-control="tail-right"]');
+    if (tailLeft) tailLeft.addEventListener('click', () => cycleOption('tail', -1));
+    if (tailRight) tailRight.addEventListener('click', () => cycleOption('tail', 1));
+}
+
+// Cycle through options for a given feature
+function cycleOption(feature, direction) {
+    const options = {
+        color: ['gray', 'orange', 'brown', 'black', 'white'],
+        ears: ['triangles', 'round', 'floppy'],
+        face: ['default', 'dog'],
+        eyes: ['default', 'cat', 'cutesy'],
+        tail: ['default', 'none', 'bushy']
+    };
+
+    const currentIndex = options[feature].indexOf(petCustomization[feature]);
+    let newIndex = currentIndex + direction;
+
+    // Wrap around
+    if (newIndex < 0) newIndex = options[feature].length - 1;
+    if (newIndex >= options[feature].length) newIndex = 0;
+
+    petCustomization[feature] = options[feature][newIndex];
+    updatePetDisplay();
+}
+
+// Setup form buttons (Save and Reset)
+function setupFormButtons() {
+    const saveBtn = document.querySelector('[data-action="save"]');
+    const resetBtn = document.querySelector('[data-action="reset"]');
+    const nameInput = document.getElementById('pet-name');
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (nameInput) {
+                petCustomization.name = nameInput.value || 'Pixel';
+            }
+            saveCustomization();
+            alert('Pet customization saved!');
+        });
+    }
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            petCustomization.color = 'gray';
+            petCustomization.ears = 'triangles';
+            petCustomization.face = 'default';
+            petCustomization.eyes = 'default';
+            petCustomization.tail = 'default';
+            petCustomization.name = 'Pixel';
+            if (nameInput) nameInput.value = 'Pixel';
+            saveCustomization();
+            updatePetDisplay();
+        });
+    }
+}
+
+// Update the pet display with current customization
+function updatePetDisplay() {
+    const pet = document.querySelector('.pet');
+    if (!pet) return;
+
+    // Update color
+    updateColor();
+
+    // Update ears
+    updateEars();
+
+    // Update face
+    updateFace();
+
+    // Update eyes
+    updateEyes();
+
+    // Update tail
+    updateTail();
+
+    // Update labels if they exist
+    updateLabels();
+    
+    // Update pet name on home page if element exists
+    updatePetName();
+}
+
+// Update pet color
+function updateColor() {
+    const color = colorOptions[petCustomization.color];
+    const ears = document.querySelectorAll('.ear');
+    const face = document.querySelector('.face');
+    const body = document.querySelector('.body');
+    const tail = document.querySelector('.tail');
+    const pet = document.querySelector('.pet');
+
+    // Add outline to entire pet container for all colors
+    if (pet) {
+        pet.style.filter = 'drop-shadow(0 0 1px #9673A6) drop-shadow(0 0 1px #9673A6) drop-shadow(0 0 2px #9673A6)';
+    }
+
+    ears.forEach(ear => {
+        // For triangular ears, update border color
+        if (ear.classList.contains('ear-round') || ear.classList.contains('ear-floppy')) {
+            ear.style.backgroundColor = color;
+        } else {
+            ear.style.borderBottomColor = color;
+        }
+    });
+    
+    if (face) {
+        face.style.backgroundColor = color;
+        face.style.borderColor = 'transparent';
+    }
+    
+    if (body) {
+        body.style.backgroundColor = color;
+        body.style.borderColor = 'transparent';
+    }
+    
+    if (tail) {
+        if (tail.classList.contains('tail-bushy')) {
+            // Bushy tail with layered effect
+            tail.style.backgroundColor = color;
+            tail.style.boxShadow = `
+                0 0 0 5px ${color},
+                0 0 0 8px ${color}
+            `;
+        } else {
+            // Regular curved tail
+            tail.style.borderColor = `${color} transparent transparent ${color}`;
+            tail.style.backgroundColor = 'transparent';
+            tail.style.boxShadow = 'none';
+        }
+    }
+}
+
+// Update ears
+function updateEars() {
+    const earsContainer = document.querySelector('.ears');
+    if (!earsContainer) return;
+
+    // Remove existing ears and classes
+    earsContainer.innerHTML = '';
+    earsContainer.classList.remove('has-floppy');
+
+    if (petCustomization.ears === 'triangles') {
+        // Default triangular ears with pink inner triangles
+        earsContainer.innerHTML = `
+            <div class="ear"></div>
+            <div class="ear"></div>
+        `;
+    } else if (petCustomization.ears === 'round') {
+        // Round ears (no inner triangles)
+        earsContainer.innerHTML = `
+            <div class="ear ear-round"></div>
+            <div class="ear ear-round"></div>
+        `;
+    } else if (petCustomization.ears === 'floppy') {
+        // Floppy ears (no inner triangles)
+        earsContainer.classList.add('has-floppy');
+        earsContainer.innerHTML = `
+            <div class="ear ear-floppy"></div>
+            <div class="ear ear-floppy"></div>
+        `;
+    }
+
+    // Reapply color after creating new ears
+    updateColor();
+}
+
+// Update face (nose and whiskers)
+function updateFace() {
+    const face = document.querySelector('.face');
+    if (!face) return;
+
+    let nose = face.querySelector('.nose');
+    let whiskers = face.querySelector('.whiskers');
+    let dots = face.querySelector('.dog-dots');
+
+    if (petCustomization.face === 'default') {
+        // Cat face: down triangle nose with whiskers
+        if (nose) {
+            nose.style.borderLeft = '10px solid transparent';
+            nose.style.borderRight = '10px solid transparent';
+            nose.style.borderTop = '15px solid #FFB6C1';
+            nose.style.borderBottom = 'none';
+            nose.style.top = '55px';
+        }
+        if (whiskers) {
+            whiskers.style.display = 'block';
+        }
+        // Remove dog dots if they exist
+        if (dots) {
+            dots.remove();
+        }
+    } else if (petCustomization.face === 'dog') {
+        // Dog face: smaller up triangle nose with dots instead of whiskers
+        if (nose) {
+            nose.style.borderLeft = '8px solid transparent';
+            nose.style.borderRight = '8px solid transparent';
+            nose.style.borderTop = 'none';
+            nose.style.borderBottom = '12px solid #000';
+            nose.style.top = '60px';
+        }
+        // Hide whiskers
+        if (whiskers) {
+            whiskers.style.display = 'none';
+        }
+        // Create dots if they don't exist - six dots in triangular patterns
+        if (!dots) {
+            dots = document.createElement('div');
+            dots.className = 'dog-dots';
+            dots.innerHTML = `
+                <div class="dog-dot" style="left: 28px; top: 55px;"></div>
+                <div class="dog-dot" style="left: 33px; top: 62px;"></div>
+                <div class="dog-dot" style="left: 38px; top: 55px;"></div>
+                <div class="dog-dot" style="right: 28px; top: 55px;"></div>
+                <div class="dog-dot" style="right: 33px; top: 62px;"></div>
+                <div class="dog-dot" style="right: 38px; top: 55px;"></div>
+            `;
+            face.appendChild(dots);
+        } else {
+            dots.style.display = 'block';
+        }
+    }
+}
+
+// Update eyes
+function updateEyes() {
+    const eyesContainer = document.querySelector('.eyes');
+    if (!eyesContainer) return;
+
+    // Remove existing eyes
+    eyesContainer.innerHTML = '';
+
+    if (petCustomization.eyes === 'default') {
+        // Default black circles
+        eyesContainer.innerHTML = `
+            <div class="eye"></div>
+            <div class="eye"></div>
+        `;
+    } else if (petCustomization.eyes === 'cat') {
+        // Cat eyes (football-shaped with slits)
+        eyesContainer.innerHTML = `
+            <div class="eye eye-cat">
+                <div class="eye-slit"></div>
+            </div>
+            <div class="eye eye-cat">
+                <div class="eye-slit"></div>
+            </div>
+        `;
+    } else if (petCustomization.eyes === 'cutesy') {
+        // Cutesy eyes with highlights
+        eyesContainer.innerHTML = `
+            <div class="eye eye-cutesy">
+                <div class="eye-highlight eye-highlight-top"></div>
+                <div class="eye-highlight eye-highlight-bottom"></div>
+            </div>
+            <div class="eye eye-cutesy">
+                <div class="eye-highlight eye-highlight-top"></div>
+                <div class="eye-highlight eye-highlight-bottom"></div>
+            </div>
+        `;
+    }
+}
+
+// Update tail
+function updateTail() {
+    const tail = document.querySelector('.tail');
+    if (!tail) return;
+
+    // Remove bushy class first
+    tail.classList.remove('tail-bushy');
+
+    if (petCustomization.tail === 'default') {
+        // Default S-curve tail
+        tail.style.display = 'block';
+        tail.style.width = '60px';
+        tail.style.height = '100px';
+        tail.style.left = '5px';
+        tail.style.bottom = '25px';
+        tail.style.borderRadius = '55% 45% 70% 30%';
+        tail.style.rotate = '-40deg';
+    } else if (petCustomization.tail === 'none') {
+        // No tail
+        tail.style.display = 'none';
+    } else if (petCustomization.tail === 'bushy') {
+        // Bushy tail - full, fluffy, curved upward
+        tail.style.display = 'block';
+        tail.classList.add('tail-bushy');
+        tail.style.width = '65px';
+        tail.style.height = '90px';
+        tail.style.left = '0px';
+        tail.style.bottom = '35px';
+        tail.style.borderRadius = '45% 55% 50% 50%';
+        tail.style.rotate = '-30deg';
+    }
+
+    // Reapply color
+    updateColor();
+}
+
+// Update customization labels
+// Update pet name on home page
+function updatePetName() {
+    const petNameElement = document.querySelector('.pet-name span');
+    if (petNameElement) {
+        petNameElement.textContent = petCustomization.name;
+    }
+}
+
+function updateLabels() {
+    const labels = {
+        'color-label': petCustomization.color.charAt(0).toUpperCase() + petCustomization.color.slice(1),
+        'ears-label': petCustomization.ears.charAt(0).toUpperCase() + petCustomization.ears.slice(1),
+        'face-label': petCustomization.face === 'default' ? 'Cat' : 'Dog',
+        'eyes-label': petCustomization.eyes.charAt(0).toUpperCase() + petCustomization.eyes.slice(1),
+        'tail-label': petCustomization.tail === 'none' ? 'None' : petCustomization.tail === 'bushy' ? 'Bushy' : petCustomization.tail.charAt(0).toUpperCase() + petCustomization.tail.slice(1)
+    };
+
+    for (const [id, text] of Object.entries(labels)) {
+        const label = document.getElementById(id);
+        if (label) label.textContent = text;
+    }
+}
+
+// Export for use in other pages
+if (typeof window !== 'undefined') {
+    window.petCustomization = petCustomization;
+    window.updatePetDisplay = updatePetDisplay;
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎨 PixelPaws - Customize</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <script src="../scripts/custom.js" defer></script>
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
@@ -68,39 +69,39 @@
 
                 <!-- Customization controls -->
                 <div class="customization-controls">
-                    <!-- Ears control -->
+                    <!-- Color control -->
                     <div class="control-row">
-                        <button class="arrow-btn" aria-label="Previous ear style">◄</button>
-                        <span class="control-label">Ears</span>
-                        <button class="arrow-btn" aria-label="Next ear style">►</button>
+                        <button class="arrow-btn" data-control="color-left" aria-label="Previous color">◄</button>
+                        <span class="control-label">Color: <span id="color-label">Gray</span></span>
+                        <button class="arrow-btn" data-control="color-right" aria-label="Next color">►</button>
                     </div>
 
-                    <!-- Eyes control -->
+                    <!-- Ears control -->
                     <div class="control-row">
-                        <button class="arrow-btn" aria-label="Previous eye style">◄</button>
-                        <span class="control-label">Eyes</span>
-                        <button class="arrow-btn" aria-label="Next eye style">►</button>
+                        <button class="arrow-btn" data-control="ears-left" aria-label="Previous ear style">◄</button>
+                        <span class="control-label">Ears: <span id="ears-label">Triangles</span></span>
+                        <button class="arrow-btn" data-control="ears-right" aria-label="Next ear style">►</button>
                     </div>
 
                     <!-- Face control -->
                     <div class="control-row">
-                        <button class="arrow-btn" aria-label="Previous face style">◄</button>
-                        <span class="control-label">Face</span>
-                        <button class="arrow-btn" aria-label="Next face style">►</button>
+                        <button class="arrow-btn" data-control="face-left" aria-label="Previous face style">◄</button>
+                        <span class="control-label">Face: <span id="face-label">Cat</span></span>
+                        <button class="arrow-btn" data-control="face-right" aria-label="Next face style">►</button>
                     </div>
 
-                    <!-- Color control -->
+                    <!-- Eyes control -->
                     <div class="control-row">
-                        <button class="arrow-btn" aria-label="Previous color">◄</button>
-                        <span class="control-label">Color</span>
-                        <button class="arrow-btn" aria-label="Next color">►</button>
+                        <button class="arrow-btn" data-control="eyes-left" aria-label="Previous eye style">◄</button>
+                        <span class="control-label">Eyes: <span id="eyes-label">Default</span></span>
+                        <button class="arrow-btn" data-control="eyes-right" aria-label="Next eye style">►</button>
                     </div>
 
                     <!-- Tail control -->
                     <div class="control-row">
-                        <button class="arrow-btn" aria-label="Previous tail style">◄</button>
-                        <span class="control-label">Tail</span>
-                        <button class="arrow-btn" aria-label="Next tail style">►</button>
+                        <button class="arrow-btn" data-control="tail-left" aria-label="Previous tail style">◄</button>
+                        <span class="control-label">Tail: <span id="tail-label">Default</span></span>
+                        <button class="arrow-btn" data-control="tail-right" aria-label="Next tail style">►</button>
                     </div>
                 </div>
             </div>
@@ -114,12 +115,13 @@
                            name="pet-name" 
                            placeholder="Enter your pet's name" 
                            maxlength="20"
+                           value="Pixel"
                            aria-required="false">
                 </div>
 
                 <div class="form-buttons">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-action="reset">Reset</button>
+                    <button type="button" class="btn btn-primary" data-action="save">Save</button>
                 </div>
             </form>
         </div>

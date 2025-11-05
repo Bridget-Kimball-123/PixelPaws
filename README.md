@@ -1,56 +1,17 @@
 # PixelPaws
 
 ## Purpose
-The main idea for my web application is to create an interactive web pet that serves as an online friend for users to take care of and to personalize. In simple terms, my application addresses the problem of stress, isolation, and poor mental health that many people tend to
-struggle with. Having a pet in real life has been shown to reduce stress and provide comfort, but not everyone can own a pet due to costs, allergies, housing rules, or busy schedules. This application offers a creative solution by giving users a digital pet they can bond with. Though not real, the pet sparks attachment and can motivate users to take small breaks, laugh, have a companion, and feel more connected. The application works like a simple form of self-care by allowing users to step away from schoolwork or responsibilities and check in with their
-companion. It provides comfort in the form of an interactive, responsive friend that is available at
-any time through the browser. By making the digital pet customizable, responsive to weather,
-and interactive through feeding or play, the project combines fun and emotional support. This
-makes it both an entertaining application and one that can support students’ mental well-being.
+The main idea for my web application is to create an interactive web pet that serves as an online friend for users to take care of and to personalize. In simple terms, my application addresses the problem of stress, isolation, and poor mental health that many people tend to struggle with. Having a pet in real life has been shown to reduce stress and provide comfort, but not everyone can own a pet due to costs, allergies, housing rules, or busy schedules. This application offers a creative solution by giving users a digital pet they can bond with. Though not real, the pet sparks attachment and can motivate users to take small breaks, laugh, have a companion, and feel more connected. The application works like a simple form of self-care by allowing users to step away from schoolwork or responsibilities and check in with their companion. It provides comfort in the form of an interactive, responsive friend that is available at any time through the browser. By making the digital pet customizable, responsive to weather, and interactive through feeding or play, the project combines fun and emotional support. This makes it both an entertaining application and one that can support students’ mental well-being.
 
 ## Users
-The primary users of my application are students, though anyone looking for a simple source of
-stress relief could enjoy it. Specifically, I envisioned high school and college students while
-brainstorming this project because they often deal with overwhelming workloads, irregular
-schedules, and pressure from both school and social commitments. Many students may not
-have the ability to own pets due to dorm rules or the financial costs associated with caring for a
-real animal, yet they could still benefit from the comfort that comes from interacting with one.
-Younger students, such as those in elementary or middle school, may also enjoy the playful and
-interactive features. However, the design is centered on older students who may seek stress
-relief during studying or breaks. For this audience, the web pet serves as a lighthearted mental
-reset. By offering customization, users can feel a sense of ownership for their pet, which helps
-create an emotional bond. The pet’s ability to reflect weather conditions also makes it feel
-dynamic and alive, giving users a small surprise or change each time they visit their online
-friend. Overall, this application will benefit users by providing both fun and an accessible tool for
+The primary users of my application are students, though anyone looking for a simple source of stress relief could enjoy it. Specifically, I envisioned high school and college students while brainstorming this project because they often deal with overwhelming workloads, irregular
+schedules, and pressure from both school and social commitments. Many students may not have the ability to own pets due to dorm rules or the financial costs associated with caring for a real animal, yet they could still benefit from the comfort that comes from interacting with one. Younger students, such as those in elementary or middle school, may also enjoy the playful and interactive features. However, the design is centered on older students who may seek stress relief during studying or breaks. For this audience, the web pet serves as a lighthearted mental reset. By offering customization, users can feel a sense of ownership for their pet, which helps create an emotional bond. The pet’s ability to reflect weather conditions also makes it feel dynamic and alive, giving users a small surprise or change each time they visit their online friend. Overall, this application will benefit users by providing both fun and an accessible tool for
 improving mood and mental health.
 
 ## Features
-The web application will include three main pages: the home page, the customization page, and
-the play page. The home page serves as the landing page and displays the pet with its current
-emotion or activity. The pet’s emotions will respond to the real-world weather by pulling
-information from a weather API. For example, rainy weather will cause the pet to appear sad
-and want to nap, while sunny weather will make the pet cheerful and eager to play. This gives
-the pet a dynamic quality that changes over time, so the user always has something new to see.
-The customization page allows users to design their pet by selecting ears, tail, face, eyes, and
-color, as well as naming it. A reset option gives users the freedom to recreate or change their
-pet whenever they like. Finally, the play page lets the user interact directly with the pet, such as
-feeding it or engaging in simple play actions. Together, these pages provide a full experience of
-owning, personalizing, and interacting with a pet. For example, a student logging in on a rainy
-day might customize their pet to look like their dog at home, then feed it before watching it curl
-up for a nap.
+The web application will include three main pages: the home page, the customization page, and the play page. The home page serves as the landing page and displays the pet with its current emotion or activity. The pet’s emotions will respond to the real-world weather by pulling information from a weather API. For example, rainy weather will cause the pet to appear sad and want to nap, while sunny weather will make the pet cheerful and eager to play. This gives the pet a dynamic quality that changes over time, so the user always has something new to see. The customization page allows users to design their pet by selecting ears, tail, face, eyes, and color, as well as naming it. A reset option gives users the freedom to recreate or change their pet whenever they like. Finally, the play page lets the user interact directly with the pet, such as feeding it or engaging in simple play actions. Together, these pages provide a full experience of owning, personalizing, and interacting with a pet. For example, a student logging in on a rainy day might customize their pet to look like their dog at home, then feed it before watching it curl up for a nap.
 
 ## Data
-The data that users will create, read, update, and delete centers around the pet itself and its
-interactions. When a user first enters the application, they can create a new pet by customizing
-its features: ears, eyes, tail, face type (dog or cat), color, and name. This information is stored in
-the browser’s local storage so that the pet persists even when the user closes and reopens the
-application. Users can then read the pet’s current state at any time by visiting the home page,
-where the pet’s appearance, name, and emotions are displayed. The update operation occurs
-when the user changes the pet’s appearance on the customization page, feeds the pet, or plays
-with it. Each of these updates is saved immediately so the pet reflects the latest choices. Finally,
-the user can delete or reset their pet by pressing the reset button, which clears the stored
-customization and returns the pet to its default form. For example, a user might create a dog
-named Max with floppy ears and a brown tail, then later update Max’s eye color or switch him
-into a cat with whiskers. This cycle of creating, reading, updating, and deleting ensures that the
-application demonstrates full CRUD functionality while giving the user meaningful control over
-their virtual pet.
+The data that users will create, read, update, and delete centers around the pet itself and its interactions. When a user first enters the application, they can create a new pet by customizing its features: ears, eyes, tail, face type (dog or cat), color, and name. This information is stored in the browser’s local storage so that the pet persists even when the user closes and reopens the application. Users can then read the pet’s current state at any time by visiting the home page,
+where the pet’s appearance, name, and emotions are displayed. The update operation occurs when the user changes the pet’s appearance on the customization page, feeds the pet, or plays
+with it. Each of these updates is saved immediately so the pet reflects the latest choices. Finally, the user can delete or reset their pet by pressing the reset button, which clears the stored customization and returns the pet to its default form. For example, a user might create a dog named Max with floppy ears and a brown tail, then later update Max’s eye color or switch him into a cat with whiskers. This cycle of creating, reading, updating, and deleting ensures that the application demonstrates full CRUD functionality while giving the user meaningful control over their virtual pet.
