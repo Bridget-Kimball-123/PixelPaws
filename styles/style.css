@@ -1385,3 +1385,42 @@ input:focus {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ===================================
+   CUSTOM NOTIFICATION
+   =================================== */
+
+.custom-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: var(--primary-purple);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+    max-width: 300px;
+}
+
+.custom-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.custom-notification strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.3rem;
+}
+
+.custom-notification p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+

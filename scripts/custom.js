@@ -115,7 +115,7 @@ function setupFormButtons() {
                 petCustomization.name = nameInput.value || 'Pixel';
             }
             saveCustomization();
-            alert('Pet customization saved!');
+            showNotification('Pet customization saved successfully!');
         });
     }
 
@@ -407,8 +407,32 @@ function updateLabels() {
     }
 }
 
+// Custom notification function
+function showNotification(message) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'custom-notification';
+    notification.innerHTML = `
+        <strong>PixelPaws</strong>
+        <p>${message}</p>
+    `;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => notification.classList.add('show'), 10);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
 // Export for use in other pages
 if (typeof window !== 'undefined') {
     window.petCustomization = petCustomization;
     window.updatePetDisplay = updatePetDisplay;
 }
+
