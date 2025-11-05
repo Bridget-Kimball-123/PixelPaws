@@ -1,0 +1,442 @@
+/* ===================================
+   PixelPaws - Main Stylesheet
+   Author: Bridget Kimball
+   =================================== */
+
+/* ===================================
+   CSS RESET & BASE STYLES
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color Palette - Based on Design Images */
+    --primary-purple: #660066;
+    --light-purple: #DFCDE7;
+    --border-purple: #9673A6;
+    --background-white: #FBF4FF;
+    --text-dark: #660066;
+    --nav-active: #4B0082;
+    
+    /* Pet Colors */
+    --pet-gray: #C0C0C0;
+    --pet-pink: #FFB6C1;
+    --pet-ear-inner: #FFC0CB;
+    
+    /* Weather Colors */
+    --sunny-bg: #FFE5B4;
+    --rainy-bg: #B0E0E6;
+    --raindrop: #3399FF;
+    
+    /* Typography */
+    --font-heading: 'Georgia', serif;
+    --font-body: 'Arial', sans-serif;
+    
+    /* Spacing */
+    --header-height: 64px;
+    --spacing-small: 0.5rem;
+    --spacing-medium: 1rem;
+    --spacing-large: 2rem;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-dark);
+    background-color: var(--background-white);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--primary-purple);
+    margin-bottom: var(--spacing-medium);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===================================
+   HEADER & NAVIGATION
+   =================================== */
+
+header {
+    background-color: var(--light-purple);
+    border-bottom: 3px solid var(--border-purple);
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-medium);
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display:flex;
+    align-items: center;
+    gap: var(--spacing-medium);
+}
+
+.logo img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    color: var(--primary-purple);
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    gap: var(--spacing-large);
+}
+
+nav a {
+    font-weight: 600;
+    color: var(--primary-purple);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: var(--border-purple);
+    color: white;
+}
+
+nav a.active {
+    background-color: var(--nav-active);
+    color: white;
+}
+
+/* Hamburger menu button (hidden by default) */
+.menu-toggle {
+    display: none;
+    background-color: var(--primary-purple);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu-toggle:hover {
+    background-color: var(--nav-active);
+}
+
+/* ===================================
+   MAIN CONTENT AREA
+   =================================== */
+
+main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-large);
+    width: 100%;
+}
+
+/* ===================================
+   SHARED COMPONENTS
+   =================================== */
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: var(--spacing-medium);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background-color: var(--primary-purple);
+    color: white;
+    border-color: var(--primary-purple);
+}
+
+.btn-primary:hover {
+    background-color: var(--nav-active);
+}
+
+.btn-secondary {
+    background-color: var(--light-purple);
+    color: var(--primary-purple);
+    border-color: var(--border-purple);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-purple);
+    color: white;
+}
+
+/* Information Section */
+.info-section {
+    background-color: white;
+    border: 2px solid var(--border-purple);
+    border-radius: 15px;
+    padding: var(--spacing-large);
+    text-align: left;
+}
+
+.info-section h2 {
+    text-align: center;
+}
+
+.info-section p {
+    margin-bottom: var(--spacing-medium);
+    font-size: 1.1rem;
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+
+footer {
+    background-color: var(--light-purple);
+    border-top: 3px solid var(--border-purple);
+    padding: var(--spacing-large);
+    text-align: center;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
+    color: var(--primary-purple);
+    font-weight: 600;
+}
+
+/* ===================================
+   ANIMATIONS
+   =================================== */
+
+@keyframes rain {
+    0% {
+        top: -10%;
+        left: 10%;
+    }
+    100% {
+        top: 100%;
+        left: 15%;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - MOBILE
+   =================================== */
+
+@media (max-width: 768px) {
+    /* Header adjustments for mobile */
+    .header-content {
+        height: auto;
+        padding: var(--spacing-small);
+        position: relative;
+    }
+    
+    .logo {
+        margin-bottom: var(--spacing-small);
+    }
+    
+    .logo h1 {
+        font-size: 1.4rem;
+    }
+    
+    /* Show hamburger menu button on mobile */
+    .menu-toggle {
+        display: block;
+    }
+    
+    /* Hide navigation by default on mobile */
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--light-purple);
+        border: 2px solid var(--border-purple);
+        border-top: none;
+        flex-direction: column;
+        padding: var(--spacing-medium);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        gap: var(--spacing-small);
+    }
+    
+    /* Show navigation when menu is open */
+    nav.open {
+        display: flex;
+    }
+    
+    nav a {
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+        width: 100%;
+        text-align: left;
+    }
+    
+    /* Main content adjustments */
+    main {
+        padding: var(--spacing-medium);
+    }
+    
+    /* Quick actions stack vertically */
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Medium screens adjustment (tablets) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header-content {
+        padding: 0 var(--spacing-large);
+    }
+    
+    main {
+        padding: var(--spacing-large) var(--spacing-medium);
+    }
+}
+
+/* ===================================
+   ACCESSIBILITY ENHANCEMENTS
+   =================================== */
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus,
+input:focus {
+    outline: 3px solid var(--nav-active);
+    outline-offset: 2px;
+}
+
+/* Skip to main content link (for screen readers) */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-purple);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 9999;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --primary-purple: #4B0082;
+        --border-purple: #000;
+    }
+    
+    .info-section {
+        border-width: 3px;
+    }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===================================
+   CUSTOM NOTIFICATION
+   =================================== */
+
+.custom-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: var(--primary-purple);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+    max-width: 300px;
+}
+
+.custom-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.custom-notification strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.3rem;
+}
+
+.custom-notification p {
+    margin: 0;
+    font-size: 0.95rem;
+}

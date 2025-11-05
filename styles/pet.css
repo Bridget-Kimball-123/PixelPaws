@@ -1,0 +1,549 @@
+/* ===================================
+   PET DISPLAY & CUSTOMIZATION STYLES
+   =================================== */
+
+/* Pet styling */
+.pet {
+    position: relative;
+    width: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Pet Ears */
+.ears {
+    display: flex;
+    justify-content: space-between;
+    width: 80px;
+    margin-bottom: -20px;
+    z-index: 1;
+}
+
+.ear {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 40px solid var(--pet-gray);
+    position: relative;
+}
+
+.ear::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid var(--pet-ear-inner);
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+}
+
+/* Round Ears */
+.ear-round {
+    width: 30px !important;
+    height: 30px !important;
+    background-color: var(--pet-gray);
+    border-radius: 50%;
+    border: none !important;
+}
+
+.ear-round::before {
+    content: none !important;
+}
+
+/* Floppy Ears */
+.ear-floppy {
+    width: 30px !important;
+    height: 70px !important;
+    background-color: var(--pet-gray);
+    border-radius: 45% 45% 50% 50%;
+    border: none !important;
+    position: absolute;
+    top: 15px;
+}
+
+.ear-floppy::before {
+    content: none !important;
+}
+
+.ear-floppy:first-child {
+    left: -18px;
+    top: 25px;
+    transform: rotate(10deg);
+}
+
+.ear-floppy:last-child {
+    right: -18px;
+    top: 25px;
+    transform: rotate(-10deg);
+}
+
+/* Adjust ears container for floppy ears */
+.ears.has-floppy {
+    width: 120px;
+    height: 90px;
+    margin-bottom: -70px;
+    position: relative;
+}
+
+/* Pet Face */
+.face {
+    width: 120px;
+    height: 120px;
+    background-color: var(--pet-gray);
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid transparent;
+}
+
+/* Eyes */
+.eyes {
+    position: absolute;
+    top: 25px;
+    width: 55px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eye {
+    width: 15px;
+    height: 15px;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+/* Cat Eyes */
+.eye-cat {
+    width: 24px;
+    height: 14px;
+    background: linear-gradient(to right, #90EE90 0%, #32CD32 50%, #90EE90 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+}
+
+.eye-slit {
+    position: absolute;
+    width: 2px;
+    height: 10px;
+    background-color: #000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+}
+
+/* Cutesy Eyes */
+.eye-cutesy {
+    width: 24px;
+    height: 24px;
+    background-color: #000;
+    border-radius: 50%;
+    position: relative;
+}
+
+.eye-highlight {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.eye-highlight-top {
+    width: 9px;
+    height: 9px;
+    top: 4px;
+    right: 4px;
+}
+
+.eye-highlight-bottom {
+    width: 5px;
+    height: 5px;
+    bottom: 5px;
+    left: 5px;
+}
+
+/* Nose */
+.nose {
+    position: absolute;
+    top: 55px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid var(--pet-pink);
+}
+
+/* Dog Dots */
+.dog-dots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+}
+
+.dog-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+/* Whiskers */
+.whiskers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: -50px;
+}
+
+.whisker {
+    position: absolute;
+    width: 50px;
+    height: 2px;
+    background-color: #000;
+}
+
+.whisker-left-top {
+    left: 35px;
+    top: 50px;
+    transform: rotate(10deg);
+}
+
+.whisker-left-bottom {
+    left: 35px;
+    top: 60px;
+    transform: rotate(-10deg);
+}
+
+.whisker-right-top {
+    right: -65px;
+    top: 50px;
+    transform: rotate(-10deg);
+}
+
+.whisker-right-bottom {
+    right: -65px;
+    top: 60px;
+    transform: rotate(10deg);
+}
+
+/* Mouth */
+.mouth {
+    position: absolute;
+    top: 0px;
+    width: 50px;
+    height: 0px;
+}
+
+.mouth::before,
+.mouth::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 7px;
+    border: 2px solid #000;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    bottom: 0;
+}
+
+.mouth::before {
+    left: 24px;
+    top: 70px;
+}
+
+.mouth::after {
+    right: 24px;
+    top: 70px;
+}
+
+/* Pet Body */
+.body {
+    width: 150px;
+    height: 150px;
+    background-color: var(--pet-gray);
+    border-radius: 50%;
+    margin-top: -10px;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+/* Belly */
+.body::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 100px;
+    background-color: var(--belly-color, white);
+    border-radius: 50%;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+/* Pet Tail */
+.tail {
+    position: absolute;
+    left: 5px;
+    bottom: 25px;
+    width: 60px;
+    height: 100px;
+    border: 15px solid var(--pet-gray);
+    border-color: var(--pet-gray) transparent transparent var(--pet-gray);
+    border-radius: 55% 45% 70% 30%;
+    rotate: -40deg;
+}
+
+/* Bushy Tail */
+.tail-bushy {
+    background-color: var(--pet-gray);
+    border: none !important;
+    box-shadow: 
+        0 0 0 5px var(--pet-gray),
+        0 0 0 8px var(--pet-gray);
+    opacity: 0.95;
+    width: 40px !important;
+    height: 70px !important;
+    left: 10px !important;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - MOBILE
+   =================================== */
+
+@media (max-width: 768px) {
+    /* Pet size adjustments for mobile */
+    .pet {
+        width: 150px;
+        height: 200px;
+    }
+    
+    /* Ears */
+    .ears {
+        width: 60px;
+        height: 35px;
+        margin-bottom: -15px;
+    }
+    
+    .ear {
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 25px solid var(--pet-gray);
+    }
+    
+    /* Mobile customization ear styles */
+    .ear-round {
+        width: 25px !important;
+        height: 25px !important;
+        top: 7px;
+    }
+    
+    .ear-floppy {
+        width: 25px !important;
+        height: 55px !important;
+        top: 12px;
+    }
+    
+    .ear-floppy:first-child {
+        left: -20px;
+    }
+    
+    .ear-floppy:last-child {
+        right: -20px;
+    }
+    
+    .ears.has-floppy {
+        width: 100px;
+        height: 70px;
+        margin-bottom: -55px;
+    }
+    
+    /* Face */
+    .face {
+        width: 100px;
+        height: 100px;
+    }
+    
+    /* Eyes */
+    .eyes {
+        top: 20px;
+        width: 45px;
+    }
+    
+    .eye {
+        width: 12px;
+        height: 12px;
+    }
+    
+    /* Cat Eyes - mobile sizing */
+    .eye-cat {
+        width: 20px;
+        height: 12px;
+    }
+    
+    .eye-slit {
+        height: 8px;
+    }
+    
+    /* Cutesy Eyes - mobile sizing */
+    .eye-cutesy {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .eye-highlight-top {
+        width: 7px;
+        height: 7px;
+        top: 3px;
+        right: 3px;
+    }
+    
+    .eye-highlight-bottom {
+        width: 4px;
+        height: 4px;
+        bottom: 4px;
+        left: 4px;
+    }
+    
+    /* Nose */
+    .nose {
+        top: 45px !important;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 12px solid var(--pet-pink);
+    }
+    
+    /* Dog Nose - override JS inline style for mobile proportions */
+    .nose[style*="border-bottom"] {
+        top: 40px !important;
+    }
+    
+    /* Dog Dots - adjust spacing for mobile face size */
+    .dog-dot:nth-child(1) {
+        left: 20px !important;
+        top: 45px !important;
+    }
+    
+    .dog-dot:nth-child(2) {
+        left: 25px !important;
+        top: 52px !important;
+    }
+    
+    .dog-dot:nth-child(3) {
+        left: 30px !important;
+        top: 45px !important;
+    }
+    
+    .dog-dot:nth-child(4) {
+        right: 20px !important;
+        left: auto !important;
+        top: 45px !important;
+    }
+    
+    .dog-dot:nth-child(5) {
+        right: 25px !important;
+        left: auto !important;
+        top: 52px !important;
+    }
+    
+    .dog-dot:nth-child(6) {
+        right: 30px !important;
+        left: auto !important;
+        top: 45px !important;
+    }
+    
+    /* Whiskers */
+    .whisker {
+        width: 40px;
+        height: 1.5px;
+    }
+    
+    .whisker-left-top {
+        left: 40px;
+        top: 45px;
+    }
+    
+    .whisker-left-bottom {
+        left: 40px;
+        top: 53px;
+    }
+    
+    .whisker-right-top {
+        right: -60px;
+        top: 45px;
+    }
+    
+    .whisker-right-bottom {
+        right: -60px;
+        top: 53px;
+    }
+    
+    /* Mouth */
+    .mouth {
+        top: -13px;
+        width: 10px;
+        height: 15px;
+        border-width: 1.5px;
+    }
+    
+    .mouth::before,
+    .mouth::after {
+        width: 15px;
+        height: 8px;
+        border-width: 1.5px;
+    }
+    
+    .mouth::before {
+        left: -12px;
+    }
+    
+    .mouth::after {
+        right: -12px;
+    }
+    
+    /* Body */
+    .body {
+        width: 120px;
+        height: 120px;
+    }
+    
+    /* Belly - mobile sizing */
+    .body::before {
+        width: 65px;
+        height: 80px;
+    }
+    
+    /* Tail */
+    .tail {
+        left: -5px;
+        top: 90px;
+        bottom: 15px;
+        width: 60px;
+        height: 100px;
+        border-width: 15px;
+        border-color: var(--pet-gray) transparent transparent var(--pet-gray);
+        border-radius: 55% 45% 70% 30%;
+        rotate: -40deg;
+    }
+    
+    /* Bushy Tail - thinner on mobile */
+    .tail-bushy {
+        box-shadow: 
+            0 0 0 4px var(--pet-gray),
+            0 0 0 6px var(--pet-gray);
+        width: 30px !important;
+        height: 40px !important;
+        top: 120px !important;
+        left: 0px !important;
+    }
+}

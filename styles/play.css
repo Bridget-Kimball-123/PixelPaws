@@ -1,0 +1,146 @@
+/* ===================================
+   PLAY PAGE
+   =================================== */
+
+.play-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-large);
+}
+
+.play-area {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--background-white);
+    border: 2px solid var(--border-purple);
+    border-radius: 15px;
+    padding: var(--spacing-large);
+}
+
+/* Pet display area */
+.pet-display {
+    background-color: var(--background-white);
+    border: 2px solid var(--border-purple);
+    border-radius: 15px;
+    padding: var(--spacing-large);
+    min-height: 400px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: var(--spacing-large);
+}
+
+/* Weather-based backgrounds */
+.pet-display.sunny {
+    background: linear-gradient(to bottom, #FFE5B4, #FFEFC1);
+}
+
+.pet-display.rainy {
+    background: linear-gradient(to bottom, #B0E0E6, #D4E8F0);
+}
+
+.pet-display.cloudy {
+    background: linear-gradient(to bottom, #D3D3D3, #E8E8E8);
+}
+
+/* Weather effects container */
+.weather-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Speech Bubble */
+.speech-bubble {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    border: 2px solid #000;
+    border-radius: 15px;
+    padding: var(--spacing-medium);
+    max-width: 200px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 20px solid white;
+}
+
+.speech-bubble p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.activity-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-medium);
+    margin-top: var(--spacing-large);
+}
+
+.activity-btn {
+    padding: 1.5rem;
+    background-color: var(--light-purple);
+    border: 2px solid var(--border-purple);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary-purple);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.activity-btn:hover {
+    background-color: var(--primary-purple);
+    color: white;
+    transform: scale(1.05);
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - MOBILE
+   =================================== */
+
+@media (max-width: 768px) {
+    .pet-display {
+        min-height: 300px;
+    }
+    
+    /* Speech bubble adjustments */
+    .speech-bubble {
+        position: static;
+        margin-top: var(--spacing-medium);
+        max-width: 100%;
+    }
+    
+    .speech-bubble::after {
+        display: none;
+    }
+    
+    /* Activity buttons stack better on mobile */
+    .activity-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Medium screens adjustment (tablets) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .activity-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

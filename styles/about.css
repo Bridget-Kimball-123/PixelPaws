@@ -1,0 +1,38 @@
+/* ===================================
+   ABOUT PAGE
+   =================================== */
+
+.about-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-section {
+    background-color: white;
+    border: 2px solid var(--border-purple);
+    border-radius: 15px;
+    padding: var(--spacing-large);
+    margin-bottom: var(--spacing-large);
+}
+
+.about-section h2 {
+    border-bottom: 2px solid var(--border-purple);
+    padding-bottom: var(--spacing-small);
+    margin-bottom: var(--spacing-medium);
+}
+
+.about-section ul {
+    margin-left: var(--spacing-large);
+    margin-top: var(--spacing-medium);
+}
+
+.about-section li {
+    margin-bottom: var(--spacing-small);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .about-section {
+        border-width: 3px;
+    }
+}

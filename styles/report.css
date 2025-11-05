@@ -1,0 +1,26 @@
+/* ===================================
+   REPORT PAGE
+   =================================== */
+
+.report-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.report-page ol {
+    margin-left: var(--spacing-large);
+    line-height: 2;
+}
+
+.report-page li {
+    margin-bottom: var(--spacing-medium);
+}
+
+.report-page a {
+    color: var(--primary-purple);
+    text-decoration: underline;
+}
+
+.report-page a:hover {
+    color: var(--nav-active);
+}
