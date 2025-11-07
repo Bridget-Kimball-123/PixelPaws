@@ -131,6 +131,9 @@ function setupFormButtons() {
             if (nameInput) nameInput.value = 'Pixel';
             saveCustomization();
             updatePetDisplay();
+            
+            // Clear all toys from play page
+            clearAllToys();
         });
     }
 }
@@ -423,16 +426,23 @@ function showNotification(message) {
     // Trigger animation
     setTimeout(() => notification.classList.add('show'), 10);
     
-    // Remove after 3 seconds
+    // Remove after 1.5 seconds
     setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    }, 1500);
+}
+
+// Function to clear all toys (to be called from play.js)
+function clearAllToys() {
+    // Set flag in localStorage to signal toy clearing
+    localStorage.setItem('clearToys', 'true');
 }
 
 // Export for use in other pages
 if (typeof window !== 'undefined') {
     window.petCustomization = petCustomization;
     window.updatePetDisplay = updatePetDisplay;
+    window.clearAllToys = clearAllToys;
 }
 
