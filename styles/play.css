@@ -89,7 +89,7 @@
 
 .activity-buttons {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-medium);
     margin-top: var(--spacing-large);
 }
@@ -132,9 +132,16 @@
         display: none;
     }
     
-    /* Activity buttons stack better on mobile */
+    /* Force 2 column layout and make buttons skinnier on mobile */
     .activity-buttons {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.25rem;
+    }
+    
+    .activity-btn {
+        padding: 0.5rem 0.1rem;
+        font-size: 0.5rem;
+        min-width: 0;
     }
 }
 

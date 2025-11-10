@@ -170,6 +170,7 @@ function feedAnimation(pet, petDisplay) {
         left: ${foodLeft}px;
         top: ${foodTop}px;
         animation: eatFood 1.5s ease-in-out;
+        z-index: 100;
     `;
     petDisplay.appendChild(food);
     
@@ -194,19 +195,20 @@ function fetchAnimation(pet, petDisplay) {
     // Different paths for mobile vs desktop
     const isMobile = window.innerWidth <= 768;
     
-    // Define the path points for the ball (perfectly straight line)
+    // Define the path points for the ball - Mobile ends closer to pet's mouth
     const pathPoints = isMobile ? [
-        // Mobile path - shorter distance, lower endpoint
-        { right: 20, bottom: 14 },
-        { right: 50, bottom: 28 },
-        { right: 80, bottom: 42 },
-        { right: 110, bottom: 56 },
-        { right: 140, bottom: 70 },
-        { right: 170, bottom: 84 },
-        { right: 185, bottom: 98 },
-        { right: 200, bottom: 112 },
-        { right: 215, bottom: 126 },
-        { right: 240, bottom: 140 }     // End at pet's mouth (mobile)
+        { right: 20, bottom: 20 },
+        { right: 35, bottom: 32 },
+        { right: 50, bottom: 44 },
+        { right: 65, bottom: 56 },
+        { right: 80, bottom: 68 },
+        { right: 95, bottom: 80 },
+        { right: 110, bottom: 92 },
+        { right: 125, bottom: 104 },
+        { right: 140, bottom: 116 },
+        { right: 155, bottom: 128 },
+        { right: 170, bottom: 140 },
+        { right: 185, bottom: 150 }      // Mobile: End at pet's mouth (straight line)
     ] : [
         // Desktop path - perfectly straight diagonal line
         { right: 20, bottom: 20 },
@@ -230,7 +232,7 @@ function fetchAnimation(pet, petDisplay) {
         { right: 290, bottom: 173 },
         { right: 305, bottom: 181 },
         { right: 320, bottom: 190 },
-        { right: 335, bottom: 200 }     // End at pet's mouth (desktop)
+        { right: 335, bottom: 200 }     // Desktop: End at pet's mouth
     ];
     
     // Create multiple ball instances along the path with delays
@@ -310,13 +312,13 @@ function treatAnimation(pet, petDisplay) {
 
     treat.textContent = randomtreat;
     
-    // Different positioning for mobile vs desktop
+    // Different positioning for mobile vs desktop (same as feed)
     const isMobile = window.innerWidth <= 768;
     const treatLeft = isMobile 
-        ? petRect.left - displayRect.left + petRect.width * 0.4
+        ? petRect.left - displayRect.left + petRect.width * 0.4 - 5
         : petRect.left - displayRect.left + 75;
     const treatTop = isMobile 
-        ? petRect.top - displayRect.top + petRect.height * 0.5
+        ? petRect.top - displayRect.top + petRect.height * 0.5 - 50
         : petRect.top - displayRect.top + 80;
     
     treat.style.cssText = `
@@ -325,16 +327,15 @@ function treatAnimation(pet, petDisplay) {
         left: ${treatLeft}px;
         top: ${treatTop}px;
         animation: eatFood 1.5s ease-in-out;
+        z-index: 100;
     `;
     petDisplay.appendChild(treat);
     
-    // Pet jumps and eats
-    pet.style.animation = 'jump 0.6s ease-in-out 2';
+    // Pet eating animation (no jumping, like feed)
     face.style.animation = 'eatAnimation 0.3s ease-in-out 5';
     
     setTimeout(() => {
         treat.remove();
-        pet.style.animation = '';
         face.style.animation = '';
     }, 1500);
 }
@@ -409,12 +410,10 @@ function brushAnimation(pet) {
     const petRect = pet.getBoundingClientRect();
     const displayRect = petDisplay.getBoundingClientRect();
     
-    // Add shimmer effect
-    pet.style.animation = 'shimmer 0.5s ease-in-out 3';
-    
     // Create brush emoji that moves across the pet
     const brush = document.createElement('div');
     brush.className = 'brush-icon';
+    brush.textContent = '🪮';
     brush.style.cssText = `
         position: absolute;
         font-size: 35px;
@@ -422,6 +421,7 @@ function brushAnimation(pet) {
         top: ${petRect.top - displayRect.top + 50}px;
         animation: brushMove 1.5s ease-in-out;
         pointer-events: none;
+        z-index: 100;
     `;
     petDisplay.appendChild(brush);
     
@@ -461,6 +461,7 @@ function createHeartParticles(pet) {
             animation: floatUp 1.5s ease-out forwards;
             animation-delay: ${i * 0.1}s;
             pointer-events: none;
+            z-index: 100;
         `;
         petDisplay.appendChild(heart);
         
@@ -495,6 +496,7 @@ function createSparkleParticles(pet) {
             animation: sparkleFloat 1.2s ease-out forwards;
             animation-delay: ${i * 0.1}s;
             pointer-events: none;
+            z-index: 100;
         `;
         petDisplay.appendChild(sparkle);
         
@@ -679,16 +681,6 @@ style.textContent = `
         }
         75% {
             transform: rotate(-10deg) scale(1.05);
-        }
-    }
-    
-    /* Shimmer animation */
-    @keyframes shimmer {
-        0%, 100% {
-            filter: brightness(1);
-        }
-        50% {
-            filter: brightness(1.5) saturate(1.3);
         }
     }
     
