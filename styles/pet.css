@@ -10,7 +10,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 10;
 }
 
 /* Pet Ears */
@@ -19,7 +18,7 @@
     justify-content: space-between;
     width: 80px;
     margin-bottom: -20px;
-    z-index: 1;
+    z-index: -1;
 }
 
 .ear {
@@ -99,7 +98,6 @@
     background-color: var(--pet-gray);
     border-radius: 50%;
     position: relative;
-    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -303,6 +301,7 @@
     border-color: var(--pet-gray) transparent transparent var(--pet-gray);
     border-radius: 55% 45% 70% 30%;
     rotate: -40deg;
+    z-index: -1;
 }
 
 /* Bushy Tail */

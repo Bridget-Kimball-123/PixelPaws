@@ -1393,7 +1393,7 @@ input:focus {
 .custom-notification {
     position: fixed;
     top: 80px;
-    right: 20px;
+    left: 20px;
     background-color: var(--primary-purple);
     color: white;
     padding: 1rem 1.5rem;
@@ -1401,7 +1401,7 @@ input:focus {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     z-index: 10000;
     opacity: 0;
-    transform: translateX(400px);
+    transform: translateX(-400px);
     transition: all 0.3s ease;
     max-width: 300px;
 }

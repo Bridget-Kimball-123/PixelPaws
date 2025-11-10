@@ -1,0 +1,36 @@
+Brainstorming:
+Weather:
+    If weather is sunny:
+        For pet mood: randomly pick between happy, hungry, sick,
+        wanting love, wanting a toy, wanting to play, etc
+
+        Default for sunny should be happy and happy should happen more often the
+        other possibilities for sunny weather, happy has more weight?
+
+        If weather is sunny and pet is hungry, pet will be happy after being fed
+        Likewise if pet wants love, it becomes happy after being pet
+        Additionally if pet wants toy, it will be happy after receiving toy
+        Finally if pet wants to play, it will be happy after being played with
+
+        Show a sun in the top left corner and yellow background
+
+    If weather is rainy:
+        Pet is sad
+
+        Pet cheers up after user plays with it
+
+    If weather is stormy:
+        Pet is anxious and scared
+
+        Pet will only go back to default after user pets it and gives it a treat
+
+    If weather is snowy:
+        Pet wants to play and will become happy after being played with
+
+Random things:
+    ✅ Logo is squished in medium view
+    ✅ In skinny view play buttons aren't all visible at once, make buttons smaller
+    ✅ In skinny view tail overlaps with belly & can see end (part covering belly)
+    Mobile view play functionality is different than desktop view and has issues
+    ✅ Move popup window to the top left instead of the top right
+    Add (holiday) accesories to pet customization

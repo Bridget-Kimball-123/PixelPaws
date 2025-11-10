@@ -276,8 +276,9 @@ footer p {
    RESPONSIVE DESIGN - MOBILE
    =================================== */
 
-@media (max-width: 768px) {
-    /* Header adjustments for mobile */
+/* Mobile and Tablet - show hamburger menu */
+@media (max-width: 1024px) {
+    /* Header adjustments for mobile and tablets */
     .header-content {
         height: auto;
         padding: var(--spacing-small);
@@ -285,21 +286,29 @@ footer p {
     }
     
     .logo {
-        margin-bottom: var(--spacing-small);
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+    
+    .logo img {
+        width: 40px;
+        height: 40px;
     }
     
     .logo h1 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
+        white-space: nowrap;
     }
     
-    /* Show hamburger menu button on mobile */
+    /* Show hamburger menu button on mobile and tablets */
     .menu-toggle {
-        display: block;
+        display: block !important;
+        flex-shrink: 0;
     }
     
-    /* Hide navigation by default on mobile */
-    nav {
-        display: none;
+    /* Hide navigation by default on mobile and tablets */
+    header nav {
+        display: none !important;
         position: absolute;
         top: 100%;
         left: 0;
@@ -315,8 +324,8 @@ footer p {
     }
     
     /* Show navigation when menu is open */
-    nav.open {
-        display: flex;
+    header nav.open {
+        display: flex !important;
     }
     
     nav a {
@@ -339,16 +348,27 @@ footer p {
     .btn {
         width: 100%;
     }
-}
-
-/* Medium screens adjustment (tablets) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .header-content {
-        padding: 0 var(--spacing-large);
+    
+    /* Notification positioning for mobile */
+    .custom-notification {
+        left: 20px !important;
+        right: auto !important;
+        transform: translateX(-400px) !important;
     }
     
-    main {
-        padding: var(--spacing-large) var(--spacing-medium);
+    .custom-notification.show {
+        transform: translateX(0) !important;
+    }
+}
+
+/* Desktop - hide hamburger menu, show full nav */
+@media (min-width: 1025px) {
+    .menu-toggle {
+        display: none !important;
+    }
+    
+    nav {
+        display: flex !important;
     }
 }
 
@@ -410,7 +430,7 @@ input:focus {
 .custom-notification {
     position: fixed;
     top: 80px;
-    right: 20px;
+    left: 20px;
     background-color: var(--primary-purple);
     color: white;
     padding: 1rem 1.5rem;
@@ -418,7 +438,7 @@ input:focus {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     z-index: 10000;
     opacity: 0;
-    transform: translateX(400px);
+    transform: translateX(-400px);
     transition: all 0.3s ease;
     max-width: 300px;
 }
