@@ -31,6 +31,10 @@ Random things:
     ✅ Logo is squished in medium view
     ✅ In skinny view play buttons aren't all visible at once, make buttons smaller
     ✅ In skinny view tail overlaps with belly & can see end (part covering belly)
-    Mobile view play functionality is different than desktop view and has issues
     ✅ Move popup window to the top left instead of the top right
+    ✅ Mobile view play functionality has issues
+    In app purchases
+    Health bar
+    Incorporate JavaScript library: https://github.com/benpickles/peity
+    Incorporate feedback from Milestone 2
     Add (holiday) accesories to pet customization
