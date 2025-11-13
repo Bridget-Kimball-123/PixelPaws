@@ -132,16 +132,20 @@
         display: none;
     }
     
-    /* Force 2 column layout and make buttons skinnier on mobile */
+    /* Larger buttons for mobile - 2 column layout */
     .activity-buttons {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.25rem;
+        gap: 0.8rem;
     }
     
     .activity-btn {
-        padding: 0.5rem 0.1rem;
-        font-size: 0.5rem;
+        padding: 1.2rem 0.8rem;
+        font-size: 0.95rem;
         min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60px;
     }
 }
 
