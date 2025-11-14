@@ -279,6 +279,9 @@ const petHealth = {
                 recoveryDiv.classList.remove('show');
             }
         }
+        
+        // Update mood based on health and weather
+        this.updateMood();
     },
     
     // Update speech bubble based on health status
@@ -293,7 +296,8 @@ const petHealth = {
                 "I'm not feeling well... 🤒",
                 "I need lots of care to feel better... 💔",
                 "Please help me get healthy again! 🏥",
-                "I'm so sick... I need food, play, pets, brushing, and a toy... 😢"
+                "I'm so sick... I need food, play, pets, brushing, and a toy... 😢",
+                "I feel terrible... please help me... 😭"
             ];
             message = messages[Math.floor(Math.random() * messages.length)];
         } else if (this.status === HEALTH_STATUS.DEPLETED) {
@@ -301,15 +305,90 @@ const petHealth = {
                 "I'm hungry and bored... 😔",
                 "I need food and playtime! 🍖🎾",
                 "Please feed me and play with me! 🥺",
-                "I'm feeling neglected... Feed me and let's play! 💙"
+                "I'm feeling neglected... Feed me and let's play! 💙",
+                "I'm not feeling great... 😟"
             ];
             message = messages[Math.floor(Math.random() * messages.length)];
         } else {
-            // Healthy - keep default messages or show happy ones
-            return; // Don't override existing messages when healthy
+            // Healthy - check weather for mood
+            const weather = this.getWeather();
+            if (weather === 'rainy') {
+                const messages = [
+                    "It's raining... I'm a bit sad 🌧️",
+                    "The rain makes me feel down... 💙",
+                    "I don't like the rain much... 😔",
+                    "Play with me to cheer me up! 🌧️"
+                ];
+                message = messages[Math.floor(Math.random() * messages.length)];
+            } else if (weather === 'snowy') {
+                const messages = [
+                    "Snow! Let's play! ❄️",
+                    "I love the snow! Play with me! ⛄",
+                    "Snowy day fun! 🌨️",
+                    "The snow makes me want to play! ❄️"
+                ];
+                message = messages[Math.floor(Math.random() * messages.length)];
+            } else if (weather === 'stormy') {
+                const messages = [
+                    "The storm scares me... 😰",
+                    "I'm scared! Hold me! ⛈️",
+                    "Thunder is so scary! 😨",
+                    "Please comfort me during the storm... 💔"
+                ];
+                message = messages[Math.floor(Math.random() * messages.length)];
+            } else {
+                // Sunny or default - happy messages
+                const messages = [
+                    "Hello! I'm feeling happy today! 😊",
+                    "What a beautiful day! ☀️",
+                    "I love sunny days! 🌞",
+                    "Let's play together! 🎉"
+                ];
+                message = messages[Math.floor(Math.random() * messages.length)];
+            }
         }
         
         speechBubble.textContent = message;
+    },
+    
+    // Get current weather from pet display class
+    getWeather() {
+        const petDisplay = document.querySelector('.pet-display');
+        if (!petDisplay) return 'sunny';
+        
+        if (petDisplay.classList.contains('rainy')) return 'rainy';
+        if (petDisplay.classList.contains('snowy')) return 'snowy';
+        if (petDisplay.classList.contains('stormy')) return 'stormy';
+        return 'sunny';
+    },
+    
+    // Update mood display based on health status and weather
+    updateMood() {
+        const moodElement = document.querySelector('.pet-mood span');
+        if (!moodElement) return;
+        
+        let mood = '';
+        
+        // Health status overrides weather mood
+        if (this.status === HEALTH_STATUS.SICK) {
+            mood = 'Depressed';
+        } else if (this.status === HEALTH_STATUS.DEPLETED) {
+            mood = 'Unhappy';
+        } else {
+            // Healthy - check weather for mood
+            const weather = this.getWeather();
+            if (weather === 'rainy') {
+                mood = 'Sad';
+            } else if (weather === 'snowy') {
+                mood = 'Playful';
+            } else if (weather === 'stormy') {
+                mood = 'Anxious';
+            } else {
+                mood = 'Happy';
+            }
+        }
+        
+        moodElement.textContent = mood;
     },
     
     // Get required actions for recovery
