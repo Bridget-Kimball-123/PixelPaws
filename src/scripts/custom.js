@@ -122,6 +122,9 @@ function setupFormButtons() {
     if (resetBtn) {
         resetBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Reset button clicked!');
+            
+            // Reset pet appearance
             petCustomization.color = 'gray';
             petCustomization.ears = 'triangles';
             petCustomization.face = 'default';
@@ -134,6 +137,25 @@ function setupFormButtons() {
             
             // Clear all toys from play page
             clearAllToys();
+            
+            // Reset health stats to 100%
+            console.log('Checking for window.petHealth:', window.petHealth);
+            if (window.petHealth) {
+                console.log('Before reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
+                
+                window.petHealth.hunger = 100;
+                window.petHealth.happiness = 100;
+                window.petHealth.status = 'healthy';
+                window.petHealth.resetRecoveryActions();
+                window.petHealth.saveHealthData();
+                window.petHealth.updateHealthDisplay();
+                
+                console.log('After reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
+                showNotification('Pet appearance and health have been reset!');
+            } else {
+                console.error('ERROR: window.petHealth is not available on customize page!');
+                showNotification('Pet appearance has been reset!');
+            }
         });
     }
 }

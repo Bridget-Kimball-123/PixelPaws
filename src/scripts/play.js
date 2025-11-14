@@ -70,14 +70,17 @@ function checkForToyClear() {
 // Setup activity button event listeners
 function setupActivityButtons() {
     const buttons = document.querySelectorAll('.activity-btn');
+    console.log('Setting up activity buttons. Found:', buttons.length, 'buttons');
     buttons.forEach((button, index) => {
         const activities = ['pet', 'feed', 'fetch', 'treat', 'toy', 'brush'];
+        console.log('Button', index, ':', button.textContent.trim(), '-> action:', activities[index]);
         button.addEventListener('click', () => performActivity(activities[index]));
     });
 }
 
 // Perform activity animation and update pet state
 function performActivity(activityType) {
+    console.log('=== performActivity called with:', activityType, '===');
     if (isAnimating) return; // Prevent multiple animations at once
     
     isAnimating = true;
@@ -92,7 +95,16 @@ function performActivity(activityType) {
     // Update speech bubble
     speechBubble.textContent = randomMessage;
     
-    // Increase happiness
+    // Update health system (this will update the health bar)
+    console.log('Checking window.petHealth:', window.petHealth);
+    if (window.petHealth) {
+        console.log('Calling petHealth.performAction with:', activityType);
+        window.petHealth.performAction(activityType);
+    } else {
+        console.error('ERROR: window.petHealth is not available!');
+    }
+    
+    // Increase local happiness for animations
     happinessLevel = Math.min(100, happinessLevel + 5);
     updateHappinessDisplay();
     
@@ -120,6 +132,11 @@ function performActivity(activityType) {
     
     // Show notification
     showNotification(`You ${activityType === 'pet' ? 'petted' : activityType === 'feed' ? 'fed' : activityType === 'brush' ? 'brushed' : 'played with'} your pet!`);
+    
+    // Update health system if available
+    if (window.petHealth) {
+        window.petHealth.performAction(activityType);
+    }
     
     // Reset animation lock after animation completes (reduced for faster interaction)
     setTimeout(() => {

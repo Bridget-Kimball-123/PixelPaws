@@ -107,16 +107,26 @@
 .pet-info-content {
     display: flex;
     gap: var(--spacing-large);
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 .pet-basic-info {
-    flex: 0 0 40%;
+    flex: 0 0 45%;
     min-width: 0;
+    background-color: var(--background-white);
+    border: 2px solid var(--border-purple);
+    border-radius: 10px;
+    padding: var(--spacing-medium);
+}
+
+.pet-basic-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-small);
+    color: var(--primary-purple);
 }
 
 .pet-info .health-bar {
-    flex: 0 0 60%;
+    flex: 0 0 50%;
     margin: 0;
     min-width: 0;
     max-width: 100%;

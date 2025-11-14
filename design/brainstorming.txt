@@ -27,6 +27,26 @@ Weather:
     If weather is snowy:
         Pet wants to play and will become happy after being played with
 
+Health Bar:
+    Color-changing: green, orange, red
+    Bars for hunger, happiness, etc.
+    If user is away for 8+ hours, pet becomes depleted: pet needs to be fed and played with in order to return to full happiness and health
+    If user is away for 24+ hours, pet becomes sick: pet needs to be fed, played with, pet, brushed, and given a toy in order to return to full happiness and health
+    Happiness and health bars will slowly go down the longer the user is away or if user is idle (not petting, feeding, brushing, or customizing)
+    Each play action has a different point system attached to it
+        If the pet is hungry, feeding it will fill the hunger bar faster than giving the pet treats
+        If the pet wants to play, playing fetch will fill the happiness bar faster than the toy time or pet functions
+        The weights for the different play functions are as follows:
+            Pet increases happiness by 5%
+            Feed increases hunger by 5%
+            Fetch increases happiness by 10%
+            Treat increases hunger by 1%
+            Toy time increases happiness by 5%
+            Brush increases happiness by 1%
+    The user will see the regression of their pets health if they sit idle on the web oage for too long
+        The health status bar will get smaller
+        Hunger and happiness percentages will decrease
+
 Random things:
     ✅ Logo is squished in medium view
     ✅ In skinny view play buttons aren't all visible at once, make buttons smaller
@@ -34,7 +54,8 @@ Random things:
     ✅ Move popup window to the top left instead of the top right
     ✅ Mobile view play functionality has issues
     In app purchases
-    Health bar
-    Incorporate JavaScript library: https://github.com/benpickles/peity
-    Incorporate feedback from Milestone 2
-    Add (holiday) accesories to pet customization
+    ✅ Health bar
+    ✅ Incorporate JavaScript library: https://github.com/benpickles/peity
+    Health status affects mood
+    ✅ Incorporate feedback from Milestone 2
+    Add accesories to pet customization

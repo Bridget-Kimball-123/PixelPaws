@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="src/styles/main.css">
     <link rel="stylesheet" href="src/styles/pet.css">
     <link rel="stylesheet" href="src/styles/home.css">
+    <!-- jQuery (required for Peity) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Peity library for health bar -->
+    <script src="https://cdn.jsdelivr.net/npm/peity@3.3.0/jquery.peity.min.js"></script>
+    <script src="src/scripts/health.js" defer></script>
     <script src="src/scripts/custom.js" defer></script>
 </head>
 <body>
@@ -78,9 +83,38 @@
             <!-- Pet info section -->
             <div class="pet-info">
                 <h2>Meet Your Pet</h2>
-                <p class="pet-name">Name: <span>Buddy</span></p>
-                <p class="pet-mood">Mood: <span>Happy</span></p>
-                <p class="weather-status">Weather: <span>Sunny</span></p>
+                
+                <div class="pet-info-content">
+                    <!-- Pet basic info -->
+                    <div class="pet-basic-info">
+                        <h3> Pet Info</h3>
+                        <p class="pet-name">Name: <span>Buddy</span></p>
+                        <p class="pet-mood">Mood: <span>Happy</span></p>
+                        <p class="weather-status">Weather: <span>Sunny</span></p>
+                    </div>
+
+                    <br>
+
+                    <!-- Health Bar -->
+                    <div class="health-bar">
+                        <h3>Health Status: <span class="health-status">Healthy</span></h3>
+                        <div class="peity-bar-wrapper">
+                            <span class="peity-bar">100</span>
+                        </div>
+                        <!-- <div class="health-details">
+                            <p class="hunger-level">Hunger: 100%</p>
+                            <p class="happiness-level">Happiness: 100%</p>
+                        </div> -->
+
+                        <div class="health-details">
+                            <p class="hunger-level">Hunger: 100%</p>
+                        </div>
+
+                        <div class="health-details">
+                            <p class="happiness-level">Happiness: 100%</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
