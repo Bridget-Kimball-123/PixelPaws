@@ -104,6 +104,25 @@
     margin-bottom: var(--spacing-medium);
 }
 
+.pet-info-content {
+    display: flex;
+    gap: var(--spacing-large);
+    align-items: flex-start;
+}
+
+.pet-basic-info {
+    flex: 0 0 40%;
+    min-width: 0;
+}
+
+.pet-info .health-bar {
+    flex: 0 0 60%;
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 .pet-info p {
     margin-bottom: var(--spacing-small);
     font-size: 1.1rem;
@@ -122,6 +141,12 @@
     /* Pet container switches from row to column layout */
     .pet-container {
         flex-direction: column;
+    }
+    
+    /* Stack pet info vertically on mobile */
+    .pet-info-content {
+        flex-direction: column-reverse;
+        gap: var(--spacing-medium);
     }
     
     .pet-display {
