@@ -53,9 +53,10 @@ Random things:
     ✅ In skinny view tail overlaps with belly & can see end (part covering belly)
     ✅ Move popup window to the top left instead of the top right
     ✅ Mobile view play functionality has issues
-    In app purchases
     ✅ Health bar
     ✅ Incorporate JavaScript library: https://github.com/benpickles/peity
-    Health status affects mood
+    ✅ Health status affects mood
     ✅ Incorporate feedback from Milestone 2
+    In app purchases: happiness can buy stuff?
+    If happiness gets to zero install a cool down of some sort
     Add accesories to pet customization

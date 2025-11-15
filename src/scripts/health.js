@@ -48,8 +48,9 @@ const petHealth = {
             const data = JSON.parse(savedData);
             this.lastVisit = data.lastVisit;
             this.status = data.status || HEALTH_STATUS.HEALTHY;
-            this.hunger = data.hunger || 100;
-            this.happiness = data.happiness || 100;
+            // Use proper null/undefined checks instead of || to avoid treating 0 as falsy
+            this.hunger = (data.hunger !== undefined && data.hunger !== null) ? data.hunger : 100;
+            this.happiness = (data.happiness !== undefined && data.happiness !== null) ? data.happiness : 100;
             this.recovery = data.recovery || this.recovery;
         } else {
             // First visit
@@ -81,35 +82,19 @@ const petHealth = {
         const currentTime = Date.now();
         const timeAway = currentTime - this.lastVisit;
         
-        if (timeAway >= TWENTY_FOUR_HOURS) {
-            // Pet is sick - 24+ hours = 20% health
-            if (this.status !== HEALTH_STATUS.SICK) {
-                this.status = HEALTH_STATUS.SICK;
-                this.hunger = Math.min(this.hunger, 20);
-                this.happiness = Math.min(this.happiness, 20);
-                this.resetRecoveryActions();
-            }
-        } else if (timeAway >= EIGHT_HOURS) {
-            // Pet is depleted - 8+ hours = 50% health
-            if (this.status !== HEALTH_STATUS.DEPLETED) {
-                this.status = HEALTH_STATUS.DEPLETED;
-                this.hunger = Math.min(this.hunger, 50);
-                this.happiness = Math.min(this.happiness, 50);
-                this.resetRecoveryActions();
-            }
-        } else if (timeAway > 0) {
-            // Gradual decay based on time away (only if status hasn't changed to sick/depleted)
-            // Only apply decay if more than 1 minute has passed to avoid drops during page navigation
-            if (this.status === HEALTH_STATUS.HEALTHY && timeAway > 60000) { // 60000ms = 1 minute
-                const minutesAway = timeAway / (60 * 1000);
-                // Decay: 0.2% hunger per minute, 0.1% happiness per minute (matching idle decay)
-                const hungerDecay = minutesAway * 0.2;
-                const happinessDecay = minutesAway * 0.1;
-                
-                this.hunger = Math.max(0, this.hunger - hungerDecay);
-                this.happiness = Math.max(0, this.happiness - happinessDecay);
-            }
+        // Apply continuous decay for any time away (more than 1 minute to avoid page navigation drops)
+        if (timeAway > 60000) { // 60000ms = 1 minute
+            const minutesAway = timeAway / (60 * 1000);
+            // Slower decay when away: 0.5% hunger per minute, 0.325% happiness per minute
+            const hungerDecay = minutesAway * 0.5;
+            const happinessDecay = minutesAway * 0.325;
+            
+            this.hunger = Math.max(0, this.hunger - hungerDecay);
+            this.happiness = Math.max(0, this.happiness - happinessDecay);
         }
+        
+        // Update status based on current health levels
+        this.updateStatusBasedOnLevels();
         
         this.saveHealthData();
     },
@@ -176,24 +161,24 @@ const petHealth = {
     
     // Update status based on current hunger/happiness levels
     updateStatusBasedOnLevels() {
-        const avgHealth = (this.hunger + this.happiness) / 2;
+        const avgHealth = this.getHealthPercentage(); // Use weighted calculation
         
-        // If health is good, upgrade status to HEALTHY
-        if (avgHealth >= 70 && this.status !== HEALTH_STATUS.HEALTHY) {
+        // If health is good (60%+), status is HEALTHY
+        if (avgHealth >= 60 && this.status !== HEALTH_STATUS.HEALTHY) {
             this.status = HEALTH_STATUS.HEALTHY;
             this.resetRecoveryActions();
             console.log('Status upgraded to HEALTHY');
         }
-        // If health is moderate, downgrade to DEPLETED if currently healthy
-        else if (avgHealth >= 40 && avgHealth < 70) {
-            if (this.status === HEALTH_STATUS.HEALTHY) {
+        // If health is moderate (30-59%), status is DEPLETED (orange)
+        else if (avgHealth >= 30 && avgHealth < 60) {
+            if (this.status !== HEALTH_STATUS.DEPLETED) {
                 this.status = HEALTH_STATUS.DEPLETED;
                 this.resetRecoveryActions();
-                console.log('Status downgraded to DEPLETED');
+                console.log('Status changed to DEPLETED');
             }
         }
-        // If health is low, set to SICK
-        else if (avgHealth < 40 && this.status !== HEALTH_STATUS.SICK) {
+        // If health is low (<30%), status is SICK (red)
+        else if (avgHealth < 30 && this.status !== HEALTH_STATUS.SICK) {
             this.status = HEALTH_STATUS.SICK;
             this.resetRecoveryActions();
             console.log('Status downgraded to SICK');
@@ -220,16 +205,31 @@ const petHealth = {
         }
     },
     
-    // Get health percentage (average of hunger and happiness)
+    // Get health percentage (weighted average of hunger and happiness)
     getHealthPercentage() {
-        return Math.round((this.hunger + this.happiness) / 2);
+        let total = this.hunger + this.happiness;
+        let divisor = 2;
+        
+        // If hunger is below 30%, add extra weight (half of hunger value)
+        if (this.hunger < 30) {
+            total += (this.hunger * 0.75);
+            divisor = 2; // Still divide by 2 to get average
+        }
+        
+        // If happiness is below 30%, add extra weight (half of happiness value)
+        if (this.happiness < 30) {
+            total += (this.happiness * 0.75);
+            divisor = 2; // Still divide by 2 to get average
+        }
+        
+        return Math.round(total / divisor);
     },
     
     // Get health color based on percentage
     getHealthColor() {
         const health = this.getHealthPercentage();
-        if (health >= 70) return '#4CAF50'; // Green
-        if (health >= 40) return '#FF9800'; // Orange
+        if (health >= 60) return '#4CAF50'; // Green - changed from 70
+        if (health >= 30) return '#FF9800'; // Orange - changed from 40
         return '#F44336'; // Red
     },
     
@@ -296,7 +296,7 @@ const petHealth = {
                 "I'm not feeling well... 🤒",
                 "I need lots of care to feel better... 💔",
                 "Please help me get healthy again! 🏥",
-                "I'm so sick... I need food, play, pets, brushing, and a toy... 😢",
+                "I'm so sick... I need food, play, pets, brushing, and a toy... 🤮",
                 "I feel terrible... please help me... 😭"
             ];
             message = messages[Math.floor(Math.random() * messages.length)];
@@ -315,25 +315,28 @@ const petHealth = {
             if (weather === 'rainy') {
                 const messages = [
                     "It's raining... I'm a bit sad 🌧️",
-                    "The rain makes me feel down... 💙",
+                    "The rain makes me feel blue... 🔵",
                     "I don't like the rain much... 😔",
-                    "Play with me to cheer me up! 🌧️"
+                    "Play with me to cheer me up! 😢",
+                    "It's too rainy outside... can we stay in? ☔️"
                 ];
                 message = messages[Math.floor(Math.random() * messages.length)];
             } else if (weather === 'snowy') {
                 const messages = [
                     "Snow! Let's play! ❄️",
-                    "I love the snow! Play with me! ⛄",
-                    "Snowy day fun! 🌨️",
-                    "The snow makes me want to play! ❄️"
+                    "Do you want to build a snowman? ⛄",
+                    "Snowy day fun! 🛷",
+                    "I'm wishing for a winter wonderland! 🌨️",
+                    "It's beginning to look a lot like Christmas! 🎄"
                 ];
                 message = messages[Math.floor(Math.random() * messages.length)];
             } else if (weather === 'stormy') {
                 const messages = [
-                    "The storm scares me... 😰",
+                    "The storm scares me... 😬",
                     "I'm scared! Hold me! ⛈️",
                     "Thunder is so scary! 😨",
-                    "Please comfort me during the storm... 💔"
+                    "Please comfort me during the storm... 💔",
+                    "I don't like storms... can we cuddle? 🌩️"
                 ];
                 message = messages[Math.floor(Math.random() * messages.length)];
             } else {
@@ -417,9 +420,9 @@ const petHealth = {
             // Only decay if pet is not already at minimum levels
             if (this.hunger > 0 || this.happiness > 0) {
                 
-                // Decrease hunger and happiness very slowly
-                this.hunger = Math.max(0, this.hunger - 0.05); // -0.05% every 30 seconds = -0.1% per minute
-                this.happiness = Math.max(0, this.happiness - 0.05); // -0.05% every 30 seconds = -0.1% per minute
+                // Decrease hunger and happiness: 1% hunger per minute, 0.75% happiness per minute
+                this.hunger = Math.max(0, this.hunger - 0.5); // -0.5% every 30 seconds = -1% per minute
+                this.happiness = Math.max(0, this.happiness - 0.375); // -0.375% every 30 seconds = -0.75% per minute
                 
                 // Update status based on current levels
                 this.updateStatusBasedOnLevels();
