@@ -209,48 +209,36 @@ function fetchAnimation(pet, petDisplay) {
     const existingBalls = petDisplay.querySelectorAll('.ball-icon');
     existingBalls.forEach(b => b.remove());
     
-    // Different paths for mobile vs desktop
-    const isMobile = window.innerWidth <= 768;
+    // Calculate pet's position relative to petDisplay
+    const petLeft = petRect.left - displayRect.left;
+    const petTop = petRect.top - displayRect.top;
+    const petWidth = petRect.width;
+    const petHeight = petRect.height;
     
-    // Define the path points for the ball - Mobile ends closer to pet's mouth
-    const pathPoints = isMobile ? [
-        { right: 20, bottom: 20 },
-        { right: 35, bottom: 32 },
-        { right: 50, bottom: 44 },
-        { right: 65, bottom: 56 },
-        { right: 80, bottom: 68 },
-        { right: 95, bottom: 80 },
-        { right: 110, bottom: 92 },
-        { right: 125, bottom: 104 },
-        { right: 140, bottom: 116 },
-        { right: 155, bottom: 128 },
-        { right: 170, bottom: 140 },
-        { right: 185, bottom: 150 }      // Mobile: End at pet's mouth (straight line)
-    ] : [
-        // Desktop path - perfectly straight diagonal line
-        { right: 20, bottom: 20 },
-        { right: 35, bottom: 28 },
-        { right: 50, bottom: 37 },
-        { right: 65, bottom: 45 },
-        { right: 80, bottom: 54 },
-        { right: 95, bottom: 62 },
-        { right: 110, bottom: 71 },
-        { right: 125, bottom: 79 },
-        { right: 140, bottom: 88 },
-        { right: 155, bottom: 96 },
-        { right: 170, bottom: 105 },
-        { right: 185, bottom: 113 },
-        { right: 200, bottom: 122 },
-        { right: 215, bottom: 130 },
-        { right: 230, bottom: 139 },
-        { right: 245, bottom: 147 },
-        { right: 260, bottom: 156 },
-        { right: 275, bottom: 164 },
-        { right: 290, bottom: 173 },
-        { right: 305, bottom: 181 },
-        { right: 320, bottom: 190 },
-        { right: 335, bottom: 200 }     // Desktop: End at pet's mouth
-    ];
+    // Different screen sizes need different target adjustments
+    const isMobile = window.innerWidth <= 768;
+    const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+    
+    // Calculate target position (pet's mouth/whisker area)
+    // Using center of pet horizontally, and about 40% down from top (mouth level)
+    const targetX = displayRect.width - (petLeft + petWidth * 0.5);
+    const targetY = displayRect.height - (petTop + petHeight * 0.45);
+    
+    // Starting position (bottom-right corner)
+    const startX = 20;
+    const startY = 20;
+    
+    // Calculate number of steps based on screen size
+    const numSteps = isMobile ? 12 : (isTablet ? 16 : 20);
+    
+    // Generate smooth diagonal path from start to target
+    const pathPoints = [];
+    for (let i = 0; i <= numSteps - 1; i++) {
+        const progress = i / (numSteps - 1);
+        const x = startX + (targetX - startX) * progress - 17;
+        const y = startY + (targetY - startY) * progress - 15;
+        pathPoints.push({ right: x, bottom: y });
+    }
     
     // Create multiple ball instances along the path with delays
     pathPoints.forEach((point, index) => {
