@@ -3,15 +3,85 @@
    =================================== */
 
 .play-page {
+    /* Stacks everything vertically */
     display: flex;
     flex-direction: column;
+
+    /* Centers everything horizontally */
     align-items: center;
+
+    /* Adds vertical spacing between elements */
     gap: var(--spacing-large);
+}
+
+/* Main container with purple border containing everything */
+.play-container {
+    background-color: var(--background-white);
+    border: 2px solid var(--border-purple);
+    border-radius: 25px;
+
+    /* Space inside the container */
+    padding: var(--spacing-large);
+
+    /* Limits how wide the container can be */
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Top row: Mobile stacks, Desktop side-by-side */
+.top-row {
+    /* Stacks everything vertically */
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--spacing-large);
+    margin-bottom: var(--spacing-large);
+
+    /* Makes children stretch to full width */
+    align-items: stretch;
+}
+
+/* Desktop: Health bar and Pet display side-by-side */
+@media (min-width: 769px) {
+    .top-row {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    /* Health bar on the left - narrower */
+    .top-row .health-bar {
+        /* Sets fixed width of 240px */
+        flex: 0 0 240px;
+
+        margin: 0;
+    }
+    
+    /* Pet display on the right - wider */
+    .top-row .pet-display {
+        /* Controls width */
+        flex: 1;
+
+        min-height: 280px;
+        margin-bottom: 0;
+    }
+}
+
+/* Mobile: Full width elements */
+@media (max-width: 768px) {
+    .top-row .health-bar {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .top-row .pet-display {
+        width: 100%;
+        min-height: 250px;
+        margin-bottom: 0;
+    }
 }
 
 .play-area {
     width: 100%;
-    max-width: 800px;
     background-color: var(--background-white);
     border: 2px solid var(--border-purple);
     border-radius: 15px;
@@ -24,13 +94,13 @@
     border: 2px solid var(--border-purple);
     border-radius: 15px;
     padding: var(--spacing-large);
-    min-height: 400px;
+    min-height: 300px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    margin-bottom: var(--spacing-large);
+    margin-bottom: var(--spacing-medium);
 }
 
 /* Weather-based backgrounds */
@@ -59,47 +129,51 @@
 /* Speech Bubble */
 .speech-bubble {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: white;
     border: 2px solid #000;
     border-radius: 15px;
-    padding: var(--spacing-medium);
-    max-width: 200px;
+    padding: 8px 12px;
+    max-width: 160px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
 
 .speech-bubble::after {
     content: '';
     position: absolute;
-    bottom: -20px;
-    left: 30px;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 20px solid white;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid white;
 }
 
 .speech-bubble p {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--text-dark);
+    line-height: 1.3;
 }
 
 .activity-buttons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-medium);
-    margin-top: var(--spacing-large);
+    margin-top: 0;
 }
 
 .activity-btn {
-    padding: 1.5rem;
+    padding: 1.2rem;
     background-color: var(--light-purple);
     border: 2px solid var(--border-purple);
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     color: var(--primary-purple);
     cursor: pointer;
@@ -123,9 +197,12 @@
     
     /* Speech bubble adjustments */
     .speech-bubble {
-        position: static;
-        margin-top: var(--spacing-medium);
-        max-width: 100%;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        left: auto;
+        transform: none;
+        max-width: 140px;
     }
     
     .speech-bubble::after {

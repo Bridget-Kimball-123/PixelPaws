@@ -57,6 +57,9 @@ Random things:
     ✅ Incorporate JavaScript library: https://github.com/benpickles/peity
     ✅ Health status affects mood
     ✅ Incorporate feedback from Milestone 2
+    Fetch functionality is off on desktop and mobile
     In app purchases: happiness can buy stuff?
     If happiness gets to zero install a cool down of some sort
+    Change depleted to a more middle-ground term (unwell?)
+    In the popup panel for the play page, include an update for the health status (hunger and happiness percentages)
     Add accesories to pet customization

@@ -10,10 +10,6 @@ const HEALTH_STATUS = {
     SICK: 'sick'
 };
 
-// Time thresholds (in milliseconds)
-const EIGHT_HOURS = 8 * 60 * 60 * 1000;
-const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
-
 // Health tracking object
 const petHealth = {
     lastVisit: null,
@@ -85,9 +81,9 @@ const petHealth = {
         // Apply continuous decay for any time away (more than 1 minute to avoid page navigation drops)
         if (timeAway > 60000) { // 60000ms = 1 minute
             const minutesAway = timeAway / (60 * 1000);
-            // Slower decay when away: 0.5% hunger per minute, 0.325% happiness per minute
-            const hungerDecay = minutesAway * 0.5;
-            const happinessDecay = minutesAway * 0.325;
+            // Slower decay when away: .1% hunger per 5 minutes, .05% happiness per 5 minutes
+            const hungerDecay = minutesAway * 0.1;
+            const happinessDecay = minutesAway * 0.05;
             
             this.hunger = Math.max(0, this.hunger - hungerDecay);
             this.happiness = Math.max(0, this.happiness - happinessDecay);
@@ -122,13 +118,13 @@ const petHealth = {
                 this.hunger = Math.min(100, this.hunger + 10);
                 break;
             case 'treat':
-                // Treat increases hunger by 1%
-                this.hunger = Math.min(100, this.hunger + 1);
+                // Treat increases hunger by 5%
+                this.hunger = Math.min(100, this.hunger + 5);
                 break;
             case 'fetch':
                 this.recovery.played = true;
-                // Fetch increases happiness by 10%
-                this.happiness = Math.min(100, this.happiness + 10);
+                // Fetch increases happiness by 15%
+                this.happiness = Math.min(100, this.happiness + 15);
                 break;
             case 'pet':
                 this.recovery.petted = true;
@@ -137,8 +133,8 @@ const petHealth = {
                 break;
             case 'brush':
                 this.recovery.brushed = true;
-                // Brush increases happiness by 1%
-                this.happiness = Math.min(100, this.happiness + 1);
+                // Brush increases happiness by 5%
+                this.happiness = Math.min(100, this.happiness + 5);
                 break;
             case 'toy':
                 this.recovery.givenToy = true;
@@ -267,18 +263,6 @@ const petHealth = {
         }
         if (hungerText) hungerText.textContent = `Hunger: ${this.hunger.toFixed(1)}%`;
         if (happinessText) happinessText.textContent = `Happiness: ${this.happiness.toFixed(1)}%`;
-        
-        // Show recovery requirements if needed
-        const recoveryDiv = healthBar.querySelector('.recovery-needed');
-        if (recoveryDiv) {
-            const requiredActions = this.getRequiredActions();
-            if (requiredActions.length > 0) {
-                recoveryDiv.innerHTML = `<strong>Recovery needed:</strong> ${requiredActions.join(', ')}`;
-                recoveryDiv.classList.add('show');
-            } else {
-                recoveryDiv.classList.remove('show');
-            }
-        }
         
         // Update mood based on health and weather
         this.updateMood();

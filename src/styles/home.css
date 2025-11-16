@@ -15,7 +15,7 @@
 }
 
 .pet-display {
-    flex: 2;
+    flex: 1.5;
     background-color: var(--background-white);
     border: 2px solid var(--border-purple);
     border-radius: 15px;
@@ -111,7 +111,7 @@
 }
 
 .pet-basic-info {
-    flex: 0 0 45%;
+    flex: 0 0 42%;
     min-width: 0;
     background-color: var(--background-white);
     border: 2px solid var(--border-purple);
