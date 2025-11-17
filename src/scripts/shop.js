@@ -25,6 +25,28 @@ const SHOP_ITEMS = {
 // Initialize shop when page loads
 $(document).ready(function() {
     initShop();
+    
+    // Listen for localStorage changes (works across tabs/windows)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'petOwnedItems') {
+            console.log('Storage changed for petOwnedItems, refreshing shop...');
+            refreshShopDisplay();
+        }
+    });
+    
+    // Listen for page visibility changes (when user returns to tab)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            console.log('Page became visible, refreshing shop...');
+            refreshShopDisplay();
+        }
+    });
+    
+    // Listen for page focus (when user returns to window)
+    window.addEventListener('focus', function() {
+        console.log('Window focused, refreshing shop...');
+        refreshShopDisplay();
+    });
 });
 
 function initShop() {
@@ -37,8 +59,13 @@ function initShop() {
     // Load owned items
     loadOwnedItems();
     
-    // Render pet with customizations
-    renderShopPet();
+    // Use custom.js updatePetDisplay to render pet with customizations
+    if (window.updatePetDisplay) {
+        window.updatePetDisplay();
+    }
+    
+    // Add owned accessories to the pet
+    renderShopAccessories();
     
     // Setup buy button handlers
     setupBuyButtons();
@@ -71,6 +98,22 @@ function checkShopAvailability() {
             $('.shop-items').show();
         }
     }
+}
+
+// Refresh shop display when localStorage changes
+function refreshShopDisplay() {
+    // Clear all owned badges and classes
+    $('.shop-item').removeClass('owned');
+    $('.owned-badge').hide();
+    
+    // Reload owned items and update UI
+    loadOwnedItems();
+    
+    // Update happiness display
+    updateHappinessDisplay();
+    
+    // Re-render accessories on pet
+    renderShopAccessories();
 }
 
 // Load owned items from localStorage
@@ -106,38 +149,24 @@ function addOwnedItem(itemId) {
     }
 }
 
-// Render pet with current customizations
-function renderShopPet() {
-    // Load pet customizations from customize page
-    const customizations = JSON.parse(localStorage.getItem('petCustomizations') || '{}');
-    const $pet = $('.pet-preview .pet');
-    
-    // Apply body color
-    if (customizations.bodyColor) {
-        $pet.find('.face, .body').css('background-color', customizations.bodyColor);
-    }
-    
-    // Apply ear color
-    if (customizations.earColor) {
-        $pet.find('.ear').css('background-color', customizations.earColor);
-    }
-    
-    // Apply eye color
-    if (customizations.eyeColor) {
-        $pet.find('.eye').css('background-color', customizations.eyeColor);
-    }
+// Render accessories on the pet (pet customization handled by custom.js)
+function renderShopAccessories() {
+    const pet = document.querySelector('.pet-preview .pet');
+    if (!pet) return;
     
     // Load and display owned accessories
     const owned = getOwnedItems();
-    const $accessories = $pet.find('.pet-accessories');
-    $accessories.empty();
-    
-    owned.forEach(itemId => {
-        const accessory = createAccessoryElement(itemId);
-        if (accessory) {
-            $accessories.append(accessory);
-        }
-    });
+    const accessories = pet.querySelector('.pet-accessories');
+    if (accessories) {
+        accessories.innerHTML = '';
+        
+        owned.forEach(itemId => {
+            const accessory = createAccessoryElement(itemId);
+            if (accessory) {
+                accessories.appendChild(accessory[0]); // jQuery element to DOM element
+            }
+        });
+    }
 }
 
 // Create accessory element for display
@@ -151,9 +180,10 @@ function createAccessoryElement(itemId) {
                 'position': 'absolute',
                 'bottom': '45%',
                 'left': '50%',
+                'top': '47%',
                 'transform': 'translateX(-50%)',
-                'width': '40px',
-                'height': '15px',
+                'width': '60px',
+                'height': '10px',
                 'background-color': '#ff0000',
                 'border-radius': '10px',
                 'border': '2px solid #cc0000'
@@ -164,13 +194,13 @@ function createAccessoryElement(itemId) {
             $accessory = $('<div class="accessory bandana"></div>');
             $accessory.css({
                 'position': 'absolute',
-                'top': '20%',
+                'top': '50%',
                 'left': '50%',
                 'transform': 'translateX(-50%)',
-                'width': '0',
-                'height': '0',
-                'border-left': '25px solid transparent',
-                'border-right': '25px solid transparent',
+                'width': '60px',
+                'height': '60px',
+                'border-left': '30px solid transparent',
+                'border-right': '30px solid transparent',
                 'border-top': '25px solid #0066ff'
             });
             break;
@@ -179,7 +209,7 @@ function createAccessoryElement(itemId) {
             $accessory = $('<div class="accessory crown">👑</div>');
             $accessory.css({
                 'position': 'absolute',
-                'top': '5%',
+                'top': '-10%',
                 'left': '50%',
                 'transform': 'translateX(-50%)',
                 'font-size': '30px'
