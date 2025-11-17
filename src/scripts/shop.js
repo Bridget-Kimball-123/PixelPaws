@@ -151,76 +151,20 @@ function addOwnedItem(itemId) {
 
 // Render accessories on the pet (pet customization handled by custom.js)
 function renderShopAccessories() {
-    const pet = document.querySelector('.pet-preview .pet');
-    if (!pet) return;
-    
-    // Load and display owned accessories
-    const owned = getOwnedItems();
-    const accessories = pet.querySelector('.pet-accessories');
-    if (accessories) {
-        accessories.innerHTML = '';
-        
-        owned.forEach(itemId => {
-            const accessory = createAccessoryElement(itemId);
-            if (accessory) {
-                accessories.appendChild(accessory[0]); // jQuery element to DOM element
-            }
-        });
+    // Use the shared renderAccessories function from custom.js
+    if (window.renderAccessories) {
+        window.renderAccessories();
     }
 }
 
-// Create accessory element for display
-function createAccessoryElement(itemId) {
-    let $accessory;
-    
-    switch(itemId) {
-        case 'red-collar':
-            $accessory = $('<div class="accessory collar"></div>');
-            $accessory.css({
-                'position': 'absolute',
-                'bottom': '45%',
-                'left': '50%',
-                'top': '47%',
-                'transform': 'translateX(-50%)',
-                'width': '60px',
-                'height': '10px',
-                'background-color': '#ff0000',
-                'border-radius': '10px',
-                'border': '2px solid #cc0000'
-            });
-            break;
-            
-        case 'blue-bandana':
-            $accessory = $('<div class="accessory bandana"></div>');
-            $accessory.css({
-                'position': 'absolute',
-                'top': '50%',
-                'left': '50%',
-                'transform': 'translateX(-50%)',
-                'width': '60px',
-                'height': '60px',
-                'border-left': '30px solid transparent',
-                'border-right': '30px solid transparent',
-                'border-top': '25px solid #0066ff'
-            });
-            break;
-            
-        case 'crown':
-            $accessory = $('<div class="accessory crown">👑</div>');
-            $accessory.css({
-                'position': 'absolute',
-                'top': '-10%',
-                'left': '50%',
-                'transform': 'translateX(-50%)',
-                'font-size': '30px'
-            });
-            break;
-            
-        default:
-            return null;
+// Get owned items from localStorage (use shared function from custom.js)
+function getOwnedItems() {
+    if (window.getOwnedAccessories) {
+        return window.getOwnedAccessories();
     }
-    
-    return $accessory;
+    const owned = localStorage.getItem('petOwnedItems');
+    console.log('Raw owned items from localStorage:', owned);
+    return owned ? JSON.parse(owned) : [];
 }
 
 // Setup buy button handlers
@@ -278,8 +222,8 @@ function purchaseItem(itemId, cost) {
     $item.addClass('owned');
     $item.find('.owned-badge').show();
     
-    // Refresh pet preview
-    renderShopPet();
+    // Refresh pet preview with new accessory
+    renderShopAccessories();
     
     // Check if shop should close
     checkShopAvailability();

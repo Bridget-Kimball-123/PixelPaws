@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupArrowButtons();
     setupFormButtons();
     updatePetDisplay();
+    renderAccessories();
 });
 
 // Load customization from localStorage
@@ -466,10 +467,97 @@ function clearAllToys() {
     localStorage.setItem('clearToys', 'true');
 }
 
+// Get owned items from localStorage
+function getOwnedAccessories() {
+    const owned = localStorage.getItem('petOwnedItems');
+    return owned ? JSON.parse(owned) : [];
+}
+
+// Create accessory element
+function createAccessoryElement(itemId) {
+    const accessory = document.createElement('div');
+    accessory.className = `accessory ${itemId}`;
+    
+    switch(itemId) {
+        case 'red-collar':
+            accessory.style.cssText = `
+                position: absolute;
+                bottom: 45%;
+                left: 50%;
+                top: 47%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 10px;
+                background-color: #ff0000;
+                border-radius: 10px;
+                border: 2px solid #cc0000;
+            `;
+            break;
+            
+        case 'blue-bandana':
+            accessory.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 30px solid transparent;
+                border-right: 30px solid transparent;
+                border-top: 25px solid #0066ff;
+            `;
+            break;
+            
+        case 'crown':
+            accessory.textContent = '👑';
+            accessory.style.cssText = `
+                position: absolute;
+                top: -10%;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 30px;
+            `;
+            break;
+            
+        default:
+            return null;
+    }
+    
+    return accessory;
+}
+
+// Render accessories on pet
+function renderAccessories() {
+    const pet = document.querySelector('.pet');
+    if (!pet) return;
+    
+    // Get or create accessories container
+    let accessoriesContainer = pet.querySelector('.pet-accessories');
+    if (!accessoriesContainer) {
+        accessoriesContainer = document.createElement('div');
+        accessoriesContainer.className = 'pet-accessories';
+        pet.appendChild(accessoriesContainer);
+    }
+    
+    // Clear existing accessories
+    accessoriesContainer.innerHTML = '';
+    
+    // Add owned accessories
+    const owned = getOwnedAccessories();
+    owned.forEach(itemId => {
+        const accessory = createAccessoryElement(itemId);
+        if (accessory) {
+            accessoriesContainer.appendChild(accessory);
+        }
+    });
+}
+
 // Export for use in other pages
 if (typeof window !== 'undefined') {
     window.petCustomization = petCustomization;
     window.updatePetDisplay = updatePetDisplay;
     window.clearAllToys = clearAllToys;
+    window.renderAccessories = renderAccessories;
+    window.getOwnedAccessories = getOwnedAccessories;
 }
 
