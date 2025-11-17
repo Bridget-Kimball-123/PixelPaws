@@ -81,9 +81,28 @@ const petHealth = {
         // Apply continuous decay for any time away (more than 1 minute to avoid page navigation drops)
         if (timeAway > 60000) { // 60000ms = 1 minute
             const minutesAway = timeAway / (60 * 1000);
-            // Slower decay when away: .1% hunger per 5 minutes, .05% happiness per 5 minutes
-            const hungerDecay = minutesAway * 0.1;
-            const happinessDecay = minutesAway * 0.05;
+            
+            let hungerDecay = 0;
+            let happinessDecay = 0;
+            
+            // Tiered decay system based on idle time
+            if (minutesAway <= 60) {
+                // First hour: Faster decay to make it more noticeable (0.05% hunger/min, 0.05% happiness/min)
+                hungerDecay = minutesAway * 0.05;
+                happinessDecay = minutesAway * 0.05;
+            } else {
+                // After 1 hour: Different decay rate
+                // First hour decay
+                hungerDecay = 60 * 0.05; // First 60 minutes (3% loss)
+                happinessDecay = 60 * 0.05; // First 60 minutes (3% loss)
+                
+                // Additional time after 1 hour: 1.05% hunger per 30 min = 0.035% per minute
+                // 1.05% happiness per 30 min = 0.035% per minute
+                // This gives ~2 days total from 100% to 0%
+                const minutesAfterFirstHour = minutesAway - 60;
+                hungerDecay += minutesAfterFirstHour * (1.05 / 30);
+                happinessDecay += minutesAfterFirstHour * (1.05 / 30);
+            }
             
             this.hunger = Math.max(0, this.hunger - hungerDecay);
             this.happiness = Math.max(0, this.happiness - happinessDecay);
@@ -404,9 +423,9 @@ const petHealth = {
             // Only decay if pet is not already at minimum levels
             if (this.hunger > 0 || this.happiness > 0) {
                 
-                // Decrease hunger and happiness: 1% hunger per minute, 0.75% happiness per minute
-                this.hunger = Math.max(0, this.hunger - 0.5); // -0.5% every 30 seconds = -1% per minute
-                this.happiness = Math.max(0, this.happiness - 0.375); // -0.375% every 30 seconds = -0.75% per minute
+                // Decrease hunger and happiness: 0.3% hunger per minute, 0.2% happiness per minute
+                this.hunger = Math.max(0, this.hunger - 0.15); // -0.15% every 30 seconds = -0.3% per minute
+                this.happiness = Math.max(0, this.happiness - 0.1); // -0.1% every 30 seconds = -0.2% per minute
                 
                 // Update status based on current levels
                 this.updateStatusBasedOnLevels();
