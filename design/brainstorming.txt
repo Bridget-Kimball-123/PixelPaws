@@ -30,8 +30,10 @@ Weather:
 Health Bar:
     Color-changing: green, orange, red
     Bars for hunger, happiness, etc.
-    If user is away for 8+ hours, pet becomes depleted: pet needs to be fed and played with in order to return to full happiness and health
-    If user is away for 24+ hours, pet becomes sick: pet needs to be fed, played with, pet, brushed, and given a toy in order to return to full happiness and health
+    Health decrease:
+        First hour of inactivity: hunger and happiness decrease by 0.05% per minute (~3% per hour)
+        After 1 hour of inactivity: hunger and happiness decrease by 1.05% per 30 minutes (~2.1% per hour)
+        Pet's health will be fully depleted (0%) after approximately 2 days of complete inactivity
     Happiness and health bars will slowly go down the longer the user is away or if user is idle (not petting, feeding, brushing, or customizing)
     Each play action has a different point system attached to it
         If the pet is hungry, feeding it will fill the hunger bar faster than giving the pet treats
@@ -57,8 +59,8 @@ Random things:
     ✅ Incorporate JavaScript library: https://github.com/benpickles/peity
     ✅ Health status affects mood
     ✅ Incorporate feedback from Milestone 2
-    Fetch functionality is off on desktop and mobile
+    ✅ Fetch functionality is off on desktop and mobile
+    ✅ Change depleted to a more middle-ground term (unwell?)
     In app purchases: happiness can buy stuff? If happiness gets to zero install a cool down of some sort
-    Change depleted to a more middle-ground term (unwell?)
     In the popup panel for the play page, include an update for the health status (hunger and happiness percentages)
     Add accesories to pet customization

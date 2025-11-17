@@ -6,7 +6,7 @@
 // Health status constants
 const HEALTH_STATUS = {
     HEALTHY: 'healthy',
-    DEPLETED: 'depleted',
+    UNWELL: 'unwell',
     SICK: 'sick'
 };
 
@@ -184,12 +184,12 @@ const petHealth = {
             this.resetRecoveryActions();
             console.log('Status upgraded to HEALTHY');
         }
-        // If health is moderate (30-59%), status is DEPLETED (orange)
+        // If health is moderate (30-59%), status is UNWELL (orange)
         else if (avgHealth >= 30 && avgHealth < 60) {
-            if (this.status !== HEALTH_STATUS.DEPLETED) {
-                this.status = HEALTH_STATUS.DEPLETED;
+            if (this.status !== HEALTH_STATUS.UNWELL) {
+                this.status = HEALTH_STATUS.UNWELL;
                 this.resetRecoveryActions();
-                console.log('Status changed to DEPLETED');
+                console.log('Status changed to UNWELL');
             }
         }
         // If health is low (<30%), status is SICK (red)
@@ -202,7 +202,7 @@ const petHealth = {
     
     // Check if pet has recovered
     checkRecovery() {
-        if (this.status === HEALTH_STATUS.DEPLETED) {
+        if (this.status === HEALTH_STATUS.UNWELL) {
             // Need to be fed and played with
             if (this.recovery.fed && this.recovery.played) {
                 this.status = HEALTH_STATUS.HEALTHY;
@@ -303,7 +303,7 @@ const petHealth = {
                 "I feel terrible... please help me... 😭"
             ];
             message = messages[Math.floor(Math.random() * messages.length)];
-        } else if (this.status === HEALTH_STATUS.DEPLETED) {
+        } else if (this.status === HEALTH_STATUS.UNWELL) {
             const messages = [
                 "I'm hungry and bored... 😔",
                 "I need food and playtime! 🍖🎾",
@@ -378,7 +378,7 @@ const petHealth = {
         // Health status overrides weather mood
         if (this.status === HEALTH_STATUS.SICK) {
             mood = 'Depressed';
-        } else if (this.status === HEALTH_STATUS.DEPLETED) {
+        } else if (this.status === HEALTH_STATUS.UNWELL) {
             mood = 'Unhappy';
         } else {
             // Healthy - check weather for mood
@@ -399,7 +399,7 @@ const petHealth = {
     
     // Get required actions for recovery
     getRequiredActions() {
-        if (this.status === HEALTH_STATUS.DEPLETED) {
+        if (this.status === HEALTH_STATUS.UNWELL) {
             const needed = [];
             if (!this.recovery.fed) needed.push('Feed');
             if (!this.recovery.played) needed.push('Play Fetch');
