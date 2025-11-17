@@ -138,6 +138,11 @@ function setupFormButtons() {
             // Clear all toys from play page
             clearAllToys();
             
+            // Clear shop purchases
+            console.log('Owned items before reset:', localStorage.getItem('petOwnedItems'));
+            localStorage.removeItem('petOwnedItems');
+            console.log('Owned items after reset:', localStorage.getItem('petOwnedItems'));
+            
             // Reset health stats to 100%
             console.log('Checking for window.petHealth:', window.petHealth);
             if (window.petHealth) {
@@ -151,7 +156,7 @@ function setupFormButtons() {
                 window.petHealth.updateHealthDisplay();
                 
                 console.log('After reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
-                showNotification('Pet appearance and health have been reset!');
+                showNotification('Pet appearance, health, and shop purchases have been reset!');
             } else {
                 console.error('ERROR: window.petHealth is not available on customize page!');
                 showNotification('Pet appearance has been reset!');
