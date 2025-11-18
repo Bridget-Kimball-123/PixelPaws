@@ -139,9 +139,10 @@ function setupFormButtons() {
             // Clear all toys from play page
             clearAllToys();
             
-            // Clear shop purchases
+            // Clear shop purchases and equipped items
             console.log('Owned items before reset:', localStorage.getItem('petOwnedItems'));
             localStorage.removeItem('petOwnedItems');
+            localStorage.removeItem('petEquippedItems');
             console.log('Owned items after reset:', localStorage.getItem('petOwnedItems'));
             
             // Reset health stats to 100%
@@ -473,6 +474,35 @@ function getOwnedAccessories() {
     return owned ? JSON.parse(owned) : [];
 }
 
+// Get equipped items from localStorage
+function getEquippedAccessories() {
+    const equipped = localStorage.getItem('petEquippedItems');
+    return equipped ? JSON.parse(equipped) : [];
+}
+
+// Save equipped items to localStorage
+function saveEquippedAccessories(items) {
+    localStorage.setItem('petEquippedItems', JSON.stringify(items));
+}
+
+// Toggle equip/unequip an accessory
+function toggleEquipAccessory(itemId) {
+    const equipped = getEquippedAccessories();
+    const index = equipped.indexOf(itemId);
+    
+    if (index > -1) {
+        // Unequip
+        equipped.splice(index, 1);
+    } else {
+        // Equip
+        equipped.push(itemId);
+    }
+    
+    saveEquippedAccessories(equipped);
+    renderAccessories();
+    return equipped.includes(itemId);
+}
+
 // Create accessory element
 function createAccessoryElement(itemId) {
     const accessory = document.createElement('div');
@@ -495,16 +525,21 @@ function createAccessoryElement(itemId) {
             break;
             
         case 'blue-bandana':
+            // Check if mobile (screen width <= 768px)
+            const isMobile = window.innerWidth <= 768;
+            const borderSize = isMobile ? '30px' : '40px';
+            const borderTop = isMobile ? '35px' : '40px';
+            
             accessory.style.cssText = `
                 position: absolute;
-                top: 50%;
+                top: 48%;
                 left: 50%;
                 transform: translateX(-50%);
                 width: 0;
                 height: 0;
-                border-left: 30px solid transparent;
-                border-right: 30px solid transparent;
-                border-top: 25px solid #0066ff;
+                border-left: ${borderSize} solid transparent;
+                border-right: ${borderSize} solid transparent;
+                border-top: ${borderTop} solid #0066ff;
             `;
             break;
             
@@ -542,9 +577,9 @@ function renderAccessories() {
     // Clear existing accessories
     accessoriesContainer.innerHTML = '';
     
-    // Add owned accessories
-    const owned = getOwnedAccessories();
-    owned.forEach(itemId => {
+    // Only add EQUIPPED accessories (not just owned)
+    const equipped = getEquippedAccessories();
+    equipped.forEach(itemId => {
         const accessory = createAccessoryElement(itemId);
         if (accessory) {
             accessoriesContainer.appendChild(accessory);
@@ -559,5 +594,8 @@ if (typeof window !== 'undefined') {
     window.clearAllToys = clearAllToys;
     window.renderAccessories = renderAccessories;
     window.getOwnedAccessories = getOwnedAccessories;
+    window.getEquippedAccessories = getEquippedAccessories;
+    window.saveEquippedAccessories = saveEquippedAccessories;
+    window.toggleEquipAccessory = toggleEquipAccessory;
 }
 

@@ -43,17 +43,11 @@
     <main id="main-content" class="shop-page">
         <h1>Accessory Shop</h1>
 
-        <!-- Happiness currency display -->
-        <div class="currency-display">
-            <h2>Your Happiness: <span class="happiness-amount">100</span>%</h2>
-            <p class="currency-note">Use your pet's happiness to purchase accessories!</p>
-        </div>
-
         <!-- Shop closed message (hidden by default) -->
         <div class="shop-closed" style="display: none;">
             <h2>🔒 Shop Temporarily Closed</h2>
             <p>Your pet needs to be happier to shop!</p>
-            <p>Play with your pet until happiness reaches 75% or higher.</p>
+            <p>Play with your pet until happiness reaches 50% or higher.</p>
             <a href="play.html" class="btn-primary">Go Play with Your Pet</a>
         </div>
 
@@ -112,6 +106,7 @@
                     <div class="item-footer">
                         <span class="item-cost">🎉 15%</span>
                         <button class="buy-btn" data-item="red-collar">Purchase</button>
+                        <button class="equip-btn" data-item="red-collar" style="display: none;">Equip</button>
                     </div>
                     <span class="owned-badge" style="display: none;">✓ Owned</span>
                 </div>
@@ -119,13 +114,22 @@
                 <!-- Blue Bandana -->
                 <div class="shop-item" data-item="blue-bandana" data-cost="15">
                     <div class="item-preview">
-                        <div class="accessory-icon" style="background-color: #0066ff; width: 0; height: 0; border-left: 30px solid transparent; border-right: 30px solid transparent; border-top: 30px solid #0066ff; margin: 20px auto;"></div>
+                        <div class="accessory-icon" style="position: absolute;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            width: 0;
+                            height: 0;
+                            border-left: 30px solid transparent;
+                            border-right: 30px solid transparent;
+                            border-top: 25px solid #0066ff;"></div>
+
                     </div>
                     <h3>Blue Bandana</h3>
                     <p class="item-description">A cool blue bandana accessory</p>
                     <div class="item-footer">
                         <span class="item-cost">🎉 15%</span>
                         <button class="buy-btn" data-item="blue-bandana">Purchase</button>
+                        <button class="equip-btn" data-item="blue-bandana" style="display: none;">Equip</button>
                     </div>
                     <span class="owned-badge" style="display: none;">✓ Owned</span>
                 </div>
@@ -140,12 +144,25 @@
                     <div class="item-footer">
                         <span class="item-cost">🎉 35%</span>
                         <button class="buy-btn" data-item="crown">Purchase</button>
+                        <button class="equip-btn" data-item="crown" style="display: none;">Equip</button>
                     </div>
                     <span class="owned-badge" style="display: none;">✓ Owned</span>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirm Purchase</h3>
+            <p id="confirmMessage"></p>
+            <div class="modal-buttons">
+                <button id="confirmYes" class="btn-primary">Yes, Buy It!</button>
+                <button id="confirmNo" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>

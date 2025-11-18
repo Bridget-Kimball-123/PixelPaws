@@ -49,7 +49,7 @@ Health Bar:
         The health status bar will get smaller
         Hunger and happiness percentages will decrease
 
-Random things:
+Random Things Checklist:
     ✅ Logo is squished in medium view
     ✅ In skinny view play buttons aren't all visible at once, make buttons smaller
     ✅ In skinny view tail overlaps with belly & can see end (part covering belly)
@@ -62,5 +62,7 @@ Random things:
     ✅ Fetch functionality is off on desktop and mobile
     ✅ Change depleted to a more middle-ground term (unwell?)
     ✅ In app purchases: happiness can buy stuff? If happiness gets to zero install a cool down of some sort
+    ✅ Add accesories to pet customization
+    ✅ Change browser popup to custom (for puchase confirmation)
     In the popup panel for the play page, include an update for the health status (hunger and happiness percentages)
-    Add accesories to pet customization
+    Include a confirmation popup for resetting pet: include what will reset and ask for confirmation

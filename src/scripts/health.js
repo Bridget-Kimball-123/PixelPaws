@@ -85,23 +85,22 @@ const petHealth = {
             let hungerDecay = 0;
             let happinessDecay = 0;
             
-            // Tiered decay system based on idle time
-            if (minutesAway <= 60) {
-                // First hour: Faster decay to make it more noticeable (0.05% hunger/min, 0.05% happiness/min)
-                hungerDecay = minutesAway * 0.05;
-                happinessDecay = minutesAway * 0.05;
+                        // Tiered decay system based on idle time
+            if (minutesAway <= 30) {
+                // First 30 minutes: Faster decay (0.5% hunger/min, 0.45% happiness/min)
+                // 25% loss in first 30 minutes (health at 75%)
+                hungerDecay = minutesAway * 0.5;
+                happinessDecay = minutesAway * 0.45;
             } else {
-                // After 1 hour: Different decay rate
-                // First hour decay
-                hungerDecay = 60 * 0.05; // First 60 minutes (3% loss)
-                happinessDecay = 60 * 0.05; // First 60 minutes (3% loss)
-                
-                // Additional time after 1 hour: 1.05% hunger per 30 min = 0.035% per minute
-                // 1.05% happiness per 30 min = 0.035% per minute
-                // This gives ~2 days total from 100% to 0%
-                const minutesAfterFirstHour = minutesAway - 60;
-                hungerDecay += minutesAfterFirstHour * (1.05 / 30);
-                happinessDecay += minutesAfterFirstHour * (1.05 / 30);
+                // After 30 minutes: Slower decay rate
+                // First 30 minutes decay
+                hungerDecay = 30 * 0.5; // First 30 minutes (25% loss)
+                happinessDecay = 30 * 0.45; // First 30 minutes (25% loss)
+
+                // Additional time after 30 minutes: 0.01% per minute
+                const minutesAfterFirstHalfHour = minutesAway - 30;
+                hungerDecay += minutesAfterFirstHalfHour * 0.01;
+                happinessDecay += minutesAfterFirstHalfHour * 0.01;
             }
             
             this.hunger = Math.max(0, this.hunger - hungerDecay);
@@ -435,6 +434,19 @@ const petHealth = {
                 this.updateSpeechBubble();
             }
         }, 30000); // Every 30 seconds
+    },
+    
+    // Getter methods for accessing health values
+    getHunger() {
+        return this.hunger;
+    },
+    
+    getHappiness() {
+        return this.happiness;
+    },
+    
+    getStatus() {
+        return this.status;
     }
 };
 
