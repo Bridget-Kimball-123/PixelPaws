@@ -233,10 +233,10 @@ function fetchAnimation(pet, petDisplay) {
     
     // Generate smooth diagonal path from start to target
     const pathPoints = [];
-    for (let i = 0; i <= numSteps - 1; i++) {
-        const progress = i / (numSteps - 1);
-        const x = startX + (targetX - startX) * progress - 17;
-        const y = startY + (targetY - startY) * progress - 15;
+    for (let i = 0; i <= numSteps; i++) {
+        const progress = i / numSteps;
+        const x = startX + (targetX - startX) * progress;
+        const y = startY + (targetY - startY) * progress;
         pathPoints.push({ right: x, bottom: y });
     }
     

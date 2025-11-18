@@ -150,6 +150,26 @@
         </section>
     </main>
 
+    <!-- Reset Confirmation Modal -->
+    <div id="resetModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirm Reset</h3>
+            <p>This will reset:</p>
+            <ul style="text-align: left; margin: 1rem 0; padding-left: 2rem;">
+                <li>Pet appearance to default (gray cat)</li>
+                <li>Pet name to "Pixel"</li>
+                <li>Health stats to 100%</li>
+                <li>All shop purchases (owned & equipped items)</li>
+                <li>All toys from play page</li>
+            </ul>
+            <p style="font-weight: bold; color: var(--primary-purple);">Are you sure you want to continue?</p>
+            <div class="modal-buttons">
+                <button id="resetYes" class="btn-primary">Yes, Reset</button>
+                <button id="resetNo" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 PixelPaws by Bridget Kimball</p>

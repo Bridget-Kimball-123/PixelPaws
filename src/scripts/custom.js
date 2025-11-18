@@ -125,45 +125,93 @@ function setupFormButtons() {
             e.preventDefault();
             console.log('Reset button clicked!');
             
-            // Reset pet appearance
-            petCustomization.color = 'gray';
-            petCustomization.ears = 'triangles';
-            petCustomization.face = 'default';
-            petCustomization.eyes = 'default';
-            petCustomization.tail = 'default';
-            petCustomization.name = 'Pixel';
-            if (nameInput) nameInput.value = 'Pixel';
-            saveCustomization();
-            updatePetDisplay();
-            
-            // Clear all toys from play page
-            clearAllToys();
-            
-            // Clear shop purchases and equipped items
-            console.log('Owned items before reset:', localStorage.getItem('petOwnedItems'));
-            localStorage.removeItem('petOwnedItems');
-            localStorage.removeItem('petEquippedItems');
-            console.log('Owned items after reset:', localStorage.getItem('petOwnedItems'));
-            
-            // Reset health stats to 100%
-            console.log('Checking for window.petHealth:', window.petHealth);
-            if (window.petHealth) {
-                console.log('Before reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
-                
-                window.petHealth.hunger = 100;
-                window.petHealth.happiness = 100;
-                window.petHealth.status = 'healthy';
-                window.petHealth.resetRecoveryActions();
-                window.petHealth.saveHealthData();
-                window.petHealth.updateHealthDisplay();
-                
-                console.log('After reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
-                showNotification('Pet appearance, health, and shop purchases have been reset!');
-            } else {
-                console.error('ERROR: window.petHealth is not available on customize page!');
-                showNotification('Pet appearance has been reset!');
-            }
+            // Show confirmation modal
+            showResetModal();
         });
+    }
+}
+
+// Show reset confirmation modal
+function showResetModal() {
+    const modal = document.getElementById('resetModal');
+    const yesBtn = document.getElementById('resetYes');
+    const noBtn = document.getElementById('resetNo');
+    
+    modal.style.display = 'flex';
+    
+    // Handle Yes button
+    const handleYes = () => {
+        modal.style.display = 'none';
+        performReset();
+        cleanup();
+    };
+    
+    // Handle No button
+    const handleNo = () => {
+        modal.style.display = 'none';
+        cleanup();
+    };
+    
+    // Cleanup listeners
+    const cleanup = () => {
+        yesBtn.removeEventListener('click', handleYes);
+        noBtn.removeEventListener('click', handleNo);
+        modal.removeEventListener('click', handleOverlay);
+    };
+    
+    // Handle clicking outside modal
+    const handleOverlay = (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            cleanup();
+        }
+    };
+    
+    yesBtn.addEventListener('click', handleYes);
+    noBtn.addEventListener('click', handleNo);
+    modal.addEventListener('click', handleOverlay);
+}
+
+// Perform the actual reset
+function performReset() {
+    // Reset pet appearance
+    petCustomization.color = 'gray';
+    petCustomization.ears = 'triangles';
+    petCustomization.face = 'default';
+    petCustomization.eyes = 'default';
+    petCustomization.tail = 'default';
+    petCustomization.name = 'Pixel';
+    const nameInput = document.getElementById('pet-name');
+    if (nameInput) nameInput.value = 'Pixel';
+    saveCustomization();
+    updatePetDisplay();
+    
+    // Clear all toys from play page
+    clearAllToys();
+    
+    // Clear shop purchases and equipped items
+    console.log('Owned items before reset:', localStorage.getItem('petOwnedItems'));
+    localStorage.removeItem('petOwnedItems');
+    localStorage.removeItem('petEquippedItems');
+    console.log('Owned items after reset:', localStorage.getItem('petOwnedItems'));
+    
+    // Reset health stats to 100%
+    console.log('Checking for window.petHealth:', window.petHealth);
+    if (window.petHealth) {
+        console.log('Before reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
+        
+        window.petHealth.hunger = 100;
+        window.petHealth.happiness = 100;
+        window.petHealth.status = 'healthy';
+        window.petHealth.resetRecoveryActions();
+        window.petHealth.saveHealthData();
+        window.petHealth.updateHealthDisplay();
+        
+        console.log('After reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
+        showNotification('Pet appearance, health, and shop purchases have been reset!');
+    } else {
+        console.error('ERROR: window.petHealth is not available on customize page!');
+        showNotification('Pet appearance has been reset!');
     }
 }
 

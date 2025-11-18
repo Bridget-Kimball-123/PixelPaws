@@ -268,7 +268,7 @@ function purchaseItem(itemId, cost) {
         
         // Get remaining happiness and show success message
         const remainingHappiness = window.petHealth.getHappiness().toFixed(1);
-        showNotification(`${itemName} purchased! 🎉<br>Remaining happiness: ${remainingHappiness}%`, 10000);
+        showNotification(`${itemName} purchased! 🎉<br>Remaining happiness: ${remainingHappiness}%`);
     });
 }
 
@@ -295,7 +295,7 @@ function toggleEquip(itemId) {
 }
 
 // Show notification (using custom purple popup style)
-function showNotification(message, duration = 1500) {
+function showNotification(message) {
     // Create notification element
     const notification = document.createElement('div');
     notification.className = 'custom-notification';
@@ -310,11 +310,11 @@ function showNotification(message, duration = 1500) {
     // Trigger animation
     setTimeout(() => notification.classList.add('show'), 10);
     
-    // Remove after specified duration
+    // Remove after 5 seconds
     setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => notification.remove(), 300);
-    }, duration);
+    }, 5000);
 }
 
 // Show confirmation modal
