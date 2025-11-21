@@ -31,9 +31,9 @@ Health Bar:
     Color-changing: green, orange, red
     Bars for hunger, happiness, etc.
     Health decrease:
-        First hour of inactivity: hunger and happiness decrease by 0.05% per minute (~3% per hour)
-        After 1 hour of inactivity: hunger and happiness decrease by 1.05% per 30 minutes (~2.1% per hour)
-        Pet's health will be fully depleted (0%) after approximately 2 days of complete inactivity
+        First half hour of inactivity: hunger and happiness decrease by a faster rate
+        After half hour of inactivity: hunger and happiness decrease by a slower rate
+        Pet's health will be fully depleted (0%) after approximately 6 days of complete inactivity
     Happiness and health bars will slowly go down the longer the user is away or if user is idle (not petting, feeding, brushing, or customizing)
     Each play action has a different point system attached to it
         If the pet is hungry, feeding it will fill the hunger bar faster than giving the pet treats
@@ -41,7 +41,7 @@ Health Bar:
         The weights for the different play functions are as follows:
             Pet increases happiness by 5%
             Feed increases hunger by 5%
-            Fetch increases happiness by 10%
+            Fetch increases happiness by 15%
             Treat increases hunger by 1%
             Toy time increases happiness by 5%
             Brush increases happiness by 1%
@@ -49,7 +49,7 @@ Health Bar:
         The health status bar will get smaller
         Hunger and happiness percentages will decrease
 
-Random Things Checklist:
+To Do Checklist:
     ✅ Logo is squished in medium view
     ✅ In skinny view play buttons aren't all visible at once, make buttons smaller
     ✅ In skinny view tail overlaps with belly & can see end (part covering belly)
@@ -65,3 +65,5 @@ Random Things Checklist:
     ✅ Add accesories to pet customization
     ✅ Change browser popup to custom (for puchase confirmation)
     ✅ Include a confirmation popup for resetting pet: include what will reset and ask for confirmation
+    Incorporate weather API
+    Implement JSON download feature (in customize or about?)

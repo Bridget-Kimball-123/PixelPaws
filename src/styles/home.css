@@ -94,7 +94,7 @@
 /* Pet Info Section */
 .pet-info {
     flex: 1;
-    background-color: var(--background-white);
+    background-color: var(--light-purple);
     border: 2px solid var(--border-purple);
     border-radius: 15px;
     padding: var(--spacing-large);
