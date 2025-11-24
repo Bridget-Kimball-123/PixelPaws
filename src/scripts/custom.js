@@ -195,6 +195,9 @@ function performReset() {
     localStorage.removeItem('petEquippedItems');
     console.log('Owned items after reset:', localStorage.getItem('petOwnedItems'));
     
+    // Re-render accessories to remove them from display immediately
+    renderAccessories();
+    
     // Reset health stats to 100%
     console.log('Checking for window.petHealth:', window.petHealth);
     if (window.petHealth) {

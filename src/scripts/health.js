@@ -238,14 +238,14 @@ const petHealth = {
         let total = this.hunger + this.happiness;
         let divisor = 2;
         
-        // If hunger is below 30%, add extra weight (half of hunger value)
-        if (this.hunger < 30) {
+        // If hunger is below 30% and happiness is above 30%, add extra weight (half of hunger value)
+        if (this.hunger < 30 && this.happiness > 30) {
             total += (this.hunger * 0.75);
             divisor = 2; // Still divide by 2 to get average
         }
         
-        // If happiness is below 30%, add extra weight (half of happiness value)
-        if (this.happiness < 30) {
+        // If happiness is below 30% and hunger is above 30%, add extra weight (half of happiness value)
+        if (this.happiness < 30 && this.hunger > 30) {
             total += (this.happiness * 0.75);
             divisor = 2; // Still divide by 2 to get average
         }
