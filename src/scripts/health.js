@@ -16,6 +16,8 @@ const petHealth = {
     status: HEALTH_STATUS.HEALTHY,
     hunger: 100,
     happiness: 100,
+    activeStartTime: null, // Track when page became active
+    isTabVisible: true, // Track if tab is currently visible
     
     // Actions completed for recovery
     recovery: {
@@ -32,9 +34,22 @@ const petHealth = {
         this.checkHealthStatus(); // Check status based on time away
         this.updateHealthDisplay();
         this.updateSpeechBubble();
+        this.activeStartTime = Date.now(); // Start tracking active time
+        this.setupVisibilityTracking(); // Track when tab is visible/hidden
         this.startIdleDecay();
         // Update last visit AFTER checking status to preserve decay between page loads
         this.updateLastVisit();
+    },
+    
+    // Setup visibility tracking to detect when tab is hidden
+    setupVisibilityTracking() {
+        // Check if Page Visibility API is supported
+        if (typeof document.hidden !== "undefined") {
+            document.addEventListener("visibilitychange", () => {
+                this.isTabVisible = !document.hidden;
+                console.log('Tab visibility changed:', this.isTabVisible ? 'visible' : 'hidden');
+            });
+        }
     },
     
     // Load health data from localStorage
@@ -85,7 +100,6 @@ const petHealth = {
             let hungerDecay = 0;
             let happinessDecay = 0;
             
-                        // Tiered decay system based on idle time
             if (minutesAway <= 30) {
                 // First 30 minutes: Faster decay (0.5% hunger/min, 0.45% happiness/min)
                 // 25% loss in first 30 minutes (health at 75%)
@@ -296,9 +310,9 @@ const petHealth = {
         if (this.status === HEALTH_STATUS.SICK) {
             const messages = [
                 "I'm not feeling well... 🤒",
-                "I need lots of care to feel better... 💔",
+                "I need the best medicine, your love... 💔",
                 "Please help me get healthy again! 🏥",
-                "I'm so sick... I need food, play, pets, brushing, and a toy... 🤮",
+                "I'm so sick... 🤮",
                 "I feel terrible... please help me... 😭"
             ];
             message = messages[Math.floor(Math.random() * messages.length)];
@@ -306,7 +320,7 @@ const petHealth = {
             const messages = [
                 "I'm hungry and bored... 😔",
                 "I need food and playtime! 🍖🎾",
-                "Please feed me and play with me! 🥺",
+                "Please feed and play with me! 🥺",
                 "I'm feeling neglected... Feed me and let's play! 💙",
                 "I'm not feeling great... 😟"
             ];
@@ -327,7 +341,7 @@ const petHealth = {
                 const messages = [
                     "Snow! Let's play! ❄️",
                     "Do you want to build a snowman? ⛄",
-                    "Snowy day fun! 🛷",
+                    "Snow day fun! 🛷",
                     "I'm wishing for a winter wonderland! 🌨️",
                     "It's beginning to look a lot like Christmas! 🎄"
                 ];
@@ -337,17 +351,18 @@ const petHealth = {
                     "The storm scares me... 😬",
                     "I'm scared! Hold me! ⛈️",
                     "Thunder is so scary! 😨",
-                    "Please comfort me during the storm... 💔",
-                    "I don't like storms... can we cuddle? 🌩️"
+                    "I need your comfort during this storm... 🌩️",
+                    "I don't like storms... can we cuddle? 🚫⚡️"
                 ];
                 message = messages[Math.floor(Math.random() * messages.length)];
             } else {
                 // Sunny or default - happy messages
                 const messages = [
-                    "Hello! I'm feeling happy today! 😊",
+                    "I'm so happy today! 😊",
                     "What a beautiful day! ☀️",
                     "I love sunny days! 🌞",
-                    "Let's play together! 🎉"
+                    "Let's play together! 🎉",
+                    "The sun is shining so I'm shining ✨"
                 ];
                 message = messages[Math.floor(Math.random() * messages.length)];
             }
@@ -422,9 +437,33 @@ const petHealth = {
             // Only decay if pet is not already at minimum levels
             if (this.hunger > 0 || this.happiness > 0) {
                 
-                // Decrease hunger and happiness: 0.3% hunger per minute, 0.2% happiness per minute
-                this.hunger = Math.max(0, this.hunger - 0.15); // -0.15% every 30 seconds = -0.3% per minute
-                this.happiness = Math.max(0, this.happiness - 0.1); // -0.1% every 30 seconds = -0.2% per minute
+                // Calculate how long the page has been active
+                const activeTime = Date.now() - this.activeStartTime;
+                const minutesActive = activeTime / (60 * 1000);
+                
+                let hungerDecayRate;
+                let happinessDecayRate;
+                
+                // Tiered decay system based on active time
+                if (minutesActive <= 30) {
+                    // First 30 minutes: Faster decay (0.5% hunger/min, 0.45% happiness/min)
+                    hungerDecayRate = 0.25; // -0.25% every 30 seconds = -0.5% per minute
+                    happinessDecayRate = 0.225; // -0.225% every 30 seconds = -0.45% per minute
+                } else {
+                    // After 30 minutes: Slower decay (0.01% per minute)
+                    hungerDecayRate = 0.005; // -0.005% every 30 seconds = -0.01% per minute
+                    happinessDecayRate = 0.005; // -0.005% every 30 seconds = -0.01% per minute
+                }
+                
+                // If tab is not visible (hidden in background), halve the decay rate
+                if (!this.isTabVisible) {
+                    hungerDecayRate *= 0.5;
+                    happinessDecayRate *= 0.5;
+                }
+                
+                // Apply decay
+                this.hunger = Math.max(0, this.hunger - hungerDecayRate);
+                this.happiness = Math.max(0, this.happiness - happinessDecayRate);
                 
                 // Update status based on current levels
                 this.updateStatusBasedOnLevels();
