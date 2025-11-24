@@ -104,6 +104,11 @@ function performActivity(activityType) {
         console.error('ERROR: window.petHealth is not available!');
     }
     
+    // Notify weather system of action
+    if (window.weatherSystem) {
+        window.weatherSystem.handleAction(activityType);
+    }
+    
     // Increase local happiness for animations
     happinessLevel = Math.min(100, happinessLevel + 5);
     updateHappinessDisplay();

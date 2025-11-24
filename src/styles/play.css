@@ -126,6 +126,26 @@
     pointer-events: none;
 }
 
+/* Weather icon in top left corner */
+.weather-icon {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 48px;
+    z-index: 10;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    animation: weatherFloat 3s ease-in-out infinite;
+}
+
+@keyframes weatherFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
 /* Speech Bubble */
 .speech-bubble {
     position: absolute;

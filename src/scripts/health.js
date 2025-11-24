@@ -307,7 +307,11 @@ const petHealth = {
         
         let message = '';
         
-        if (this.status === HEALTH_STATUS.SICK) {
+        // Check if weather system has a custom mood message
+        if (this.customMoodMessage) {
+            message = this.customMoodMessage;
+            this.customMoodMessage = null; // Clear after use
+        } else if (this.status === HEALTH_STATUS.SICK) {
             const messages = [
                 "I'm not feeling well... 🤒",
                 "I need the best medicine, your love... 💔",
