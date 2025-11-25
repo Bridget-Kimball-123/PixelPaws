@@ -107,6 +107,9 @@ function cycleOption(feature, direction) {
 function setupFormButtons() {
     const saveBtn = document.querySelector('[data-action="save"]');
     const resetBtn = document.querySelector('[data-action="reset"]');
+    const exportBtn = document.querySelector('[data-action="export"]');
+    const importBtn = document.querySelector('[data-action="import"]');
+    const fileInput = document.getElementById('import-file-input');
     const nameInput = document.getElementById('pet-name');
 
     if (saveBtn) {
@@ -127,6 +130,29 @@ function setupFormButtons() {
             
             // Show confirmation modal
             showResetModal();
+        });
+    }
+
+    if (exportBtn) {
+        exportBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            exportPetData();
+        });
+    }
+
+    if (importBtn && fileInput) {
+        importBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                importPetData(file);
+            }
+            // Reset the file input so the same file can be selected again
+            fileInput.value = '';
         });
     }
 }
@@ -636,6 +662,112 @@ function renderAccessories() {
             accessoriesContainer.appendChild(accessory);
         }
     });
+}
+
+// Export pet data as JSON file
+function exportPetData() {
+    // Gather all pet data
+    const petData = {
+        version: '1.0',
+        exportDate: new Date().toISOString(),
+        customization: petCustomization,
+        ownedItems: getOwnedAccessories(),
+        equippedItems: getEquippedAccessories(),
+        health: null
+    };
+
+    // Include health data if available
+    if (window.petHealth) {
+        petData.health = {
+            hunger: window.petHealth.hunger,
+            happiness: window.petHealth.happiness,
+            status: window.petHealth.status
+        };
+    }
+
+    // Convert to JSON string
+    const jsonString = JSON.stringify(petData, null, 2);
+    
+    // Create blob and download link
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    
+    // Use pet name in filename
+    const petName = petCustomization.name || 'Pixel';
+    const filename = `${petName}_PixelPaws_${new Date().toISOString().split('T')[0]}.json`;
+    
+    link.href = url;
+    link.download = filename;
+    link.click();
+    
+    // Clean up
+    URL.revokeObjectURL(url);
+    
+    showNotification('Pet data exported successfully!');
+}
+
+// Import pet data from JSON file
+function importPetData(file) {
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        try {
+            const petData = JSON.parse(e.target.result);
+            
+            // Validate the data structure
+            if (!petData.version || !petData.customization) {
+                throw new Error('Invalid pet data file');
+            }
+            
+            // Import customization
+            if (petData.customization) {
+                Object.assign(petCustomization, petData.customization);
+                saveCustomization();
+                
+                // Update name input if present
+                const nameInput = document.getElementById('pet-name');
+                if (nameInput && petCustomization.name) {
+                    nameInput.value = petCustomization.name;
+                }
+            }
+            
+            // Import owned accessories
+            if (petData.ownedItems) {
+                localStorage.setItem('petOwnedItems', JSON.stringify(petData.ownedItems));
+            }
+            
+            // Import equipped accessories
+            if (petData.equippedItems) {
+                localStorage.setItem('petEquippedItems', JSON.stringify(petData.equippedItems));
+            }
+            
+            // Import health data if available
+            if (petData.health && window.petHealth) {
+                window.petHealth.hunger = petData.health.hunger || 100;
+                window.petHealth.happiness = petData.health.happiness || 100;
+                window.petHealth.status = petData.health.status || 'healthy';
+                window.petHealth.saveHealthData();
+                window.petHealth.updateHealthDisplay();
+            }
+            
+            // Update displays
+            updatePetDisplay();
+            renderAccessories();
+            
+            showNotification(`Pet data imported successfully! Welcome back, ${petCustomization.name}!`);
+            
+        } catch (error) {
+            console.error('Import error:', error);
+            showNotification('Error importing pet data. Please check the file and try again.');
+        }
+    };
+    
+    reader.onerror = function() {
+        showNotification('Error reading file. Please try again.');
+    };
+    
+    reader.readAsText(file);
 }
 
 // Export for use in other pages

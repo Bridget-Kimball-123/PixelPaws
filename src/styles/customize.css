@@ -109,6 +109,16 @@
     gap: var(--spacing-medium);
 }
 
+.import-export-buttons {
+    margin-top: var(--spacing-medium);
+    padding-top: var(--spacing-medium);
+    border-top: 1px solid var(--border-purple);
+}
+
+.import-export-buttons .btn {
+    font-size: 0.9rem;
+}
+
 /* ===================================
    RESPONSIVE DESIGN - MOBILE
    =================================== */
