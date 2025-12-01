@@ -66,4 +66,5 @@ To Do Checklist:
     ✅ Change browser popup to custom (for puchase confirmation)
     ✅ Include a confirmation popup for resetting pet: include what will reset and ask for confirmation
     ✅ Incorporate weather API
-    Implement JSON download feature (in customize or about?)
+    ✅ Implement JSON download feature (in customize or about?)
+    Implement loyalty points: the more a user comes back the more they will gain

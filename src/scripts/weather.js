@@ -237,15 +237,101 @@ const weatherSystem = {
         }
         
         const weather = WEATHER_MOODS[this.currentWeather];
-        console.log('Applying weather:', this.currentWeather, weather);
-        
         // Set background
         petDisplay.style.background = weather.background;
-        console.log('Background set to:', weather.background);
-        
         // Set weather icon
         weatherEffects.innerHTML = `<div class="weather-icon">${weather.icon}</div>`;
-        console.log('Weather icon added');
+
+        // Remove previous stars, rain, snow, storm effects
+        const starBg = document.querySelector('.star-bg');
+        if (starBg) starBg.innerHTML = '';
+        document.querySelectorAll('.rain-emoji, .snow-emoji, .lightning-emoji').forEach(e => e.remove());
+
+        // Night logic
+        if (this.currentWeather === 'NIGHT') {
+            // Check for rain/snow/storm classes on petDisplay
+            if (petDisplay.classList.contains('rainy')) {
+                // Night + rain: show rain only
+                for (let i = 0; i < 12; i++) {
+                    const rain = document.createElement('div');
+                    rain.className = 'rain-emoji';
+                    rain.textContent = '💧';
+                    rain.style.left = Math.random() * 95 + '%';
+                    rain.style.animationDelay = (Math.random() * 2) + 's';
+                    petDisplay.appendChild(rain);
+                }
+            } else if (petDisplay.classList.contains('snowy')) {
+                // Night + snow: show snow only
+                for (let i = 0; i < 12; i++) {
+                    const snow = document.createElement('div');
+                    snow.className = 'snow-emoji';
+                    snow.textContent = '❄️';
+                    snow.style.left = Math.random() * 95 + '%';
+                    snow.style.animationDelay = (Math.random() * 2) + 's';
+                    petDisplay.appendChild(snow);
+                }
+            } else if (petDisplay.classList.contains('stormy')) {
+                // Night + storm: show lightning bolts flickering
+                for (let i = 0; i < 6; i++) {
+                    const lightning = document.createElement('div');
+                    lightning.className = 'lightning-emoji';
+                    lightning.textContent = '⚡';
+                    lightning.style.left = Math.random() * 95 + '%';
+                    lightning.style.animationDelay = (Math.random() * 2) + 's';
+                    lightning.style.position = 'absolute';
+                    lightning.style.top = (10 + Math.random() * 60) + '%';
+                    lightning.style.fontSize = '40px';
+                    lightning.style.opacity = '0.7';
+                    petDisplay.appendChild(lightning);
+                }
+            } else {
+                // Night only: show stars
+                if (starBg) {
+                    for (let i = 0; i < 50; i++) {
+                        const star = document.createElement('div');
+                        star.className = 'star';
+                        star.style.top = Math.random() * 100 + '%';
+                        star.style.left = Math.random() * 100 + '%';
+                        star.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+                        starBg.appendChild(star);
+                    }
+                }
+            }
+        } else if (this.currentWeather === 'SNOWY') {
+            // Day snow: show snow flurries only
+            for (let i = 0; i < 12; i++) {
+                const snow = document.createElement('div');
+                snow.className = 'snow-emoji';
+                snow.textContent = '❄️';
+                snow.style.left = Math.random() * 95 + '%';
+                snow.style.animationDelay = (Math.random() * 2) + 's';
+                petDisplay.appendChild(snow);
+            }
+        } else if (this.currentWeather === 'RAINY') {
+            // Day rain: show rain only
+            for (let i = 0; i < 12; i++) {
+                const rain = document.createElement('div');
+                rain.className = 'rain-emoji';
+                rain.textContent = '💧';
+                rain.style.left = Math.random() * 95 + '%';
+                rain.style.animationDelay = (Math.random() * 2) + 's';
+                petDisplay.appendChild(rain);
+            }
+        } else if (this.currentWeather === 'STORMY') {
+            // Day storm: show lightning bolts flickering
+            for (let i = 0; i < 6; i++) {
+                const lightning = document.createElement('div');
+                lightning.className = 'lightning-emoji';
+                lightning.textContent = '⚡';
+                lightning.style.left = Math.random() * 95 + '%';
+                lightning.style.animationDelay = (Math.random() * 2) + 's';
+                lightning.style.position = 'absolute';
+                lightning.style.top = (10 + Math.random() * 60) + '%';
+                lightning.style.fontSize = '40px';
+                lightning.style.opacity = '0.7';
+                petDisplay.appendChild(lightning);
+            }
+        }
     },
     
     // Update mood speech bubble

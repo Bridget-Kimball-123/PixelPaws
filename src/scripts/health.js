@@ -100,21 +100,14 @@ const petHealth = {
             let hungerDecay = 0;
             let happinessDecay = 0;
             
-            if (minutesAway <= 30) {
-                // First 30 minutes: Faster decay (0.5% hunger/min, 0.45% happiness/min)
-                // 25% loss in first 30 minutes (health at 75%)
-                hungerDecay = minutesAway * 0.5;
-                happinessDecay = minutesAway * 0.45;
+            if (minutesAway <= 10) {
+                // First 10 minutes: Faster decay (0.5% hunger/min, 0.45% happiness/min)
+                hungerDecay = minutesAway * 0.05;
+                happinessDecay = minutesAway * 0.045;
             } else {
-                // After 30 minutes: Slower decay rate
-                // First 30 minutes decay
-                hungerDecay = 30 * 0.5; // First 30 minutes (25% loss)
-                happinessDecay = 30 * 0.45; // First 30 minutes (25% loss)
-
-                // Additional time after 30 minutes: 0.01% per minute
-                const minutesAfterFirstHalfHour = minutesAway - 30;
-                hungerDecay += minutesAfterFirstHalfHour * 0.01;
-                happinessDecay += minutesAfterFirstHalfHour * 0.01;
+                // After 10 minutes: Slower decay rate
+                hungerDecay = 10 * 0.001;
+                happinessDecay = 10 * 0.001;
             }
             
             this.hunger = Math.max(0, this.hunger - hungerDecay);
@@ -332,7 +325,16 @@ const petHealth = {
         } else {
             // Healthy - check weather for mood
             const weather = this.getWeather();
-            if (weather === 'rainy') {
+            if (weather === 'night') {
+                const messages = [
+                    "I'm sleepy... 😴",
+                    "Bedtime snack? 🍪",
+                    "Too tired to play much... 💤",
+                    "Just want a treat or toy... 🌙",
+                    "Time for bed soon... ⭐"
+                ];
+                message = messages[Math.floor(Math.random() * messages.length)];
+            } else if (weather === 'rainy') {
                 const messages = [
                     "It's raining... I'm a bit sad 🌧️",
                     "The rain makes me feel blue... 🔵",
@@ -379,6 +381,10 @@ const petHealth = {
     getWeather() {
         const petDisplay = document.querySelector('.pet-display');
         if (!petDisplay) return 'sunny';
+        
+        // Check if it's night time (same logic as weather.js)
+        const hour = new Date().getHours();
+        if (hour >= 20 || hour < 6) return 'night';
         
         if (petDisplay.classList.contains('rainy')) return 'rainy';
         if (petDisplay.classList.contains('snowy')) return 'snowy';
@@ -438,40 +444,39 @@ const petHealth = {
     startIdleDecay() {
         // Decay every 30 seconds while on the page
         setInterval(() => {
-            // Only decay if pet is not already at minimum levels
             if (this.hunger > 0 || this.happiness > 0) {
-                
-                // Calculate how long the page has been active
+                // Desktop detection
+                const isDesktop = !/Mobi|Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
                 const activeTime = Date.now() - this.activeStartTime;
                 const minutesActive = activeTime / (60 * 1000);
-                
-                let hungerDecayRate;
-                let happinessDecayRate;
-                
-                // Tiered decay system based on active time
-                if (minutesActive <= 30) {
-                    // First 30 minutes: Faster decay (0.5% hunger/min, 0.45% happiness/min)
-                    hungerDecayRate = 0.25; // -0.25% every 30 seconds = -0.5% per minute
-                    happinessDecayRate = 0.225; // -0.225% every 30 seconds = -0.45% per minute
+                let hungerDecayRate, happinessDecayRate;
+                if (isDesktop) {
+                    // Desktop: much slower decay
+                    if (minutesActive <= 15) {
+                        hungerDecayRate = 0.1; // 0.2%/min
+                        happinessDecayRate = 0.075; // 0.15%/min
+                    } else {
+                        hungerDecayRate = 0.0007; // 0.0014%/min
+                        happinessDecayRate = 0.0007;
+                    }
                 } else {
-                    // After 30 minutes: Slower decay (0.01% per minute)
-                    hungerDecayRate = 0.005; // -0.005% every 30 seconds = -0.01% per minute
-                    happinessDecayRate = 0.005; // -0.005% every 30 seconds = -0.01% per minute
+                    // Mobile: 1.75x faster decay
+                    if (minutesActive <= 30) {
+                        hungerDecayRate = 0.25 * 1.75; // 0.875%/min
+                        happinessDecayRate = 0.225 * 1.75; // 0.7875%/min
+                    } else {
+                        hungerDecayRate = 0.005 * 1.75; // 0.0175%/min
+                        happinessDecayRate = 0.005 * 1.75;
+                    }
                 }
-                
-                // If tab is not visible (hidden in background), halve the decay rate
+                // If tab is not visible, halve the decay rate
                 if (!this.isTabVisible) {
                     hungerDecayRate *= 0.5;
                     happinessDecayRate *= 0.5;
                 }
-                
-                // Apply decay
                 this.hunger = Math.max(0, this.hunger - hungerDecayRate);
                 this.happiness = Math.max(0, this.happiness - happinessDecayRate);
-                
-                // Update status based on current levels
                 this.updateStatusBasedOnLevels();
-                
                 this.saveHealthData();
                 this.updateHealthDisplay();
                 this.updateSpeechBubble();
