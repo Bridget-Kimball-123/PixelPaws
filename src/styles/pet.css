@@ -547,3 +547,29 @@
         left: 0px !important;
     }
 }
+
+/* Icicle sway animation for freezing weather */
+@keyframes sway {
+    0%, 100% {
+        transform: rotateZ(0deg);
+    }
+    50% {
+        transform: rotateZ(3deg);
+    }
+}
+
+/* Shivering animation for freezing weather */
+@keyframes shiver {
+    0%, 100% {
+        transform: translateX(0px);
+    }
+    25% {
+        transform: translateX(-2px);
+    }
+    50% {
+        transform: translateX(2px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+}

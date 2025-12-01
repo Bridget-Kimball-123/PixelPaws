@@ -139,4 +139,29 @@
         <p>&copy; 2025 PixelPaws by Bridget Kimball</p>
     </footer>
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function updatePetInfoBox() {
+        if (window.weatherSystem) {
+            // Get mood and weather
+            var mood = window.weatherSystem.getCurrentMood();
+            var weather = window.weatherSystem.getCurrentWeather();
+            // Capitalize only first letter
+            mood = mood.toLowerCase();
+            mood = mood.charAt(0).toUpperCase() + mood.slice(1);
+            weather = weather.toLowerCase();
+            weather = weather.charAt(0).toUpperCase() + weather.slice(1);
+            // Update DOM
+            var moodSpan = document.querySelector('.pet-mood span');
+            var weatherSpan = document.querySelector('.weather-status span');
+            if (moodSpan) moodSpan.textContent = mood;
+            if (weatherSpan) weatherSpan.textContent = weather;
+        }
+    }
+    // Initial update after weatherSystem loads
+    setTimeout(updatePetInfoBox, 800);
+    // Update every minute in case weather changes
+    setInterval(updatePetInfoBox, 60000);
+});
+</script>
 </html>
