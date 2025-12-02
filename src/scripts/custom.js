@@ -586,7 +586,7 @@ function createAccessoryElement(itemId) {
     accessory.className = `accessory ${itemId}`;
     
     switch(itemId) {
-        case 'red-collar':
+        case 'pink-collar':
             accessory.style.cssText = `
                 position: absolute;
                 bottom: 45%;
@@ -595,9 +595,9 @@ function createAccessoryElement(itemId) {
                 transform: translateX(-50%);
                 width: 60px;
                 height: 10px;
-                background-color: #ff0000;
+                background-color: #ffaae3;
                 border-radius: 10px;
-                border: 2px solid #cc0000;
+                border: 2px solid #ff76d1;
             `;
             break;
             
@@ -624,10 +624,95 @@ function createAccessoryElement(itemId) {
             accessory.textContent = '👑';
             accessory.style.cssText = `
                 position: absolute;
-                top: -10%;
+                top: -5%;
                 left: 50%;
                 transform: translateX(-50%);
                 font-size: 30px;
+            `;
+            break;
+            
+        case 'green-sweater':
+            accessory.style.cssText = `
+                position: absolute;
+                top: 75%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                width: 120px;
+                height: 100px;
+                background-color: #228B22;
+                border-radius: 40%;
+                border: 2px solid #1a6b1a;
+                z-index: 1;
+            `;
+            break;
+            
+        case 'santa-hat':
+            // Create SVG for santa hat (white cuff, red cone, white pom-pom)
+            const santaSVG = `
+                <svg viewBox="0 -5 80 75" width="80" height="75" xmlns="http://www.w3.org/2000/svg">
+                    <!-- White cuff at bottom -->
+                    <rect x="5" y="42" width="70" height="10" fill="white" stroke="#333" stroke-width="1"/>
+                    <!-- Red triangle cone -->
+                    <polygon points="40,8 12,42 68,42" fill="#ff0000" stroke="#cc0000" stroke-width="1"/>
+                    <!-- White pom-pom at top -->
+                    <circle cx="40" cy="5" r="8" fill="white" stroke="#333" stroke-width="1"/>
+                </svg>
+            `;
+            accessory.innerHTML = santaSVG;
+            accessory.style.cssText = `
+                position: absolute;
+                top: -13%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 75px;
+            `;
+            break;
+            
+        case 'birthday-hat':
+            // Create SVG for birthday hat (flat 2D triangle with stripes)
+            const birthdaySVG = `
+                <svg viewBox="0 0 100 75" width="80" height="60" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- Clipping path for stripes to stay inside triangle -->
+                        <clipPath id="triangleClip">
+                            <polygon points="50,10 10,75 90,75"/>
+                        </clipPath>
+                    </defs>
+                    
+                    <!-- Yellow triangle - point at top, flat base at bottom -->
+                    <polygon points="50,10 10,75 90,75" fill="#FFD700" stroke="#333" stroke-width="1"/>
+                    
+                    <!-- Stripes clipped to triangle -->
+                    <g clip-path="url(#triangleClip)">
+                        <!-- Blue stripes (evenly spaced at 0, 26.67, 53.33 positions) -->
+                        <line x1="11.33" y1="75" x2="41.33" y2="10" stroke="#0066ff" stroke-width="3"/>
+                        <line x1="38" y1="75" x2="68" y2="10" stroke="#0066ff" stroke-width="3"/>
+                        <line x1="64.67" y1="75" x2="94.67" y2="10" stroke="#0066ff" stroke-width="3"/>
+                        
+                        <!-- Pink stripes (evenly spaced at 8.89, 35.55, 62.22 positions) -->
+                        <line x1="20.22" y1="75" x2="50.22" y2="10" stroke="#ff1493" stroke-width="3"/>
+                        <line x1="46.89" y1="75" x2="76.89" y2="10" stroke="#ff1493" stroke-width="3"/>
+                        <line x1="73.55" y1="75" x2="103.55" y2="10" stroke="#ff1493" stroke-width="3"/>
+                        
+                        <!-- Green stripes (evenly spaced at 17.78, 44.44, 71.11 positions) -->
+                        <line x1="29.11" y1="75" x2="59.11" y2="10" stroke="#00cc00" stroke-width="3"/>
+                        <line x1="55.78" y1="75" x2="85.78" y2="10" stroke="#00cc00" stroke-width="3"/>
+                        <line x1="82.44" y1="75" x2="112.44" y2="10" stroke="#00cc00" stroke-width="3"/>
+                    </g>
+                    
+                    <!-- Red circle on top point -->
+                    <circle cx="50" cy="10" r="8" fill="#FF4444" stroke="#cc0000" stroke-width="1"/>
+                </svg>
+            `;
+            accessory.innerHTML = birthdaySVG;
+            accessory.style.cssText = `
+                position: absolute;
+                top: -15%;
+                left: 45%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 60px;
             `;
             break;
             

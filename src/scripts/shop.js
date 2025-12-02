@@ -5,8 +5,8 @@
 
 // Shop items catalog
 const SHOP_ITEMS = {
-    'red-collar': {
-        name: 'Red Collar',
+    'pink-collar': {
+        name: 'Pink Collar',
         cost: 15,
         type: 'collar'
     },
@@ -19,6 +19,21 @@ const SHOP_ITEMS = {
         name: 'Royal Crown',
         cost: 35,
         type: 'crown'
+    },
+    'green-sweater': {
+        name: 'Green Sweater',
+        cost: 35,
+        type: 'sweater'
+    },
+    'santa-hat': {
+        name: 'Santa Hat',
+        cost: 50,
+        type: 'santa-hat'
+    },
+    'birthday-hat': {
+        name: 'Birthday Hat',
+        cost: 50,
+        type: 'birthday-hat'
     }
 };
 
