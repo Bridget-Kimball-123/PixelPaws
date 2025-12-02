@@ -1,4 +1,8 @@
-/* Star background for pet area */
+/* ===================================
+   HOME PAGE - PET DISPLAY
+   =================================== */
+
+/* Star and snowflake backgrounds */
 .star-bg {
     position: absolute;
     top: 0;
@@ -19,41 +23,14 @@
     box-shadow: 0 0 6px 2px #fff;
 }
 
-/* Rain and snow animations */
-.rain-emoji, .snow-emoji {
+/* Snowflakes - static like stars but bigger */
+.snowflake {
     position: absolute;
-    font-size: 2rem;
+    font-size: 1.2rem;
+    opacity: 0.8;
     pointer-events: none;
-    animation-timing-function: linear;
-    z-index: 2;
+    z-index: 0;
 }
-
-.rain-emoji {
-    animation-name: rain-fall;
-    animation-duration: 2.5s;
-    animation-iteration-count: infinite;
-}
-
-.snow-emoji {
-    animation-name: snow-fall;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
-}
-
-@keyframes rain-fall {
-    0% { top: -10%; opacity: 1; }
-    80% { opacity: 1; }
-    100% { top: 110%; opacity: 0.2; }
-}
-
-@keyframes snow-fall {
-    0% { top: -10%; opacity: 1; }
-    80% { opacity: 1; }
-    100% { top: 110%; opacity: 0.2; }
-}
-/* ===================================
-   HOME PAGE - PET DISPLAY
-   =================================== */
 
 .home-page {
     display: flex;
@@ -68,7 +45,7 @@
 }
 
 .pet-display {
-    flex: 1.5;
+    flex: 2;
     background-color: var(--background-white);
     border: 2px solid var(--border-purple);
     border-radius: 15px;
@@ -147,7 +124,7 @@
 /* Pet Info Section */
 .pet-info {
     flex: 1;
-    background-color: var(--light-purple);
+    background-color: var(--background-white);
     border: 2px solid var(--border-purple);
     border-radius: 15px;
     padding: var(--spacing-large);
@@ -155,35 +132,6 @@
 
 .pet-info h2 {
     margin-bottom: var(--spacing-medium);
-}
-
-.pet-info-content {
-    display: flex;
-    gap: var(--spacing-large);
-    align-items: stretch;
-}
-
-.pet-basic-info {
-    flex: 0 0 42%;
-    min-width: 0;
-    background-color: var(--background-white);
-    border: 2px solid var(--border-purple);
-    border-radius: 10px;
-    padding: var(--spacing-medium);
-}
-
-.pet-basic-info h3 {
-    font-size: 1.3rem;
-    margin-bottom: var(--spacing-small);
-    color: var(--primary-purple);
-}
-
-.pet-info .health-bar {
-    flex: 0 0 50%;
-    margin: 0;
-    min-width: 0;
-    max-width: 100%;
-    box-sizing: border-box;
 }
 
 .pet-info p {
@@ -204,12 +152,6 @@
     /* Pet container switches from row to column layout */
     .pet-container {
         flex-direction: column;
-    }
-    
-    /* Stack pet info vertically on mobile */
-    .pet-info-content {
-        flex-direction: column-reverse;
-        gap: var(--spacing-medium);
     }
     
     .pet-display {

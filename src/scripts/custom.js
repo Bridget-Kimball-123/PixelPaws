@@ -637,8 +637,8 @@ function createAccessoryElement(itemId) {
                 top: 75%;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
-                width: 120px;
-                height: 100px;
+                width: 80%;
+                height: 53%;
                 background-color: #228B22;
                 border-radius: 40%;
                 border: 2px solid #1a6b1a;

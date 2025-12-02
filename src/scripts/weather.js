@@ -466,13 +466,31 @@ const weatherSystem = {
         if (this.currentWeather === 'NIGHT') {
             // Night mood is handled above with stars
         } else if (this.currentWeather === 'SNOWY') {
-            for (let i = 0; i < 12; i++) {
-                const snow = document.createElement('div');
-                snow.className = 'snow-emoji';
-                snow.textContent = '❄️';
-                snow.style.left = Math.random() * 95 + '%';
-                snow.style.animationDelay = (Math.random() * 2) + 's';
-                petDisplay.appendChild(snow);
+            // Create static snowflakes like stars (behind the pet)
+            const starBg = document.querySelector('.star-bg');
+            if (starBg) {
+                // Determine number of snowflakes based on screen size
+                let snowflakeCount = 40; // Desktop
+                if (window.innerWidth <= 768) {
+                    snowflakeCount = 25; // Mobile
+                } else if (window.innerWidth <= 1024) {
+                    snowflakeCount = 35; // Tablet
+                }
+                
+                for (let i = 0; i < snowflakeCount; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    snowflake.textContent = '❄️';
+                    snowflake.style.top = Math.random() * 100 + '%';
+                    snowflake.style.left = Math.random() * 100 + '%';
+                    snowflake.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
+                    starBg.appendChild(snowflake);
+                }
+            }
+            
+            // Darken the background gradient for snowy night
+            if (this.isNightTime()) {
+                petDisplay.style.background = 'linear-gradient(to bottom, #0F1620 0%, #1A2231 100%)';
             }
         } else if (this.currentWeather === 'RAINY') {
             for (let i = 0; i < 12; i++) {
