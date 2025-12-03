@@ -95,6 +95,32 @@
         <div class="shop-items">
             <h2>Available Accessories</h2>
             
+            <!-- Filter Section -->
+            <div class="shop-filters">
+                <div class="filter-group">
+                    <label for="filter-type">Filter by Type:</label>
+                    <select id="filter-type" class="filter-select">
+                        <option value="">All Types</option>
+                        <option value="necklace">Necklace</option>
+                        <option value="hat">Hat</option>
+                        <option value="shirt">Shirt</option>
+                        <option value="friend">Friend</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filter-status">Filter by Status:</label>
+                    <select id="filter-status" class="filter-select">
+                        <option value="">All Items</option>
+                        <option value="unowned">Unowned</option>
+                        <option value="owned">Owned</option>
+                        <option value="equipped">Equipped</option>
+                    </select>
+                </div>
+            </div>
+
+            <br>
+            
             <div class="shop-grid">
                 <!-- Pink Collar -->
                 <div class="shop-item" data-item="pink-collar" data-cost="15">

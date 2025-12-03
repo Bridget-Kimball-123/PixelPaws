@@ -119,6 +119,9 @@ function initShop() {
     
     // Setup buy button handlers
     setupBuyButtons();
+    
+    // Setup filter handlers
+    setupFilters();
 }
 
 // Check if shop should be accessible
@@ -399,4 +402,53 @@ function showConfirmModal(message, onConfirm) {
     yesBtn.addEventListener('click', handleYes);
     noBtn.addEventListener('click', handleNo);
     modal.addEventListener('click', handleOverlay);
+}
+
+// Setup filter functionality
+function setupFilters() {
+    const filterTypeSelect = document.getElementById('filter-type');
+    const filterStatusSelect = document.getElementById('filter-status');
+    
+    if (!filterTypeSelect || !filterStatusSelect) return;
+    
+    // Add event listeners to both filters
+    filterTypeSelect.addEventListener('change', applyFilters);
+    filterStatusSelect.addEventListener('change', applyFilters);
+}
+
+// Apply filters to shop items
+function applyFilters() {
+    const filterType = document.getElementById('filter-type')?.value || '';
+    const filterStatus = document.getElementById('filter-status')?.value || '';
+    const shopItems = document.querySelectorAll('.shop-item');
+    const owned = window.getOwnedAccessories ? window.getOwnedAccessories() : [];
+    const equipped = window.getEquippedAccessories ? window.getEquippedAccessories() : [];
+    
+    shopItems.forEach(item => {
+        const itemId = item.dataset.item;
+        const itemType = SHOP_ITEMS[itemId]?.type || '';
+        const isOwned = owned.includes(itemId);
+        const isEquipped = equipped.includes(itemId);
+        
+        let shouldShow = true;
+        
+        // Check type filter
+        if (filterType && itemType !== filterType) {
+            shouldShow = false;
+        }
+        
+        // Check status filter
+        if (shouldShow && filterStatus) {
+            if (filterStatus === 'unowned' && isOwned) {
+                shouldShow = false;
+            } else if (filterStatus === 'owned' && !isOwned) {
+                shouldShow = false;
+            } else if (filterStatus === 'equipped' && !isEquipped) {
+                shouldShow = false;
+            }
+        }
+        
+        // Show or hide the item
+        item.style.display = shouldShow ? 'block' : 'none';
+    });
 }

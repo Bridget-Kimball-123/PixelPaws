@@ -67,7 +67,7 @@ To Do Checklist:
     ✅ Include a confirmation popup for resetting pet: include what will reset and ask for confirmation
     ✅ Incorporate weather API
     ✅ Implement JSON download feature (in customize or about?)
-    Implement loyalty points: the more a user comes back the more they will gain (rewards = themes)
+    Implement loyalty points: the more a user comes back the more they will gain (rewards = themes?)
     Change health bar calculation
         If one (hunger/happiness) is below 30 and the other is above 75 weigh the 20 more
         If either hunger or happiness is below 50% the health bar should NOT be green
