@@ -570,14 +570,91 @@ function toggleEquipAccessory(itemId) {
     if (index > -1) {
         // Unequip
         equipped.splice(index, 1);
+        saveEquippedAccessories(equipped);
+        renderAccessories();
+        return false;
     } else {
-        // Equip
+        // Check if trying to equip an item of a type that's already equipped
+        const itemType = SHOP_ITEMS[itemId]?.type;
+        if (itemType) {
+            // Find any equipped item of the same type
+            const sameTypeIndex = equipped.findIndex(equippedId => 
+                SHOP_ITEMS[equippedId]?.type === itemType
+            );
+            if (sameTypeIndex > -1) {
+                // There's a conflict - show confirmation modal
+                showAccessoryConflictModal(itemId, equipped[sameTypeIndex], itemType);
+                return equipped.includes(itemId);
+            }
+        }
+        // Equip the new item
         equipped.push(itemId);
+        saveEquippedAccessories(equipped);
+        renderAccessories();
+        return true;
+    }
+}
+
+// Show modal for accessory type conflict
+function showAccessoryConflictModal(newItemId, currentItemId, itemType) {
+    const modal = document.getElementById('confirmModal');
+    if (!modal) return;
+    
+    const newItemName = SHOP_ITEMS[newItemId]?.name || 'Item';
+    const currentItemName = SHOP_ITEMS[currentItemId]?.name || 'Current item';
+    const typeDisplayName = SHOP_ITEMS[newItemId]?.displayType || itemType;
+    
+    const message = `Only one ${typeDisplayName.toLowerCase()} is allowed at a time. You currently have "${currentItemName}" equipped. Would you like to unequip it and equip "${newItemName}" instead?`;
+    
+    document.getElementById('confirmMessage').textContent = message;
+    
+    // Clear previous event listeners by cloning
+    const confirmYesBtn = document.getElementById('confirmYes');
+    const newConfirmYesBtn = confirmYesBtn.cloneNode(true);
+    confirmYesBtn.parentNode.replaceChild(newConfirmYesBtn, confirmYesBtn);
+    
+    const confirmNoBtn = document.getElementById('confirmNo');
+    const newConfirmNoBtn = confirmNoBtn.cloneNode(true);
+    confirmNoBtn.parentNode.replaceChild(newConfirmNoBtn, confirmNoBtn);
+    
+    // Set up new event listeners
+    document.getElementById('confirmYes').addEventListener('click', () => {
+        // Confirm the swap
+        const equipped = getEquippedAccessories();
+        const sameTypeIndex = equipped.findIndex(equippedId => 
+            SHOP_ITEMS[equippedId]?.type === itemType
+        );
+        if (sameTypeIndex > -1) {
+            equipped.splice(sameTypeIndex, 1);
+        }
+        equipped.push(newItemId);
+        saveEquippedAccessories(equipped);
+        renderAccessories();
+        
+        // Update shop UI buttons
+        if (window.loadOwnedItems) {
+            window.loadOwnedItems();
+        }
+        
+        // Update pet preview
+        if (window.renderShopAccessories) {
+            window.renderShopAccessories();
+        }
+        
+        modal.style.display = 'none';
+    });
+    
+    document.getElementById('confirmNo').addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    
+    // Update modal title
+    const modalHeader = document.getElementById('modalTitle');
+    if (modalHeader) {
+        modalHeader.textContent = `${typeDisplayName} Conflict`;
     }
     
-    saveEquippedAccessories(equipped);
-    renderAccessories();
-    return equipped.includes(itemId);
+    modal.style.display = 'flex';
 }
 
 // Create accessory element
@@ -597,7 +674,8 @@ function createAccessoryElement(itemId) {
                 height: 10px;
                 background-color: #ffaae3;
                 border-radius: 10px;
-                border: 2px solid #ff76d1;
+                border: 2px solid #fea2dfff;
+                z-index: 10;
             `;
             break;
             
@@ -617,6 +695,7 @@ function createAccessoryElement(itemId) {
                 border-left: ${borderSize} solid transparent;
                 border-right: ${borderSize} solid transparent;
                 border-top: ${borderTop} solid #0066ff;
+                z-index: 9;
             `;
             break;
             
@@ -632,18 +711,96 @@ function createAccessoryElement(itemId) {
             break;
             
         case 'green-sweater':
+            // Green sweater with cable knit pattern - rectangular with very rounded corners
+            const sweaterSVG = `
+                <svg viewBox="0 0 142 140" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Main sweater body - rectangle with very rounded corners -->
+                    <rect x="8" y="15" width="127" height="110" rx="35" ry="35" fill="#228B22" stroke="#1a6b1a" stroke-width="1.5"/>
+                    
+                    <!-- Cable knit pattern (kept within bounds) -->
+                    <g stroke="#1a6b1a" stroke-width="1.2" opacity="0.5" fill="none" stroke-linecap="round">
+                        <!-- Left side cable -->
+                        <path d="M 20 30 Q 22 40 20 50 Q 22 60 20 70 Q 22 80 20 90 Q 22 100 20 110"/>
+                        <path d="M 28 28 Q 30 38 28 48 Q 30 58 28 68 Q 30 78 28 88 Q 30 98 28 112"/>
+                        <path d="M 36 30 Q 38 40 36 50 Q 38 60 36 70 Q 38 80 36 90 Q 38 100 36 110"/>
+                        
+                        <!-- Left-center cable -->
+                        <path d="M 46 26 Q 49 36 46 46 Q 49 56 46 66 Q 49 76 46 86 Q 49 96 46 114"/>
+                        <path d="M 56 25 Q 59 35 56 45 Q 59 55 56 65 Q 59 75 56 85 Q 59 95 56 115"/>
+                        
+                        <!-- Center cable -->
+                        <path d="M 66 22 Q 69 32 66 42 Q 69 52 66 62 Q 69 72 66 82 Q 69 92 66 118"/>
+                        <path d="M 74 22 Q 77 32 74 42 Q 77 52 74 62 Q 77 72 74 82 Q 77 92 74 118"/>
+                        
+                        <!-- Right-center cable -->
+                        <path d="M 84 25 Q 87 35 84 45 Q 87 55 84 65 Q 87 75 84 85 Q 87 95 84 115"/>
+                        <path d="M 94 26 Q 97 36 94 46 Q 97 56 94 66 Q 97 76 94 86 Q 97 96 94 114"/>
+                        
+                        <!-- Right side cable -->
+                        <path d="M 104 30 Q 106 40 104 50 Q 106 60 104 70 Q 106 80 104 90 Q 106 100 104 110"/>
+                        <path d="M 112 28 Q 114 38 112 48 Q 114 58 112 68 Q 114 78 112 88 Q 114 98 112 112"/>
+                        <path d="M 120 30 Q 122 40 120 50 Q 122 60 120 70 Q 122 80 120 90 Q 122 100 120 110"/>
+                    </g>
+                    
+                    <!-- Additional texture detail - subtle diamond patterns in cables -->
+                    <g stroke="#0d4d0d" stroke-width="0.6" opacity="0.3" fill="none">
+                        <path d="M 36 40 L 42 45 M 36 60 L 42 65 M 36 80 L 42 85 M 36 100 L 42 105"/>
+                        <path d="M 98 40 L 104 45 M 98 60 L 104 65 M 98 80 L 104 85 M 98 100 L 104 105"/>
+                        <path d="M 56 35 L 60 40 M 56 55 L 60 60 M 56 75 L 60 80 M 56 95 L 60 100"/>
+                        <path d="M 74 35 L 78 40 M 74 55 L 78 60 M 74 75 L 78 80 M 74 95 L 78 100"/>
+                    </g>
+                </svg>
+            `;
+            accessory.innerHTML = sweaterSVG;
             accessory.style.cssText = `
                 position: absolute;
                 top: 75%;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
-                width: 80%;
-                height: 53%;
-                background-color: #228B22;
-                border-radius: 40%;
-                border: 2px solid #1a6b1a;
+                width: 100%;
+                height: 65%;
                 z-index: 1;
             `;
+            break;
+            
+        case 'jmu-cs-shirt':
+            // Purple JMU CS shirt - circular, covers full lower body
+            accessory.style.cssText = `
+                position: absolute;
+                top: 74%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                width: 80%;
+                height: 54%;
+                background-color: #6A2FA8;
+                border-radius: 50%;
+                border: 2px solid #4A1F7F;
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            // Create text overlay for the shirt
+            const jmuTextDiv = document.createElement('div');
+            jmuTextDiv.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                color: white;
+                font-family: Arial, sans-serif;
+                font-weight: bold;
+                width: 90%;
+                z-index: 2;
+            `;
+            jmuTextDiv.innerHTML = `
+                <div style="font-size: 14px; line-height: 1.2;">JMU</div>
+                <div style="font-size: 8px; line-height: 1;">Computer</div>
+                <div style="font-size: 8px;">Science</div>
+            `;
+            accessory.appendChild(jmuTextDiv);
             break;
             
         case 'santa-hat':
@@ -713,6 +870,37 @@ function createAccessoryElement(itemId) {
                 transform: translateX(-50%);
                 width: 60px;
                 height: 60px;
+            `;
+            break;
+            
+        case 'rubber-duckie':
+            // Create SVG for rubber duckie with shorter neck
+            const ducklingSVG = `
+                <svg viewBox="0 0 100 100" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Body -->
+                    <ellipse cx="50" cy="62" rx="25" ry="28" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+                    <!-- Neck (shorter) -->
+                    <rect x="45" y="42" width="10" height="8" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+                    <!-- Head -->
+                    <circle cx="50" cy="30" r="15" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+                    <!-- Eyes -->
+                    <circle cx="45" cy="27" r="3" fill="#000"/>
+                    <circle cx="55" cy="27" r="3" fill="#000"/>
+                    <!-- Beak -->
+                    <ellipse cx="50" cy="35" rx="8" ry="6" fill="#FF8C00" stroke="#FF6600" stroke-width="1"/>
+                    <!-- Wing lines -->
+                    <path d="M 35 52 Q 30 62 35 72" stroke="#FFA500" stroke-width="1.5" fill="none"/>
+                    <path d="M 65 52 Q 70 62 65 72" stroke="#FFA500" stroke-width="1.5" fill="none"/>
+                </svg>
+            `;
+            accessory.innerHTML = ducklingSVG;
+            accessory.style.cssText = `
+                position: absolute;
+                bottom: -5%;
+                left: 70%;
+                width: 60px;
+                height: 60px;
+                z-index: 3;
             `;
             break;
             

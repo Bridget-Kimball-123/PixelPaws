@@ -3,37 +3,55 @@
  * Author: Bridget Kimball
  */
 
-// Shop items catalog
+// Shop items catalog (organized by price)
 const SHOP_ITEMS = {
     'pink-collar': {
         name: 'Pink Collar',
         cost: 15,
-        type: 'collar'
+        type: 'necklace',
+        displayType: 'Necklace'
     },
     'blue-bandana': {
         name: 'Blue Bandana',
         cost: 15,
-        type: 'bandana'
-    },
-    'crown': {
-        name: 'Royal Crown',
-        cost: 35,
-        type: 'crown'
+        type: 'necklace',
+        displayType: 'Necklace'
     },
     'green-sweater': {
         name: 'Green Sweater',
         cost: 35,
-        type: 'sweater'
+        type: 'shirt',
+        displayType: 'Shirt'
+    },
+    'crown': {
+        name: 'Royal Crown',
+        cost: 35,
+        type: 'hat',
+        displayType: 'Hat'
     },
     'santa-hat': {
         name: 'Santa Hat',
         cost: 50,
-        type: 'santa-hat'
+        type: 'hat',
+        displayType: 'Hat'
     },
     'birthday-hat': {
         name: 'Birthday Hat',
         cost: 50,
-        type: 'birthday-hat'
+        type: 'hat',
+        displayType: 'Hat'
+    },
+    'jmu-cs-shirt': {
+        name: 'JMU CS Shirt',
+        cost: 75,
+        type: 'shirt',
+        displayType: 'Shirt'
+    },
+    'rubber-duckie': {
+        name: 'Rubber Duckie',
+        cost: 90,
+        type: 'friend',
+        displayType: 'Friend'
     }
 };
 
@@ -299,6 +317,14 @@ function toggleEquip(itemId) {
     
     // Update button
     const $item = $(`.shop-item[data-item="${itemId}"]`);
+    
+    // Check if modal is showing (conflict detected)
+    const modal = document.getElementById('confirmModal');
+    if (modal && modal.style.display !== 'none') {
+        // Modal is showing, don't update UI yet - let the modal handler do it
+        return;
+    }
+    
     $item.find('.equip-btn').text(isNowEquipped ? 'Unequip' : 'Equip');
     $item.find('.equip-btn').toggleClass('equipped', isNowEquipped);
     

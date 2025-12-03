@@ -72,8 +72,15 @@ To Do Checklist:
         If one (hunger/happiness) is below 30 and the other is above 75 weigh the 20 more
         If either hunger or happiness is below 50% the health bar should NOT be green
     Fix snow
-        For desktop: see if there's an option for falling snow otherwise make it similar to stars
-        For tablet: make more sparser snow fall
-        For all views: make the snow appear behind the pet, make the night snow gradient darker
+        ✅ For desktop: make the snow look similar to stars
+        ✅ For all views: make the snow appear behind the pet, make the night snow gradient darker
+        For tablet: make more snow fall
     Fix fetch function: ball doesn't end up over the pets mouth
     Add wait period of a couple seconds in between play functions
+    Shop:
+        ✅ Only allow one hat to be equipped at a time
+        Allow the user to filter stuff in the shop
+            Type
+            Unquipped
+            Unowned
+            Owned
