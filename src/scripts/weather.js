@@ -12,12 +12,12 @@ const WEATHER_MOODS = {
         windEffect: true,
         cheersUpWith: ['pet'],
         night: {
-            background: 'linear-gradient(to bottom, #bfc6c6 0%, #e0e0e0 100%)',
-            icon: '💨'
+            background: 'linear-gradient(to bottom, #9ca2a2ff 0%, #b8b8b8ff 100%)',
+            icon: '🌙💨'
         }
     },
     SUNNY: {
-        moods: ['happy', 'hungry', 'wants-love', 'wants-toy', 'wants-play'],
+        moods: ['happy', 'hungry', 'wants love', 'wants toy', 'wants to play'],
         weights: [0.5, 0.15, 0.15, 0.1, 0.1], // Happy has 50% weight
         default: 'happy',
         background: 'linear-gradient(to bottom, #87CEEB 0%, #FFE66D 100%)',
@@ -26,8 +26,12 @@ const WEATHER_MOODS = {
     RAINY: {
         mood: 'sad',
         background: 'linear-gradient(to bottom, #003e80ff 0%, #003facff 100%)',
-        icon: '🌧️',
-        cheersUpWith: ['fetch', 'toy-time']
+        icon: '💧',
+        cheersUpWith: ['fetch', 'toy-time'],
+        night: {
+            background: 'linear-gradient(to bottom, #243d8eff 0%, #3982a2ff 100%)',
+            icon: '🌙💧'
+        }
     },
     FOGGY: {
         mood: 'nervous',
@@ -42,10 +46,14 @@ const WEATHER_MOODS = {
         recoversAfter: ['pet', 'treat', 'toy-time']
     },
     SNOWY: {
-        mood: 'wants-play',
+        mood: 'wants to play',
         background: 'linear-gradient(to bottom, #ffffffff 0%, #CBD5E0 100%)',
         icon: '❄️',
-        cheersUpWith: ['fetch', 'toy-time']
+        cheersUpWith: ['fetch', 'toy-time'],
+        night: {
+            background: 'linear-gradient(to bottom, #8b9292ff 0%, #b9bec3ff 100%)',
+            icon: '🌙❄️'
+        }
     },
     CLOUDY: {
         mood: 'content',
@@ -66,7 +74,7 @@ const WEATHER_MOODS = {
         cheersUpWith: ['pet', 'treat', 'toy-time'],
         night: {
             background: 'linear-gradient(to bottom, #5a3a1a 0%, #a67c52 100%)',
-            icon: '🌪️'
+            icon: '🌙🌪️'
         }
     },
     HURRICANE: {
@@ -77,7 +85,7 @@ const WEATHER_MOODS = {
         cheersUpWith: ['pet', 'treat', 'toy-time'],
         night: {
             background: 'linear-gradient(to bottom, #052c3a 0%, #084c61 100%)',
-            icon: '🌀'
+            icon: '🌙🌀'
         }
     },
     FROZEN_MIX: {
@@ -87,7 +95,7 @@ const WEATHER_MOODS = {
         cheersUpWith: ['pet'],
         night: {
             background: 'linear-gradient(to bottom, #6b7a8f 0%, #b6c6e9 100%)',
-            icon: '🌨️'
+            icon: '🌙🌨️'
         }
     },
     HOT: {
@@ -97,7 +105,7 @@ const WEATHER_MOODS = {
         cheersUpWith: ['brush'],
         night: {
             background: 'linear-gradient(to bottom, #9c2525ff 0%, #d47638ff 100%)',
-            icon: '🥵'
+            icon: '🌙🥵'
         }
     },
     FREEZING: {
@@ -107,7 +115,7 @@ const WEATHER_MOODS = {
         cheersUpWith: ['fetch'],
         night: {
             background: 'linear-gradient(to bottom, #243d8eff 0%, #3982a2ff 100%)',
-            icon: '🥶'
+            icon: '🌙🥶'
         }
     }
 };
@@ -117,9 +125,9 @@ const MOOD_MESSAGES = {
     'nervous': ['The wind makes me nervous... 😟', 'It\'s so blustery!', 'Can you pet me to calm down?'],
     'happy': ['I\'m so happy! 😊', 'What a great day!', 'Life is good! ✨'],
     'hungry': ['I\'m hungry! 🍖', 'Feed me please!', 'My tummy is rumbling...'],
-    'wants-love': ['I need some love! 💕', 'Pet me please!', 'Can I have cuddles?'],
-    'wants-toy': ['I want to play with a toy! 🎾', 'Toy time?', 'Can I have a new toy?'],
-    'wants-play': ['Let\'s play! 🎮', 'Play with me!', 'I want to have fun!'],
+    'wants love': ['I need some love! 💕', 'Pet me please!', 'Can I have cuddles?'],
+    'wants toy': ['I want to play with a toy! 🎾', 'Toy time?', 'Can I have a new toy?'],
+    '': ['Let\'s play! 🎮', 'Play with me!', 'I want to have fun!'],
     'sad': ['I\'m feeling sad... 😢', 'The rain makes me blue...', 'Cheer me up?'],
     'anxious': ['I\'m scared! 😰', 'The storm is scary...', 'Hold me please...'],
     'content': ['I\'m feeling okay', 'Just relaxing...', 'Taking it easy'],
@@ -466,31 +474,110 @@ const weatherSystem = {
         if (this.currentWeather === 'NIGHT') {
             // Night mood is handled above with stars
         } else if (this.currentWeather === 'SNOWY') {
-            // Create static snowflakes like stars (behind the pet)
-            const starBg = document.querySelector('.star-bg');
-            if (starBg) {
-                // Determine number of snowflakes based on screen size
-                let snowflakeCount = 40; // Desktop
+            // Create snow animation
+            if (petDisplay) {
+                // Determine snow style based on screen size
+                let snowflakeCount = 50; // Desktop - static scattered snowflakes
+                let isMobileView = false;
+                let isDesktop = false;
+                
                 if (window.innerWidth <= 768) {
-                    snowflakeCount = 25; // Mobile
+                    snowflakeCount = 25; // Mobile - falling
+                    isMobileView = true;
                 } else if (window.innerWidth <= 1024) {
-                    snowflakeCount = 35; // Tablet
+                    snowflakeCount = 35; // Tablet - falling
+                    isMobileView = true;
+                } else {
+                    isDesktop = true; // Desktop - static scattered
                 }
                 
-                for (let i = 0; i < snowflakeCount; i++) {
-                    const snowflake = document.createElement('div');
-                    snowflake.className = 'snowflake';
-                    snowflake.textContent = '❄️';
-                    snowflake.style.top = Math.random() * 100 + '%';
-                    snowflake.style.left = Math.random() * 100 + '%';
-                    snowflake.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
-                    starBg.appendChild(snowflake);
+                if (isDesktop) {
+                    // Desktop: Create static scattered snowflakes throughout the display
+                    for (let i = 0; i < snowflakeCount; i++) {
+                        const snowflake = document.createElement('div');
+                        snowflake.className = 'scattered-snowflake';
+                        snowflake.textContent = '❄️';
+                        
+                        // Random position anywhere in the display
+                        const randomX = Math.random() * 100;
+                        const randomY = Math.random() * 100;
+                        
+                        snowflake.style.position = 'absolute';
+                        snowflake.style.left = randomX + '%';
+                        snowflake.style.top = randomY + '%';
+                        snowflake.style.fontSize = '24px';
+                        snowflake.style.opacity = (0.4 + Math.random() * 0.4).toFixed(2);
+                        snowflake.style.pointerEvents = 'none';
+                        snowflake.style.zIndex = '0'; // Behind pet (z-index: 2) and speech bubble (z-index: 3)
+                        
+                        petDisplay.appendChild(snowflake);
+                    }
+                } else {
+                    // Mobile/Tablet: Create falling snowflakes with better spread
+                    const createFallingSnowflake = () => {
+                        const snowflake = document.createElement('div');
+                        snowflake.className = 'falling-snowflake';
+                        snowflake.textContent = '❄️';
+                        
+                        // Get pet display dimensions - use percentage if dimensions not ready
+                        const displayWidth = petDisplay.offsetWidth;
+                        
+                        let startX;
+                        if (displayWidth > 0) {
+                            // Use pixel positioning if display has dimensions
+                            startX = Math.random() * displayWidth;
+                            snowflake.style.position = 'absolute';
+                            snowflake.style.left = startX + 'px';
+                        } else {
+                            // Fallback to percentage positioning
+                            startX = Math.random() * 100;
+                            snowflake.style.position = 'absolute';
+                            snowflake.style.left = startX + '%';
+                        }
+                        
+                        const startY = -30; // Start above display in pixels
+                        const duration = 10 + Math.random() * 6; // 10-16 seconds to fall
+                        const horizontalDrift = (Math.random() - 0.5) * 80; // Wider horizontal movement
+                        
+                        snowflake.style.top = startY + 'px';
+                        snowflake.style.fontSize = '20px';
+                        snowflake.style.opacity = '0.7';
+                        snowflake.style.pointerEvents = 'none';
+                        snowflake.style.zIndex = '0'; // Behind pet (z-index: 2) and speech bubble (z-index: 3)
+                        
+                        // Use CSS animation with custom properties
+                        snowflake.style.setProperty('--drift', horizontalDrift + 'px');
+                        snowflake.style.setProperty('--duration', duration + 's');
+                        snowflake.style.setProperty('--delay', '0s');
+                        
+                        petDisplay.appendChild(snowflake);
+                        
+                        // Remove snowflake when animation completes to prevent memory leak
+                        const animationDuration = duration * 1000;
+                        setTimeout(() => {
+                            snowflake.remove();
+                        }, animationDuration);
+                    };
+                    
+                    // Create initial snowflakes spread out over time to avoid clumping
+                    for (let i = 0; i < snowflakeCount; i++) {
+                        // Spread creation over 2 seconds to distribute snowflakes
+                        const staggerDelay = (i / snowflakeCount) * 2000;
+                        setTimeout(() => {
+                            createFallingSnowflake();
+                        }, staggerDelay);
+                    }
+                    
+                    // Continuously create new snowflakes
+                    const creationInterval = isMobileView ? 400 : 200; // Mobile less frequent
+                    this.snowInterval = setInterval(() => {
+                        // Only create new snowflakes if there aren't too many
+                        const currentSnowflakes = petDisplay.querySelectorAll('.falling-snowflake').length;
+                        if (currentSnowflakes < snowflakeCount * 2) {
+                            createFallingSnowflake();
+                        }
+                    }, creationInterval);
                 }
-            }
-            
-            // Darken the background gradient for snowy night
-            if (this.isNightTime()) {
-                petDisplay.style.background = 'linear-gradient(to bottom, #0F1620 0%, #1A2231 100%)';
             }
         } else if (this.currentWeather === 'RAINY') {
             for (let i = 0; i < 12; i++) {

@@ -32,6 +32,34 @@
     z-index: 0;
 }
 
+/* Falling snowflakes animation */
+.falling-snowflake {
+    position: absolute;
+    pointer-events: none;
+    animation-name: falling-snow;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--duration, 10s);
+    animation-delay: var(--delay, 0s);
+}
+
+/* Scattered snowflakes for desktop */
+.scattered-snowflake {
+    position: absolute;
+    pointer-events: none;
+}
+
+@keyframes falling-snow {
+    from {
+        transform: translateY(0) translateX(0);
+        opacity: 0.8;
+    }
+    to {
+        transform: translateY(110vh) translateX(var(--drift, 0));
+        opacity: 0;
+    }
+}
+
 .home-page {
     display: flex;
     flex-direction: column;
@@ -101,6 +129,7 @@
     padding: var(--spacing-medium);
     max-width: 200px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 3;
 }
 
 .speech-bubble::after {

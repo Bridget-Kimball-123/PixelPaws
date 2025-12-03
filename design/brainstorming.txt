@@ -68,7 +68,9 @@ To Do Checklist:
     ✅ Incorporate weather API
     ✅ Implement JSON download feature (in customize or about?)
     Implement loyalty points: the more a user comes back the more they will gain (rewards = themes)
-    Change health bar calculation: if one (hunger/happiness) is below 20 and the other is above 75 weigh the 20 more
+    Change health bar calculation
+        If one (hunger/happiness) is below 30 and the other is above 75 weigh the 20 more
+        If either hunger or happiness is below 50% the health bar should NOT be green
     Fix snow
         For desktop: see if there's an option for falling snow otherwise make it similar to stars
         For tablet: make more sparser snow fall
