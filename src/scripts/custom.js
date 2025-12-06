@@ -576,7 +576,8 @@ function toggleEquipAccessory(itemId) {
     } else {
         // Check if trying to equip an item of a type that's already equipped
         const itemType = SHOP_ITEMS[itemId]?.type;
-        if (itemType) {
+        if (itemType && itemType !== 'friend') {
+            // For non-friend types, only one can be equipped at a time
             // Find any equipped item of the same type
             const sameTypeIndex = equipped.findIndex(equippedId => 
                 SHOP_ITEMS[equippedId]?.type === itemType
@@ -587,7 +588,7 @@ function toggleEquipAccessory(itemId) {
                 return equipped.includes(itemId);
             }
         }
-        // Equip the new item
+        // Equip the new item (friends can have multiple equipped)
         equipped.push(itemId);
         saveEquippedAccessories(equipped);
         renderAccessories();
@@ -670,11 +671,11 @@ function createAccessoryElement(itemId) {
                 left: 50%;
                 top: 47%;
                 transform: translateX(-50%);
-                width: 60px;
+                width: 65px;
                 height: 10px;
-                background-color: #ffaae3;
+                background-color: #fe93daff;
                 border-radius: 10px;
-                border: 2px solid #fea2dfff;
+                border: 2px solid #ff74d1ff;
                 z-index: 10;
             `;
             break;
@@ -687,7 +688,7 @@ function createAccessoryElement(itemId) {
             
             accessory.style.cssText = `
                 position: absolute;
-                top: 48%;
+                top: 50%;
                 left: 50%;
                 transform: translateX(-50%);
                 width: 0;
@@ -770,7 +771,7 @@ function createAccessoryElement(itemId) {
                 top: 74%;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
-                width: 80%;
+                width: 79%;
                 height: 54%;
                 background-color: #6A2FA8;
                 border-radius: 50%;
@@ -806,7 +807,7 @@ function createAccessoryElement(itemId) {
         case 'santa-hat':
             // Create SVG for santa hat (white cuff, red cone, white pom-pom)
             const santaSVG = `
-                <svg viewBox="0 -5 80 75" width="80" height="75" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="5 -2 80 75" width="90" height="85" xmlns="http://www.w3.org/2000/svg">
                     <!-- White cuff at bottom -->
                     <rect x="5" y="42" width="70" height="10" fill="white" stroke="#333" stroke-width="1"/>
                     <!-- Red triangle cone -->
@@ -829,7 +830,7 @@ function createAccessoryElement(itemId) {
         case 'birthday-hat':
             // Create SVG for birthday hat (flat 2D triangle with stripes)
             const birthdaySVG = `
-                <svg viewBox="0 0 100 75" width="80" height="60" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="5 7 100 75" width="90" height="75" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <!-- Clipping path for stripes to stay inside triangle -->
                         <clipPath id="triangleClip">
@@ -859,7 +860,7 @@ function createAccessoryElement(itemId) {
                     </g>
                     
                     <!-- Red circle on top point -->
-                    <circle cx="50" cy="10" r="8" fill="#FF4444" stroke="#cc0000" stroke-width="1"/>
+                    <circle cx="50" cy="10" r="10" fill="#FF4444" stroke="#cc0000" stroke-width="1"/>
                 </svg>
             `;
             accessory.innerHTML = birthdaySVG;
@@ -876,7 +877,7 @@ function createAccessoryElement(itemId) {
         case 'rubber-duckie':
             // Create SVG for rubber duckie with shorter neck
             const ducklingSVG = `
-                <svg viewBox="0 0 100 100" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="-30 0 100 100" width="70" height="60" xmlns="http://www.w3.org/2000/svg">
                     <!-- Body -->
                     <ellipse cx="50" cy="62" rx="25" ry="28" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
                     <!-- Neck (shorter) -->
@@ -897,10 +898,117 @@ function createAccessoryElement(itemId) {
             accessory.style.cssText = `
                 position: absolute;
                 bottom: -5%;
-                left: 70%;
+                left: -10%;
                 width: 60px;
                 height: 60px;
-                z-index: 3;
+                z-index: 11;
+            `;
+            break;
+            
+        case 'orange-frog':
+            // Create SVG for orange frog friend
+            const frogSVG = `
+                <svg viewBox="0 0 300 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Back left leg -->
+                    <ellipse cx="35" cy="96" rx="15" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <!-- Back left foot with toes -->
+                    <ellipse cx="33" cy="115" rx="14" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <!-- Left toe 1 (upper left) -->
+                    <ellipse cx="13" cy="120" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="1" cy="121" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    <!-- Left toe 2 (lower left) -->
+                    <ellipse cx="21" cy="124" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="9" cy="125" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+
+                    <!-- Back right leg -->
+                    <ellipse cx="125" cy="96" rx="15" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <!-- Back right foot with toes (mirrored from left) -->
+                    <ellipse cx="127" cy="115" rx="14" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <!-- Right toe 1 (upper right, mirrored) -->
+                    <ellipse cx="147" cy="120" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="159" cy="121" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    <!-- Right toe 2 (lower right, mirrored) -->
+                    <ellipse cx="139" cy="124" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="151" cy="125" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+
+                    <!-- Body -->
+                    <ellipse cx="80" cy="95" rx="45" ry="40" fill="#FF6B35" stroke="#CC5528" stroke-width="2"/>
+
+                    <!-- Belly/throat area (light cream) -->
+                    <ellipse cx="80" cy="105" rx="38" ry="30" fill="#F5D5B8" stroke="none"/>
+                    
+                    <!-- Front left leg -->
+                    <ellipse cx="47" cy="100" rx="15" ry="30" fill="#FF6B35" stroke="#CC5528" stroke-width="1.5"/>
+                    <!-- Left foot with toes (smaller) -->
+                    <ellipse cx="45" cy="130" rx="11" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <!-- Left toe 1 -->
+                    <ellipse cx="30" cy="130" rx="2.5" ry="4" transform="rotate(45 28 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="34" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    <!-- Left toe 2 -->
+                    <ellipse cx="45" cy="138" rx="2.5" ry="4" transform="rotate(0 43 143)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="45" cy="142" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    <!-- Left toe 3 -->
+                    <ellipse cx="60" cy="130" rx="2.5" ry="4" transform="rotate(-45 62 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="56" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    
+                    <!-- Front right leg -->
+                    <ellipse cx="113" cy="100" rx="15" ry="30" fill="#FF6B35" stroke="#CC5528" stroke-width="1.5"/>
+                    <!-- Right foot with toes (smaller) -->
+                    <ellipse cx="115" cy="130" rx="11" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <!-- Right toe 1 -->
+                    <ellipse cx="100" cy="130" rx="2.5" ry="4" transform="rotate(45 98 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="104" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    <!-- Right toe 2 -->
+                    <ellipse cx="115" cy="138" rx="2.5" ry="4" transform="rotate(0 113 143)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="115" cy="142" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    <!-- Right toe 3 -->
+                    <ellipse cx="130" cy="130" rx="2.5" ry="4" transform="rotate(-45 132 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    <circle cx="126" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                    
+                    <!-- Head area -->
+                    <ellipse cx="80" cy="60" rx="42" ry="35" fill="#FF6B35" stroke="#CC5528" stroke-width="2"/>
+                    
+                    <!-- Left eye orange circle behind (taller) -->
+                    <ellipse cx="55" cy="40" rx="18" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    
+                    <!-- Right eye orange circle behind (taller) -->
+                    <ellipse cx="105" cy="40" rx="18" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                    
+                    <!-- Left eye green base (shorter) -->
+                    <ellipse cx="55" cy="42" rx="14" ry="17" fill="#B8D956" stroke="#3D5A1F" stroke-width="1.5"/>
+                    
+                    <!-- Right eye green base (shorter) -->
+                    <ellipse cx="105" cy="42" rx="14" ry="17" fill="#B8D956" stroke="#3D5A1F" stroke-width="1.5"/>
+                    
+                    <!-- Left eye pupil (taller and slightly wider) -->
+                    <ellipse cx="57" cy="42" rx="10" ry="12" fill="#000"/>
+                    <!-- Left eye shine -->
+                    <circle cx="59" cy="37" r="3" fill="white"/>
+                    
+                    <!-- Right eye pupil (taller and slightly wider) -->
+                    <ellipse cx="103" cy="42" rx="10" ry="12" fill="#000"/>
+                    <!-- Right eye shine -->
+                    <circle cx="101" cy="37" r="3" fill="white"/>
+                    
+                    <!-- Smile mouth (curved smile) -->
+                    <path d="M 46 78 Q 80 95 115 78" stroke="#CC5528" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- Smile fill -->
+                    <path d="M 46 78 Q 80 94 115 78 Q 80 82 46 78" fill="#FF6B35"/>
+                    
+                    <!-- Nostril left (stretched oval, tilted) -->
+                    <ellipse cx="75" cy="65" rx="1.5" ry="3" fill="#CC5528" transform="rotate(-45 75 65)"/>
+                    <!-- Nostril right (stretched oval, tilted) -->
+                    <ellipse cx="85" cy="65" rx="1.5" ry="3" fill="#CC5528" transform="rotate(45 85 65)"/>
+                </svg>
+            `;
+            accessory.innerHTML = frogSVG;
+            accessory.style.cssText = `
+                position: absolute;
+                bottom: 0%;
+                left: 70%;
+                width: 75px;
+                height: 75px;
+                z-index: 11;
             `;
             break;
             

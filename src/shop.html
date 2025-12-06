@@ -89,12 +89,17 @@
                     <div class="pet-accessories"></div>
                 </div>
             </div>
+            
+            <!-- Unequip All Button -->
+            <div class="pet-preview-actions">
+                <button id="unequip-all-btn" class="btn-unequip-all">Unequip All</button>
+            </div>
         </div>
 
         <!-- Shop items -->
         <div class="shop-items">
             <h2>Available Accessories</h2>
-            
+
             <!-- Filter Section -->
             <div class="shop-filters">
                 <div class="filter-group">
@@ -108,25 +113,36 @@
                     </select>
                 </div>
                 
-                <div class="filter-group">
-                    <label for="filter-status">Filter by Status:</label>
-                    <select id="filter-status" class="filter-select">
-                        <option value="">All Items</option>
-                        <option value="unowned">Unowned</option>
-                        <option value="owned">Owned</option>
-                        <option value="equipped">Equipped</option>
-                    </select>
+                <div class="filter-column">
+                    <div class="filter-group">
+                        <label for="filter-status">Filter by Status:</label>
+                        <select id="filter-status" class="filter-select">
+                            <option value="">All Items</option>
+                            <option value="unowned">Unowned</option>
+                            <option value="owned">Owned</option>
+                            <option value="equipped">Equipped</option>
+                        </select>
+                    </div>
+                    <br>
+                    
+                    <button id="reset-filters-btn" class="btn-reset-filters">Clear Filters</button>
                 </div>
             </div>
 
             <br>
             
             <div class="shop-grid">
+                <!-- No Results Message -->
+                <div id="no-results-message" class="no-results-message" style="display: none; grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+                    <h4>No accessories found matching your filters.</h4>
+                    <h4>Try adjusting your filter selections!</h4>
+                </div>
+
                 <!-- Pink Collar -->
                 <div class="shop-item" data-item="pink-collar" data-cost="15">
                     <div class="item-type">Type: Necklace</div>
                     <div class="item-preview">
-                        <div class="accessory-icon" style="background-color: #ff76d1; width: 60px; height: 20px; border-radius: 10px; margin: 20px auto;"></div>
+                        <div class="accessory-icon" style="background-color: #ff76d1; width: 60px; height: 20px; border-radius: 10px;"></div>
                     </div>
                     <h3>Pink Collar</h3>
                     <p class="item-description">A stylish pink collar for your pet</p>
@@ -142,15 +158,7 @@
                 <div class="shop-item" data-item="blue-bandana" data-cost="15">
                     <div class="item-type">Type: Necklace</div>
                     <div class="item-preview">
-                        <div class="accessory-icon" style="position: absolute;
-                            left: 50%;
-                            transform: translateX(-50%);
-                            width: 0;
-                            height: 0;
-                            border-left: 30px solid transparent;
-                            border-right: 30px solid transparent;
-                            border-top: 25px solid #0066ff;"></div>
-
+                        <div class="accessory-icon" style="width: 0; height: 0; border-left: 30px solid transparent; border-right: 30px solid transparent; border-top: 25px solid #0066ff;"></div>
                     </div>
                     <h3>Blue Bandana</h3>
                     <p class="item-description">A cool blue bandana accessory</p>
@@ -166,10 +174,44 @@
                 <div class="shop-item" data-item="green-sweater" data-cost="35">
                     <div class="item-type">Type: Shirt</div>
                     <div class="item-preview">
-                        <div class="accessory-icon" style="background-color: #228B22; width: 70px; height: 50px; border-radius: 15px; margin: 15px auto; position: relative;">
-                            <div style="position: absolute; top: 5px; left: 10px; width: 8px; height: 30px; background-color: #228B22;"></div>
-                            <div style="position: absolute; top: 5px; right: 10px; width: 8px; height: 30px; background-color: #228B22;"></div>
-                        </div>
+                        <svg viewBox="-20 -20 182 180" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
+                            <g transform="translate(0, 0) scale(1)">
+                            <!-- Main sweater body - rectangle with very rounded corners -->
+                            <rect x="8" y="15" width="127" height="110" rx="35" ry="35" fill="#228B22" stroke="#1a6b1a" stroke-width="1.5"/>
+                            <!-- Cable knit pattern (kept within bounds) -->
+                            <g stroke="#1a6b1a" stroke-width="1.2" opacity="0.5" fill="none" stroke-linecap="round">
+                                <!-- Left side cable -->
+                                <path d="M 20 30 Q 22 40 20 50 Q 22 60 20 70 Q 22 80 20 90 Q 22 100 20 110"/>
+                                <path d="M 28 28 Q 30 38 28 48 Q 30 58 28 68 Q 30 78 28 88 Q 30 98 28 112"/>
+                                <path d="M 36 30 Q 38 40 36 50 Q 38 60 36 70 Q 38 80 36 90 Q 38 100 36 110"/>
+                                
+                                <!-- Left-center cable -->
+                                <path d="M 46 26 Q 49 36 46 46 Q 49 56 46 66 Q 49 76 46 86 Q 49 96 46 114"/>
+                                <path d="M 56 25 Q 59 35 56 45 Q 59 55 56 65 Q 59 75 56 85 Q 59 95 56 115"/>
+                                
+                                <!-- Center cable -->
+                                <path d="M 66 22 Q 69 32 66 42 Q 69 52 66 62 Q 69 72 66 82 Q 69 92 66 118"/>
+                                <path d="M 74 22 Q 77 32 74 42 Q 77 52 74 62 Q 77 72 74 82 Q 77 92 74 118"/>
+                                
+                                <!-- Right-center cable -->
+                                <path d="M 84 25 Q 87 35 84 45 Q 87 55 84 65 Q 87 75 84 85 Q 87 95 84 115"/>
+                                <path d="M 94 26 Q 97 36 94 46 Q 97 56 94 66 Q 97 76 94 86 Q 97 96 94 114"/>
+                                
+                                <!-- Right side cable -->
+                                <path d="M 104 30 Q 106 40 104 50 Q 106 60 104 70 Q 106 80 104 90 Q 106 100 104 110"/>
+                                <path d="M 112 28 Q 114 38 112 48 Q 114 58 112 68 Q 114 78 112 88 Q 114 98 112 112"/>
+                                <path d="M 120 30 Q 122 40 120 50 Q 122 60 120 70 Q 122 80 120 90 Q 122 100 120 110"/>
+                            </g>
+                            
+                            <!-- Additional texture detail - subtle diamond patterns in cables -->
+                            <g stroke="#0d4d0d" stroke-width="0.6" opacity="0.3" fill="none">
+                                <path d="M 36 40 L 42 45 M 36 60 L 42 65 M 36 80 L 42 85 M 36 100 L 42 105"/>
+                                <path d="M 98 40 L 104 45 M 98 60 L 104 65 M 98 80 L 104 85 M 98 100 L 104 105"/>
+                                <path d="M 56 35 L 60 40 M 56 55 L 60 60 M 56 75 L 60 80 M 56 95 L 60 100"/>
+                                <path d="M 74 35 L 78 40 M 74 55 L 78 60 M 74 75 L 78 80 M 74 95 L 78 100"/>
+                            </g>
+                            </g>
+                        </svg>
                     </div>
                     <h3>Green Sweater</h3>
                     <p class="item-description">A cozy green sweater to keep warm</p>
@@ -185,7 +227,7 @@
                 <div class="shop-item" data-item="crown" data-cost="35">
                     <div class="item-type">Type: Hat</div>
                     <div class="item-preview">
-                        <div class="accessory-icon" style="font-size: 40px; margin: 10px auto;">👑</div>
+                        <div class="accessory-icon" style="font-size: 40px;">👑</div>
                     </div>
                     <h3>Royal Crown</h3>
                     <p class="item-description">A majestic crown fit for royalty</p>
@@ -201,13 +243,15 @@
                 <div class="shop-item" data-item="santa-hat" data-cost="50">
                     <div class="item-type">Type: Hat</div>
                     <div class="item-preview">
-                        <svg viewBox="0 0 80 60" width="80" height="60" xmlns="http://www.w3.org/2000/svg" style="margin: 10px auto; display: block;">
+                        <svg viewBox="0 -5 80 75" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
+                            <g transform="translate(20, 18) scale(0.6)">
                             <!-- White cuff at bottom -->
                             <rect x="5" y="42" width="70" height="10" fill="white" stroke="#333" stroke-width="1"/>
                             <!-- Red triangle cone -->
                             <polygon points="40,8 12,42 68,42" fill="#ff0000" stroke="#cc0000" stroke-width="1"/>
                             <!-- White pom-pom at top -->
                             <circle cx="40" cy="5" r="8" fill="white" stroke="#333" stroke-width="1"/>
+                            </g>
                         </svg>
                     </div>
                     <h3>Santa Hat</h3>
@@ -224,25 +268,37 @@
                 <div class="shop-item" data-item="birthday-hat" data-cost="50">
                     <div class="item-type">Type: Hat</div>
                     <div class="item-preview">
-                        <svg viewBox="0 0 100 75" width="70" height="60" xmlns="http://www.w3.org/2000/svg" style="margin: 5px auto; display: block;">
+                        <svg viewBox="-15 -20 130 115" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
                             <defs>
                                 <clipPath id="triangleClip">
                                     <polygon points="50,10 10,75 90,75"/>
                                 </clipPath>
                             </defs>
+                            <g transform="translate(0, 0) scale(1)">
+                            <!-- Yellow triangle - point at top, flat base at bottom -->
                             <polygon points="50,10 10,75 90,75" fill="#FFD700" stroke="#333" stroke-width="1"/>
+                            
+                            <!-- Stripes clipped to triangle -->
                             <g clip-path="url(#triangleClip)">
-                                <line x1="11.33" y1="75" x2="41.33" y2="10" stroke="#0066ff" stroke-width="2"/>
-                                <line x1="38" y1="75" x2="68" y2="10" stroke="#0066ff" stroke-width="2"/>
-                                <line x1="64.67" y1="75" x2="94.67" y2="10" stroke="#0066ff" stroke-width="2"/>
-                                <line x1="20.22" y1="75" x2="50.22" y2="10" stroke="#ff1493" stroke-width="2"/>
-                                <line x1="46.89" y1="75" x2="76.89" y2="10" stroke="#ff1493" stroke-width="2"/>
-                                <line x1="73.55" y1="75" x2="103.55" y2="10" stroke="#ff1493" stroke-width="2"/>
-                                <line x1="29.11" y1="75" x2="59.11" y2="10" stroke="#00cc00" stroke-width="2"/>
-                                <line x1="55.78" y1="75" x2="85.78" y2="10" stroke="#00cc00" stroke-width="2"/>
-                                <line x1="82.44" y1="75" x2="112.44" y2="10" stroke="#00cc00" stroke-width="2"/>
+                                <!-- Blue stripes (evenly spaced at 0, 26.67, 53.33 positions) -->
+                                <line x1="11.33" y1="75" x2="41.33" y2="10" stroke="#0066ff" stroke-width="3"/>
+                                <line x1="38" y1="75" x2="68" y2="10" stroke="#0066ff" stroke-width="3"/>
+                                <line x1="64.67" y1="75" x2="94.67" y2="10" stroke="#0066ff" stroke-width="3"/>
+                                
+                                <!-- Pink stripes (evenly spaced at 8.89, 35.55, 62.22 positions) -->
+                                <line x1="20.22" y1="75" x2="50.22" y2="10" stroke="#ff1493" stroke-width="3"/>
+                                <line x1="46.89" y1="75" x2="76.89" y2="10" stroke="#ff1493" stroke-width="3"/>
+                                <line x1="73.55" y1="75" x2="103.55" y2="10" stroke="#ff1493" stroke-width="3"/>
+                                
+                                <!-- Green stripes (evenly spaced at 17.78, 44.44, 71.11 positions) -->
+                                <line x1="29.11" y1="75" x2="59.11" y2="10" stroke="#00cc00" stroke-width="3"/>
+                                <line x1="55.78" y1="75" x2="85.78" y2="10" stroke="#00cc00" stroke-width="3"/>
+                                <line x1="82.44" y1="75" x2="112.44" y2="10" stroke="#00cc00" stroke-width="3"/>
                             </g>
-                            <circle cx="50" cy="10" r="8" fill="#FF4444" stroke="#cc0000" stroke-width="1"/>
+                            
+                            <!-- Red circle on top point -->
+                            <circle cx="50" cy="10" r="10" fill="#FF4444" stroke="#cc0000" stroke-width="1"/>
+                            </g>
                         </svg>
                     </div>
                     <h3>Birthday Hat</h3>
@@ -259,11 +315,15 @@
                 <div class="shop-item" data-item="jmu-cs-shirt" data-cost="75">
                     <div class="item-type">Type: Shirt</div>
                     <div class="item-preview">
-                        <svg viewBox="0 0 100 100" width="70" height="70" xmlns="http://www.w3.org/2000/svg" style="margin: 10px auto; display: block;">
-                            <ellipse cx="50" cy="50" rx="35" ry="30" fill="#6A2FA8" stroke="#4A1F7F" stroke-width="1"/>
-                            <text x="50" y="38" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="white" text-anchor="middle">JMU</text>
-                            <text x="50" y="50" font-family="Arial, sans-serif" font-size="5" fill="white" text-anchor="middle">Computer</text>
-                            <text x="50" y="60" font-family="Arial, sans-serif" font-size="5" fill="white" text-anchor="middle">Science</text>
+                        <svg viewBox="-15 -5 110 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
+                            <g transform="translate(0, 0) scale(1)">
+                            <!-- Purple circular shirt body -->
+                            <circle cx="40" cy="40" r="40" fill="#6A2FA8" stroke="#4A1F7F" stroke-width="2"/>
+                            <!-- Text -->
+                            <text x="40" y="35" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white" text-anchor="middle">JMU</text>
+                            <text x="40" y="47" font-family="Arial, sans-serif" font-size="6" fill="white" text-anchor="middle">Computer</text>
+                            <text x="40" y="57" font-family="Arial, sans-serif" font-size="6" fill="white" text-anchor="middle">Science</text>
+                            </g>
                         </svg>
                     </div>
                     <h3>JMU CS Shirt</h3>
@@ -280,7 +340,8 @@
                 <div class="shop-item" data-item="rubber-duckie" data-cost="90">
                     <div class="item-type">Type: Friend</div>
                     <div class="item-preview">
-                        <svg viewBox="0 0 100 100" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
+                            <g transform="translate(20, 15) scale(0.6)">
                             <ellipse cx="50" cy="62" rx="25" ry="28" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
                             <rect x="45" y="42" width="10" height="8" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
                             <circle cx="50" cy="30" r="15" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
@@ -289,14 +350,123 @@
                             <ellipse cx="50" cy="35" rx="8" ry="6" fill="#FF8C00" stroke="#FF6600" stroke-width="1"/>
                             <path d="M 35 52 Q 30 62 35 72" stroke="#FFA500" stroke-width="1.5" fill="none"/>
                             <path d="M 65 52 Q 70 62 65 72" stroke="#FFA500" stroke-width="1.5" fill="none"/>
+                            </g>
                         </svg>
                     </div>
                     <h3>Rubber Duckie</h3>
-                    <p class="item-description">An adorable yellow rubber duck friend for your pet</p>
+                    <p class="item-description">A rubber duckie for your pet who happens to be a JMU alum</p>
                     <div class="item-footer">
                         <span class="item-cost">🎉 90%</span>
                         <button class="buy-btn" data-item="rubber-duckie">Purchase</button>
                         <button class="equip-btn" data-item="rubber-duckie" style="display: none;">Equip</button>
+                    </div>
+                    <span class="owned-badge" style="display: none;">✓ Owned</span>
+                </div>
+
+                <!-- Orange Frog -->
+                <div class="shop-item" data-item="orange-frog" data-cost="90">
+                    <div class="item-type">Type: Friend</div>
+                    <div class="item-preview">
+                        <svg viewBox="0 0 300 320" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
+                            <g transform="translate(75, 80)">
+                            <ellipse cx="35" cy="96" rx="15" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <!-- Back left foot with toes -->
+                            <ellipse cx="33" cy="115" rx="14" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <!-- Left toe 1 (upper left) -->
+                            <ellipse cx="13" cy="120" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="1" cy="121" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            <!-- Left toe 2 (lower left) -->
+                            <ellipse cx="21" cy="124" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="9" cy="125" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+
+                            <!-- Back right leg -->
+                            <ellipse cx="125" cy="96" rx="15" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <!-- Back right foot with toes (mirrored from left) -->
+                            <ellipse cx="127" cy="115" rx="14" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <!-- Right toe 1 (upper right, mirrored) -->
+                            <ellipse cx="147" cy="120" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="159" cy="121" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            <!-- Right toe 2 (lower right, mirrored) -->
+                            <ellipse cx="139" cy="124" rx="15" ry="3" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="151" cy="125" r="3.5" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+
+                            <!-- Body -->
+                            <ellipse cx="80" cy="95" rx="45" ry="40" fill="#FF6B35" stroke="#CC5528" stroke-width="2"/>
+
+                            <!-- Belly/throat area (light cream) -->
+                            <ellipse cx="80" cy="105" rx="38" ry="30" fill="#F5D5B8" stroke="none"/>
+                            
+                            <!-- Front left leg -->
+                            <ellipse cx="47" cy="100" rx="15" ry="30" fill="#FF6B35" stroke="#CC5528" stroke-width="1.5"/>
+                            <!-- Left foot with toes (smaller) -->
+                            <ellipse cx="45" cy="130" rx="11" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <!-- Left toe 1 -->
+                            <ellipse cx="30" cy="130" rx="2.5" ry="4" transform="rotate(45 28 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="34" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            <!-- Left toe 2 -->
+                            <ellipse cx="45" cy="138" rx="2.5" ry="4" transform="rotate(0 43 143)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="45" cy="142" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            <!-- Left toe 3 -->
+                            <ellipse cx="60" cy="130" rx="2.5" ry="4" transform="rotate(-45 62 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="56" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            
+                            <!-- Front right leg -->
+                            <ellipse cx="113" cy="100" rx="15" ry="30" fill="#FF6B35" stroke="#CC5528" stroke-width="1.5"/>
+                            <!-- Right foot with toes (smaller) -->
+                            <ellipse cx="115" cy="130" rx="11" ry="8" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <!-- Right toe 1 -->
+                            <ellipse cx="100" cy="130" rx="2.5" ry="4" transform="rotate(45 98 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="104" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            <!-- Right toe 2 -->
+                            <ellipse cx="115" cy="138" rx="2.5" ry="4" transform="rotate(0 113 143)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="115" cy="142" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            <!-- Right toe 3 -->
+                            <ellipse cx="130" cy="130" rx="2.5" ry="4" transform="rotate(-45 132 140)" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            <circle cx="126" cy="138" r="2.8" fill="#F5D5B8" stroke="#CC5528" stroke-width="0.8"/>
+                            
+                            <!-- Head area -->
+                            <ellipse cx="80" cy="60" rx="42" ry="35" fill="#FF6B35" stroke="#CC5528" stroke-width="2"/>
+                            
+                            <!-- Left eye orange circle behind (taller) -->
+                            <ellipse cx="55" cy="40" rx="18" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            
+                            <!-- Right eye orange circle behind (taller) -->
+                            <ellipse cx="105" cy="40" rx="18" ry="22" fill="#FF6B35" stroke="#CC5528" stroke-width="1"/>
+                            
+                            <!-- Left eye green base (shorter) -->
+                            <ellipse cx="55" cy="42" rx="14" ry="17" fill="#B8D956" stroke="#3D5A1F" stroke-width="1.5"/>
+                            
+                            <!-- Right eye green base (shorter) -->
+                            <ellipse cx="105" cy="42" rx="14" ry="17" fill="#B8D956" stroke="#3D5A1F" stroke-width="1.5"/>
+                            
+                            <!-- Left eye pupil (taller and slightly wider) -->
+                            <ellipse cx="57" cy="42" rx="7" ry="12" fill="#000"/>
+                            <!-- Left eye shine -->
+                            <circle cx="59" cy="37" r="3" fill="white"/>
+                            
+                            <!-- Right eye pupil (taller and slightly wider) -->
+                            <ellipse cx="103" cy="42" rx="7" ry="12" fill="#000"/>
+                            <!-- Right eye shine -->
+                            <circle cx="101" cy="37" r="3" fill="white"/>
+                            
+                            <!-- Smile mouth (curved smile) -->
+                            <path d="M 46 78 Q 80 95 115 78" stroke="#CC5528" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                            <!-- Smile fill -->
+                            <path d="M 46 78 Q 80 94 115 78 Q 80 82 46 78" fill="#FF6B35"/>
+                            
+                            <!-- Nostril left (stretched oval, tilted) -->
+                            <ellipse cx="75" cy="65" rx="1.5" ry="3" fill="#CC5528" transform="rotate(-45 75 65)"/>
+                            <!-- Nostril right (stretched oval, tilted) -->
+                            <ellipse cx="85" cy="65" rx="1.5" ry="3" fill="#CC5528" transform="rotate(45 85 65)"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3>Orange Frog</h3>
+                    <p class="item-description">A delightful orange frog friend</p>
+                    <div class="item-footer">
+                        <span class="item-cost">🎉 90%</span>
+                        <button class="buy-btn" data-item="orange-frog">Purchase</button>
+                        <button class="equip-btn" data-item="orange-frog" style="display: none;">Equip</button>
                     </div>
                     <span class="owned-badge" style="display: none;">✓ Owned</span>
                 </div>

@@ -52,6 +52,12 @@ const SHOP_ITEMS = {
         cost: 90,
         type: 'friend',
         displayType: 'Friend'
+    },
+    'orange-frog': {
+        name: 'Orange frog',
+        cost: 90,
+        type: 'friend',
+        displayType: 'Friend'
     }
 };
 
@@ -122,6 +128,9 @@ function initShop() {
     
     // Setup filter handlers
     setupFilters();
+    
+    // Setup unequip all button
+    setupUnequipAllButton();
 }
 
 // Check if shop should be accessible
@@ -334,6 +343,11 @@ function toggleEquip(itemId) {
     // Refresh pet preview
     renderShopAccessories();
     
+    // Update filters if an accessory was unequipped
+    if (!isNowEquipped) {
+        applyFilters();
+    }
+    
     // Show notification
     showNotification(isNowEquipped ? `${itemName} equipped! ✨` : `${itemName} unequipped.`);
 }
@@ -408,12 +422,71 @@ function showConfirmModal(message, onConfirm) {
 function setupFilters() {
     const filterTypeSelect = document.getElementById('filter-type');
     const filterStatusSelect = document.getElementById('filter-status');
+    const resetBtn = document.getElementById('reset-filters-btn');
     
     if (!filterTypeSelect || !filterStatusSelect) return;
     
+    // Restore filters from localStorage and apply them
+    restoreFilters();
+    applyFilters();
+    
     // Add event listeners to both filters
-    filterTypeSelect.addEventListener('change', applyFilters);
-    filterStatusSelect.addEventListener('change', applyFilters);
+    filterTypeSelect.addEventListener('change', () => {
+        saveFilters();
+        applyFilters();
+    });
+    filterStatusSelect.addEventListener('change', () => {
+        saveFilters();
+        applyFilters();
+    });
+    
+    // Add event listener to reset button
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            showConfirmModal('Are you sure you want to clear all filters?', () => {
+                filterTypeSelect.value = '';
+                filterStatusSelect.value = '';
+                clearSavedFilters();
+                applyFilters();
+                showNotification('Filters cleared! ✨');
+            });
+        });
+    }
+}
+
+// Save filters to localStorage
+function saveFilters() {
+    const filterType = document.getElementById('filter-type')?.value || '';
+    const filterStatus = document.getElementById('filter-status')?.value || '';
+    
+    const filters = {
+        type: filterType,
+        status: filterStatus
+    };
+    
+    localStorage.setItem('shopFilters', JSON.stringify(filters));
+}
+
+// Restore filters from localStorage
+function restoreFilters() {
+    const filterTypeSelect = document.getElementById('filter-type');
+    const filterStatusSelect = document.getElementById('filter-status');
+    
+    const savedFilters = localStorage.getItem('shopFilters');
+    if (savedFilters) {
+        try {
+            const filters = JSON.parse(savedFilters);
+            if (filterTypeSelect) filterTypeSelect.value = filters.type || '';
+            if (filterStatusSelect) filterStatusSelect.value = filters.status || '';
+        } catch (e) {
+            console.error('Error restoring filters:', e);
+        }
+    }
+}
+
+// Clear saved filters from localStorage
+function clearSavedFilters() {
+    localStorage.removeItem('shopFilters');
 }
 
 // Apply filters to shop items
@@ -423,6 +496,8 @@ function applyFilters() {
     const shopItems = document.querySelectorAll('.shop-item');
     const owned = window.getOwnedAccessories ? window.getOwnedAccessories() : [];
     const equipped = window.getEquippedAccessories ? window.getEquippedAccessories() : [];
+    
+    let visibleCount = 0;
     
     shopItems.forEach(item => {
         const itemId = item.dataset.item;
@@ -450,5 +525,56 @@ function applyFilters() {
         
         // Show or hide the item
         item.style.display = shouldShow ? 'block' : 'none';
+        if (shouldShow) {
+            visibleCount++;
+        }
+    });
+    
+    // Show or hide no results message
+    const noResultsMessage = document.getElementById('no-results-message');
+    if (noResultsMessage) {
+        noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+}
+
+// Setup unequip all button
+function setupUnequipAllButton() {
+    const unequipAllBtn = document.getElementById('unequip-all-btn');
+    
+    if (!unequipAllBtn) return;
+    
+    unequipAllBtn.addEventListener('click', () => {
+        const equipped = window.getEquippedAccessories ? window.getEquippedAccessories() : [];
+        
+        if (equipped.length === 0) {
+            showNotification('No accessories are currently equipped.');
+            return;
+        }
+        
+        showConfirmModal('Are you sure you want to unequip all accessories?', () => {
+            // Clear all equipped accessories
+            if (window.saveEquippedAccessories) {
+                window.saveEquippedAccessories([]);
+            }
+            
+            // Re-render accessories on pet
+            if (window.renderAccessories) {
+                window.renderAccessories();
+            }
+            
+            // Update shop UI
+            if (window.loadOwnedItems) {
+                window.loadOwnedItems();
+            }
+            
+            if (window.renderShopAccessories) {
+                window.renderShopAccessories();
+            }
+            
+            // Update filters to reflect unequipped accessories
+            applyFilters();
+            
+            showNotification('All accessories have been unequipped! ✨');
+        });
     });
 }
