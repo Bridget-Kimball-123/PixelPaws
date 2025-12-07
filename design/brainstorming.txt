@@ -86,10 +86,10 @@ To Do Checklist:
     ✅ Add wait period of a couple seconds in between play functions
     ✅ Health bar color is different than health status
     ✅ Implement loyalty points: the more a user comes back the more they will gain (rewards = themes?)
+    ✅ Sound effects
     
     Achievement/badge system: unlock for reaching milestones
     Pet personalities
-    Sound effects
     Mini-games
         Memory match
         Tic-tac-toe

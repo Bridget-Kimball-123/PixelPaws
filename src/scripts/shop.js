@@ -273,6 +273,10 @@ function purchaseItem(itemId, cost) {
     
     // Check if enough happiness
     if (currentHappiness < cost) {
+        // Play insufficient funds sound
+        if (typeof soundManager !== 'undefined') {
+            soundManager.play('insufficient');
+        }
         showNotification(`Not enough happiness! You need ${cost}% but only have ${Math.round(currentHappiness)}%.`);
         return;
     }
@@ -284,6 +288,11 @@ function purchaseItem(itemId, cost) {
         window.petHealth.happiness = Math.max(0, currentHappiness - cost);
         window.petHealth.saveHealthData();
         window.petHealth.updateHealthDisplay();
+        
+        // Play purchase sound
+        if (typeof soundManager !== 'undefined') {
+            soundManager.play('purchase');
+        }
         
         // Add to owned items
         addOwnedItem(itemId);
@@ -326,6 +335,11 @@ function toggleEquip(itemId) {
     
     const isNowEquipped = window.toggleEquipAccessory(itemId);
     const itemName = SHOP_ITEMS[itemId].name;
+    
+    // Play equip/unequip sound
+    if (typeof soundManager !== 'undefined') {
+        soundManager.play('equip');
+    }
     
     // Update button
     const $item = $(`.shop-item[data-item="${itemId}"]`);

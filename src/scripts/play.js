@@ -109,6 +109,11 @@ function performActivity(activityType) {
         window.weatherSystem.handleAction(activityType);
     }
     
+    // Play sound effect for this activity
+    if (typeof soundManager !== 'undefined') {
+        soundManager.play(activityType);
+    }
+    
     // Increase local happiness for animations
     happinessLevel = Math.min(100, happinessLevel + 5);
     updateHappinessDisplay();
@@ -143,10 +148,20 @@ function performActivity(activityType) {
         window.petHealth.performAction(activityType);
     }
     
-    // Reset animation lock after animation completes (2 second cooldown to prevent overlapping)
+    // Reset animation lock after animation completes
+    // Different cooldown times for each activity
+    const cooldownMap = {
+        pet: 1000,
+        feed: 1500,
+        fetch: 4000,
+        treat: 1500,
+        toy: 1000,
+        brush: 1000
+    };
+    const cooldownTime = cooldownMap[activityType] || 1000;
     setTimeout(() => {
         isAnimating = false;
-    }, 5000);
+    }, cooldownTime);
 }
 
 // Animation: Pet the pet (bounce and happy wiggle)

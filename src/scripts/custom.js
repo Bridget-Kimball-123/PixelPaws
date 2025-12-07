@@ -100,6 +100,12 @@ function cycleOption(feature, direction) {
     if (newIndex >= options[feature].length) newIndex = 0;
 
     petCustomization[feature] = options[feature][newIndex];
+    
+    // Play cycle sound effect
+    if (typeof soundManager !== 'undefined') {
+        soundManager.play('cycle');
+    }
+    
     updatePetDisplay();
 }
 
@@ -119,6 +125,10 @@ function setupFormButtons() {
                 petCustomization.name = nameInput.value || 'Pixel';
             }
             saveCustomization();
+            // Play save sound effect
+            if (typeof soundManager !== 'undefined') {
+                soundManager.play('save');
+            }
             showNotification('Pet customization saved successfully!');
         });
     }
@@ -211,6 +221,11 @@ function performReset() {
     if (nameInput) nameInput.value = 'Pixel';
     saveCustomization();
     updatePetDisplay();
+    
+    // Play reset sound effect
+    if (typeof soundManager !== 'undefined') {
+        soundManager.play('reset');
+    }
     
     // Clear all toys from play page
     clearAllToys();

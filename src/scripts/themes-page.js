@@ -71,10 +71,18 @@ function setupEventListeners() {
             
             if (result) {
                 // New theme was unlocked
+                // Play unlock sound effect
+                if (typeof soundManager !== 'undefined') {
+                    soundManager.play('unlock');
+                }
                 showNotification(`Welcome back! You unlocked ${result.name}!`);
                 window.petTheme.showThemeUnlockNotification(result);
             } else {
                 // No new theme today
+                // Play check-in sound effect
+                if (typeof soundManager !== 'undefined') {
+                    soundManager.play('checkin');
+                }
                 showNotification('You already checked in today! Come back tomorrow for a new theme.');
             }
             
@@ -90,6 +98,10 @@ function setupEventListeners() {
         btn.addEventListener('click', function() {
             const themeKey = this.getAttribute('data-theme');
             if (window.petTheme.isThemeUnlocked(themeKey)) {
+                // Play theme selection sound effect
+                if (typeof soundManager !== 'undefined') {
+                    soundManager.play('theme');
+                }
                 window.petTheme.applyTheme(themeKey);
                 renderThemesGrid();
                 showNotification(`Theme changed to ${window.petTheme.themes[themeKey].name}!`);
@@ -102,6 +114,10 @@ function setupEventListeners() {
     if (resetThemeBtn) {
         resetThemeBtn.addEventListener('click', function() {
             if (confirm('Are you sure you want to reset your theme to the default purple? This will also reset your loyalty progress.')) {
+                // Play reset sound effect
+                if (typeof soundManager !== 'undefined') {
+                    soundManager.play('reset');
+                }
                 window.petTheme.resetTheme();
                 renderCalendar();
                 renderThemesGrid();
