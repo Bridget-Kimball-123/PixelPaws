@@ -13,6 +13,98 @@ const petCustomization = {
     name: 'Pixel'
 };
 
+// Undo/Redo history system
+const customizationHistory = {
+    undoStack: [],
+    redoStack: [],
+    maxHistorySize: 50,
+
+    // Save current state to undo stack
+    saveState(state) {
+        // Convert to JSON and back to create a deep copy
+        this.undoStack.push(JSON.parse(JSON.stringify(state)));
+        
+        // Limit history size
+        if (this.undoStack.length > this.maxHistorySize) {
+            this.undoStack.shift();
+        }
+        
+        // Clear redo stack when a new action is performed
+        this.redoStack = [];
+        
+        // Update button states
+        updateUndoRedoButtons();
+    },
+
+    // Perform undo
+    undo() {
+        if (this.undoStack.length === 0) return null;
+        
+        // Save current state to redo stack
+        this.redoStack.push(JSON.parse(JSON.stringify(petCustomization)));
+        
+        // Restore previous state
+        const previousState = this.undoStack.pop();
+        Object.assign(petCustomization, previousState);
+        
+        // Update button states
+        updateUndoRedoButtons();
+        
+        return previousState;
+    },
+
+    // Perform redo
+    redo() {
+        if (this.redoStack.length === 0) return null;
+        
+        // Save current state to undo stack
+        this.undoStack.push(JSON.parse(JSON.stringify(petCustomization)));
+        
+        // Restore next state
+        const nextState = this.redoStack.pop();
+        Object.assign(petCustomization, nextState);
+        
+        // Update button states
+        updateUndoRedoButtons();
+        
+        return nextState;
+    },
+
+    // Clear history (used on reset or save)
+    clear() {
+        this.undoStack = [];
+        this.redoStack = [];
+        updateUndoRedoButtons();
+    }
+};
+
+// Update undo/redo button disabled states
+function updateUndoRedoButtons() {
+    const undoBtn = document.querySelector('[data-action="undo"]');
+    const redoBtn = document.querySelector('[data-action="redo"]');
+    
+    if (undoBtn) {
+        // Add visual disabled state without actually disabling the button
+        if (customizationHistory.undoStack.length === 0) {
+            undoBtn.classList.add('btn-disabled');
+            undoBtn.setAttribute('aria-disabled', 'true');
+        } else {
+            undoBtn.classList.remove('btn-disabled');
+            undoBtn.setAttribute('aria-disabled', 'false');
+        }
+    }
+    if (redoBtn) {
+        // Add visual disabled state without actually disabling the button
+        if (customizationHistory.redoStack.length === 0) {
+            redoBtn.classList.add('btn-disabled');
+            redoBtn.setAttribute('aria-disabled', 'true');
+        } else {
+            redoBtn.classList.remove('btn-disabled');
+            redoBtn.setAttribute('aria-disabled', 'false');
+        }
+    }
+}
+
 // Color options with their CSS color values
 const colorOptions = {
     gray: '#C0C0C0',
@@ -29,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupFormButtons();
     updatePetDisplay();
     renderAccessories();
+    updateUndoRedoButtons();
 });
 
 // Load customization from localStorage
@@ -92,6 +185,9 @@ function cycleOption(feature, direction) {
         tail: ['default', 'none', 'bushy']
     };
 
+    // Save current state before making changes
+    customizationHistory.saveState(petCustomization);
+
     const currentIndex = options[feature].indexOf(petCustomization[feature]);
     let newIndex = currentIndex + direction;
 
@@ -113,6 +209,8 @@ function cycleOption(feature, direction) {
 function setupFormButtons() {
     const saveBtn = document.querySelector('[data-action="save"]');
     const resetBtn = document.querySelector('[data-action="reset"]');
+    const undoBtn = document.querySelector('[data-action="undo"]');
+    const redoBtn = document.querySelector('[data-action="redo"]');
     const exportBtn = document.querySelector('[data-action="export"]');
     const importBtn = document.querySelector('[data-action="import"]');
     const fileInput = document.getElementById('import-file-input');
@@ -125,6 +223,8 @@ function setupFormButtons() {
                 petCustomization.name = nameInput.value || 'Pixel';
             }
             saveCustomization();
+            // Clear undo/redo history on save
+            customizationHistory.clear();
             // Play save sound effect
             if (typeof soundManager !== 'undefined') {
                 soundManager.play('save');
@@ -140,6 +240,48 @@ function setupFormButtons() {
             
             // Show confirmation modal
             showResetModal();
+        });
+    }
+
+    if (undoBtn) {
+        undoBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const previousState = customizationHistory.undo();
+            if (previousState) {
+                updatePetDisplay();
+                // Update name input if it changed
+                if (nameInput) {
+                    nameInput.value = petCustomization.name;
+                }
+                // Play cycle sound for feedback
+                if (typeof soundManager !== 'undefined') {
+                    soundManager.play('cycle');
+                }
+            } else {
+                // Show notification when there's nothing to undo
+                showNotification('Nothing to undo!');
+            }
+        });
+    }
+
+    if (redoBtn) {
+        redoBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const nextState = customizationHistory.redo();
+            if (nextState) {
+                updatePetDisplay();
+                // Update name input if it changed
+                if (nameInput) {
+                    nameInput.value = petCustomization.name;
+                }
+                // Play cycle sound for feedback
+                if (typeof soundManager !== 'undefined') {
+                    soundManager.play('cycle');
+                }
+            } else {
+                // Show notification when there's nothing to redo
+                showNotification('Nothing to redo!');
+            }
         });
     }
 
@@ -221,6 +363,9 @@ function performReset() {
     if (nameInput) nameInput.value = 'Pixel';
     saveCustomization();
     updatePetDisplay();
+    
+    // Clear undo/redo history on reset
+    customizationHistory.clear();
     
     // Play reset sound effect
     if (typeof soundManager !== 'undefined') {

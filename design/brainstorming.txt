@@ -87,6 +87,7 @@ To Do Checklist:
     ✅ Health bar color is different than health status
     ✅ Implement loyalty points: the more a user comes back the more they will gain (rewards = themes?)
     ✅ Sound effects
+    ✅ Undo/redo recent customization changes
     
     Fix snow:
         ✅ For desktop: make the snow look similar to stars
@@ -102,7 +103,7 @@ Ideas:
     Upgraded accessories: people pay real money for luxury items?
     Pet breeding
     Daily quests
-    Undo/redo recent customization changes
+    Pomodoro method: study buddy timer
     Dark mode alternate for all themes:
         User has option to choose when dark mode goes into effect
         Dark mode can be automatic based on system settings or user preference
