@@ -69,7 +69,7 @@ To Do Checklist:
     ✅ Implement JSON download feature (in customize or about?)
     ✅ Shop:
         ✅ Only allow one hat to be equipped at a time
-        ✅ Allow the user to filter stuff in the shop
+        ✅ Allow the user to filter stuff in the shop:
             Type
             Unequipped
             Unowned
@@ -78,7 +78,7 @@ To Do Checklist:
         ✅ If one (hunger/happiness) is below 30 and the other is above 75 weigh the 30 more
         ✅ If either hunger or happiness is below 50% the health bar should be orange NOT green
         ✅ If either hunger or happiness is below 20% the health bar should be red NOT orange and NOT green
-    ✅ Fix play functions
+    ✅ Fix play functions:
         ✅ Feed: food is slightly lower than pets mouth
         ✅ Fetch: ball doesn't end up over the pets mouth
         ✅ Treat: treat is slightly lower than pets mouth
@@ -88,14 +88,29 @@ To Do Checklist:
     ✅ Implement loyalty points: the more a user comes back the more they will gain (rewards = themes?)
     ✅ Sound effects
     
-    Achievement/badge system: unlock for reaching milestones
-    Pet personalities
-    Mini-games
-        Memory match
-        Tic-tac-toe
-        Rock paper scissors
-        Guess the number (using higher/lower hints)
     Fix snow:
         ✅ For desktop: make the snow look similar to stars
         ✅ For all views: make the snow appear behind the pet, make the night snow gradient darker
         For tablet: make more snow fall
+
+Ideas:
+    Achievement/badge system: unlock for reaching milestones
+    Pet personalities
+    Holiday/seasonal themes
+    Pet photos
+    Pet experience levels: pets level up with continued interaction
+    Upgraded accessories: people pay real money for luxury items?
+    Pet breeding
+    Daily quests
+    Undo/redo recent customization changes
+    Dark mode alternate for all themes:
+        User has option to choose when dark mode goes into effect
+        Dark mode can be automatic based on system settings or user preference
+    Implement favorites:
+        Accessories
+        Themes
+    Mini-games:
+        Memory match
+        Tic-tac-toe
+        Rock paper scissors
+        Guess the number (using higher/lower hints)
