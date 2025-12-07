@@ -25,7 +25,7 @@ const WEATHER_MOODS = {
     },
     RAINY: {
         mood: 'sad',
-        background: 'linear-gradient(to bottom, #005fc4ff 0%, #005effff 100%)',
+        background: 'linear-gradient(to bottom, #005fc4ff 0%, #5e99ffff 100%)',
         icon: '💧',
         cheersUpWith: ['fetch', 'toy-time'],
         night: {
@@ -37,13 +37,21 @@ const WEATHER_MOODS = {
         mood: 'nervous',
         background: 'linear-gradient(to bottom, #bfc6c6 0%, #e0e0e0 100%)',
         icon: '🌫️',
-        cheersUpWith: ['pet']
+        cheersUpWith: ['pet'],
+        night: {
+            background: 'linear-gradient(to bottom, #4a4f52 0%, #6b7278 100%)',
+            icon: '🌙🌫️'
+        }
     },
     STORMY: {
         mood: 'anxious',
-        background: 'linear-gradient(to bottom, #2D3748 0%, #193a7dff 100%)',
+        background: 'linear-gradient(to bottom, #566f98ff 0%, #3f6dc8ff 100%)',
         icon: '⛈️',
-        recoversAfter: ['pet', 'treat', 'toy-time']
+        recoversAfter: ['pet', 'treat', 'toy-time'],
+        night: {
+            background: 'linear-gradient(to bottom, #001940ff 0%, #003971ff 100%)',
+            icon: '🌙⛈️'
+        }
     },
     SNOWY: {
         mood: 'wants to play',
@@ -58,7 +66,11 @@ const WEATHER_MOODS = {
     CLOUDY: {
         mood: 'content',
         background: 'linear-gradient(to bottom, #e0e0e0 0%, #f8f8f8 100%)',
-        icon: '☁️'
+        icon: '☁️',
+        night: {
+            background: 'linear-gradient(to bottom, #3a3f47 0%, #5a606b 100%)',
+            icon: '🌙☁️'
+        }
     },
     NIGHT: {
         mood: 'sleepy',
