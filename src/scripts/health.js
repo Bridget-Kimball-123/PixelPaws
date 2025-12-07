@@ -228,30 +228,39 @@ const petHealth = {
     
     // Get health percentage (weighted average of hunger and happiness)
     getHealthPercentage() {
-        let total = this.hunger + this.happiness;
-        let divisor = 2;
+        // New weighted calculation:
+        // If one (hunger/happiness) is below 30 and the other is above 75, weigh the 30 more
+        let hunger = this.hunger;
+        let happiness = this.happiness;
         
-        // If hunger is below 30% and happiness is above 30%, add extra weight (half of hunger value)
-        if (this.hunger < 30 && this.happiness > 30) {
-            total += (this.hunger * 0.75);
-            divisor = 2; // Still divide by 2 to get average
+        // Check if one is below 30 and the other is above 75
+        if (hunger < 30 && happiness > 75) {
+            // Weigh hunger more heavily (give it double weight)
+            return Math.round((hunger * 2 + happiness) / 3);
+        }
+        if (happiness < 30 && hunger > 75) {
+            // Weigh happiness more heavily (give it double weight)
+            return Math.round((happiness * 2 + hunger) / 3);
         }
         
-        // If happiness is below 30% and hunger is above 30%, add extra weight (half of happiness value)
-        if (this.happiness < 30 && this.hunger > 30) {
-            total += (this.happiness * 0.75);
-            divisor = 2; // Still divide by 2 to get average
-        }
-        
-        return Math.round(total / divisor);
+        // Otherwise, return simple average
+        return Math.round((hunger + happiness) / 2);
     },
     
-    // Get health color based on percentage
+    // Get health color based on hunger/happiness thresholds
     getHealthColor() {
-        const health = this.getHealthPercentage();
-        if (health >= 60) return '#367C3C'; // Green - changed from 70
-        if (health >= 30) return '#FF9800'; // Orange - changed from 40
-        return '#F44336'; // Red
+        // If either hunger or happiness is below 20%, return red
+        if (this.hunger < 20 || this.happiness < 20) {
+            return '#F44336'; // Red
+        }
+        
+        // If either hunger or happiness is below 50%, return orange
+        if (this.hunger < 50 || this.happiness < 50) {
+            return '#FF9800'; // Orange
+        }
+        
+        // Otherwise, return green (both above 50%)
+        return '#367C3C'; // Green
     },
     
     // Update health bar display
