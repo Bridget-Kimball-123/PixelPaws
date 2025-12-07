@@ -71,7 +71,7 @@
 }
 
 .theme-unlock-body p {
-    color: #666;
+    color: var(--text-dark);
     margin: 0.5rem 0;
     font-size: 0.95rem;
 }
@@ -184,13 +184,13 @@ main.themes-page h1 {
 
 .calendar-day.visited {
     background-color: #E6F3E6;
-    border-color: #66CC66;
+    border-color: #297A29;
     box-shadow: 0 0 8px rgba(102, 204, 102, 0.3);
 }
 
 .calendar-day.unvisited {
     background-color: #F5F5F5;
-    color: #999;
+    color: #6E6E6E;
 }
 
 .day-number {
@@ -205,7 +205,7 @@ main.themes-page h1 {
 }
 
 .calendar-day.visited .day-status {
-    color: #66CC66;
+    color: #297A29;
 }
 
 .theme-counter {
@@ -226,7 +226,7 @@ main.themes-page h1 {
 }
 
 .btn-checkin {
-    background-color: #66CC66;
+    background-color: #297A29;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -247,7 +247,7 @@ main.themes-page h1 {
 
 .checkin-message {
     margin-top: 0.5rem;
-    color: #666;
+    color: var(--text-dark);
     font-size: 0.9rem;
 }
 
@@ -258,7 +258,7 @@ main.themes-page h1 {
 }
 
 .btn-reset-theme {
-    background-color: #FF6666;
+    background-color: #AD0000;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -339,7 +339,7 @@ main.themes-page h1 {
 
 .theme-day {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-dark);
     margin-bottom: 1rem;
 }
 
@@ -350,13 +350,13 @@ main.themes-page h1 {
 
 .locked-message {
     font-size: 0.85rem;
-    color: #FF6666;
+    color: #AD0000;
     font-weight: bold;
 }
 
 .active-badge {
     display: inline-block;
-    background-color: #66CC66;
+    background-color: #297A29;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 20px;
@@ -391,7 +391,7 @@ main.themes-page h1 {
     top: 80px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #66CC66;
+    background-color: #297A29;
     color: white;
     padding: 1rem 1.5rem;
     border-radius: 6px;
