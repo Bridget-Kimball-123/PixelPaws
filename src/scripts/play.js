@@ -143,10 +143,10 @@ function performActivity(activityType) {
         window.petHealth.performAction(activityType);
     }
     
-    // Reset animation lock after animation completes (reduced for faster interaction)
+    // Reset animation lock after animation completes (2 second cooldown to prevent overlapping)
     setTimeout(() => {
         isAnimating = false;
-    }, 1000);
+    }, 5000);
 }
 
 // Animation: Pet the pet (bounce and happy wiggle)
