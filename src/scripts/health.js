@@ -182,27 +182,27 @@ const petHealth = {
     
     // Update status based on current hunger/happiness levels
     updateStatusBasedOnLevels() {
-        const avgHealth = this.getHealthPercentage(); // Use weighted calculation
-        
-        // If health is good (60%+), status is HEALTHY
-        if (avgHealth >= 60 && this.status !== HEALTH_STATUS.HEALTHY) {
-            this.status = HEALTH_STATUS.HEALTHY;
-            this.resetRecoveryActions();
-            console.log('Status upgraded to HEALTHY');
+        // If either hunger or happiness falls below 20%, status is SICK (red)
+        if (this.hunger < 20 || this.happiness < 20) {
+            if (this.status !== HEALTH_STATUS.SICK) {
+                this.status = HEALTH_STATUS.SICK;
+                this.resetRecoveryActions();
+                console.log('Status downgraded to SICK');
+            }
         }
-        // If health is moderate (30-59%), status is UNWELL (orange)
-        else if (avgHealth >= 30 && avgHealth < 60) {
+        // If either hunger or happiness falls below 50%, status is UNWELL (orange)
+        else if (this.hunger < 50 || this.happiness < 50) {
             if (this.status !== HEALTH_STATUS.UNWELL) {
                 this.status = HEALTH_STATUS.UNWELL;
                 this.resetRecoveryActions();
                 console.log('Status changed to UNWELL');
             }
         }
-        // If health is low (<30%), status is SICK (red)
-        else if (avgHealth < 30 && this.status !== HEALTH_STATUS.SICK) {
-            this.status = HEALTH_STATUS.SICK;
+        // If both hunger and happiness are 50%+, status is HEALTHY (green)
+        else if (this.hunger >= 50 && this.happiness >= 50 && this.status !== HEALTH_STATUS.HEALTHY) {
+            this.status = HEALTH_STATUS.HEALTHY;
             this.resetRecoveryActions();
-            console.log('Status downgraded to SICK');
+            console.log('Status upgraded to HEALTHY');
         }
     },
     
@@ -249,17 +249,17 @@ const petHealth = {
     
     // Get health color based on hunger/happiness thresholds
     getHealthColor() {
-        // If average health is below 30%, return red (SICK)
-        if (this.getHealthPercentage() < 30) {
+        // If either hunger or happiness falls below 20%, return red (SICK)
+        if (this.hunger < 20 || this.happiness < 20) {
             return '#F44336'; // Red
         }
         
-        // If average health is between 30-59%, return orange (UNWELL)
-        if (this.getHealthPercentage() < 60) {
+        // If either hunger or happiness falls below 50%, return orange (UNWELL)
+        if (this.hunger < 50 || this.happiness < 50) {
             return '#FF9800'; // Orange
         }
         
-        // Otherwise, return green (HEALTHY - 60%+)
+        // Otherwise, return green (HEALTHY - both 50%+)
         return '#367C3C'; // Green
     },
     
