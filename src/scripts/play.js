@@ -180,11 +180,11 @@ function feedAnimation(pet, petDisplay) {
     // Different positioning for mobile vs desktop
     const isMobile = window.innerWidth <= 768;
     const foodLeft = isMobile 
-        ? petRect.left - displayRect.left + petRect.width * 0.4 - 5
-        : petRect.left - displayRect.left + 75;
+        ? petRect.left - displayRect.left + petRect.width * 0.5 - 20
+        : petRect.left - displayRect.left + petRect.width * 0.5 - 20;
     const foodTop = isMobile 
-        ? petRect.top - displayRect.top + petRect.height * 0.5 - 50
-        : petRect.top - displayRect.top + 80;
+        ? petRect.top - displayRect.top + petRect.height * 0.55 - 70
+        : petRect.top - displayRect.top + petRect.height * 0.55 - 70;
     
     food.style.cssText = `
         position: absolute;
@@ -224,14 +224,14 @@ function fetchAnimation(pet, petDisplay) {
     const isMobile = window.innerWidth <= 768;
     const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
     
-    // Calculate target position (pet's mouth/whisker area)
-    // Using center of pet horizontally, and about 40% down from top (mouth level)
-    const targetX = displayRect.width - (petLeft + petWidth * 0.5);
-    const targetY = displayRect.height - (petTop + petHeight * 0.45);
+    // Calculate target position (pet's mouth) - same as feed/treat positioning
+    // Pet center horizontally, mouth at about 30% down from top (upper part of face)
+    const targetLeft = petLeft + petWidth * 0.5 - 15; // Center with slight offset for emoji width
+    const targetTop = petTop + petHeight * 0.30;
     
-    // Starting position (bottom-right corner)
-    const startX = 20;
-    const startY = 20;
+    // Starting position (bottom-right corner of display)
+    const startLeft = displayRect.width;
+    const startTop = displayRect.height;
     
     // Calculate number of steps based on screen size
     const numSteps = isMobile ? 12 : (isTablet ? 16 : 20);
@@ -240,9 +240,9 @@ function fetchAnimation(pet, petDisplay) {
     const pathPoints = [];
     for (let i = 0; i <= numSteps; i++) {
         const progress = i / numSteps;
-        const x = startX + (targetX - startX) * progress;
-        const y = startY + (targetY - startY) * progress;
-        pathPoints.push({ right: x, bottom: y });
+        const x = startLeft + (targetLeft - startLeft) * progress;
+        const y = startTop + (targetTop - startTop) * progress;
+        pathPoints.push({ left: x, top: y });
     }
     
     // Create multiple ball instances along the path with delays
@@ -264,8 +264,8 @@ function fetchAnimation(pet, petDisplay) {
             ball.style.cssText = `
                 position: absolute !important;
                 font-size: 30px;
-                right: ${point.right}px;
-                bottom: ${point.bottom}px;
+                left: ${point.left}px;
+                top: ${point.top}px;
                 z-index: 1000 !important;
                 pointer-events: none;
                 display: block !important;
@@ -325,11 +325,11 @@ function treatAnimation(pet, petDisplay) {
     // Different positioning for mobile vs desktop (same as feed)
     const isMobile = window.innerWidth <= 768;
     const treatLeft = isMobile 
-        ? petRect.left - displayRect.left + petRect.width * 0.4 - 5
-        : petRect.left - displayRect.left + 75;
+        ? petRect.left - displayRect.left + petRect.width * 0.5 - 20
+        : petRect.left - displayRect.left + petRect.width * 0.5 - 20;
     const treatTop = isMobile 
-        ? petRect.top - displayRect.top + petRect.height * 0.5 - 50
-        : petRect.top - displayRect.top + 80;
+        ? petRect.top - displayRect.top + petRect.height * 0.55 - 70
+        : petRect.top - displayRect.top + petRect.height * 0.55 - 70;
     
     treat.style.cssText = `
         position: absolute;
