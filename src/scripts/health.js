@@ -249,17 +249,17 @@ const petHealth = {
     
     // Get health color based on hunger/happiness thresholds
     getHealthColor() {
-        // If either hunger or happiness is below 20%, return red
-        if (this.hunger < 20 || this.happiness < 20) {
+        // If average health is below 30%, return red (SICK)
+        if (this.getHealthPercentage() < 30) {
             return '#F44336'; // Red
         }
         
-        // If either hunger or happiness is below 50%, return orange
-        if (this.hunger < 50 || this.happiness < 50) {
+        // If average health is between 30-59%, return orange (UNWELL)
+        if (this.getHealthPercentage() < 60) {
             return '#FF9800'; // Orange
         }
         
-        // Otherwise, return green (both above 50%)
+        // Otherwise, return green (HEALTHY - 60%+)
         return '#367C3C'; // Green
     },
     
