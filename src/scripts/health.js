@@ -249,7 +249,7 @@ const petHealth = {
     // Get health color based on percentage
     getHealthColor() {
         const health = this.getHealthPercentage();
-        if (health >= 60) return '#4CAF50'; // Green - changed from 70
+        if (health >= 60) return '#367C3C'; // Green - changed from 70
         if (health >= 30) return '#FF9800'; // Orange - changed from 40
         return '#F44336'; // Red
     },

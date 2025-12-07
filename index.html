@@ -11,6 +11,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Peity library for health bar -->
     <script src="https://cdn.jsdelivr.net/npm/peity@3.3.0/jquery.peity.min.js"></script>
+    <!-- Error Handling Module -->
+    <script src="src/scripts/error-handler.js" defer></script>
     <script src="src/scripts/health.js" defer></script>
     <script src="src/scripts/weather.js" defer></script>
     <script src="src/scripts/custom.js" defer></script>
@@ -23,7 +25,7 @@
     <header>
         <div class="header-content">
             <div class="logo">
-                <img src="design/logo.png" alt="PixelPaws logo with a cute pixelated pet icon">
+                <img src="design/logo.png" alt="PixelPaws logo of a pixel cat head">
                 <h1>PixelPaws</h1>
             </div>
             <button class="menu-toggle" aria-label="Toggle navigation menu" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
@@ -96,9 +98,9 @@
                     <!-- Pet basic info -->
                     <div class="pet-basic-info">
                         <h3> Pet Info</h3>
-                        <p class="pet-name">Name: <span>Buddy</span></p>
-                        <p class="pet-mood">Mood: <span>Happy</span></p>
-                        <p class="weather-status">Weather: <span>Sunny</span></p>
+                        <h4 class="pet-name">Name: <span>Buddy</span></h4>
+                        <h4 class="pet-mood">Mood: <span>Happy</span></h4>
+                        <h4 class="weather-status">Weather: <span>Sunny</span></h4>
                     </div>
 
                     <!-- Health Bar -->

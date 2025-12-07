@@ -11,6 +11,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Peity library for health bar -->
     <script src="https://cdn.jsdelivr.net/npm/peity@3.3.0/jquery.peity.min.js"></script>
+    <!-- Error Handling Module -->
+    <script src="scripts/error-handler.js" defer></script>
     <script src="scripts/health.js" defer></script>
     <script src="scripts/weather.js" defer></script>
     <script src="scripts/custom.js" defer></script>
@@ -52,7 +54,7 @@
             <div class="top-row">
                 <!-- Health Bar -->
                 <div class="health-bar">
-                    <h3>Health Status: <span class="health-status">Healthy</span></h3>
+                    <h2>Health Status: <span class="health-status">Healthy</span></h2>
                     <div class="peity-bar-wrapper">
                         <span class="peity-bar">100</span>
                     </div>
@@ -109,25 +111,28 @@
             </div>
 
             <!-- Activity buttons below -->
-            <div class="activity-buttons">
-                <button class="activity-btn" aria-label="Pet your virtual friend">
-                    🐾 Pet
-                </button>
-                <button class="activity-btn" aria-label="Feed your virtual pet">
-                    🍖 Feed
-                </button>
-                <button class="activity-btn" aria-label="Play fetch with your pet">
-                    🎾 Play Fetch
-                </button>
-                <button class="activity-btn" aria-label="Give your pet a treat">
-                    🦴 Give Treat
-                </button>
-                <button class="activity-btn" aria-label="Play with a toy">
-                    🧸 Toy Time
-                </button>
-                <button class="activity-btn" aria-label="Brush your pet">
-                    🪮 Brush
-                </button>
+            <div class="activity-section">
+                <h2>Play Activities</h2>
+                <div class="activity-buttons">
+                    <button class="activity-btn" aria-label="Pet your virtual friend">
+                        🐾 Pet
+                    </button>
+                    <button class="activity-btn" aria-label="Feed your virtual pet">
+                        🍖 Feed
+                    </button>
+                    <button class="activity-btn" aria-label="Play fetch with your pet">
+                        🎾 Play Fetch
+                    </button>
+                    <button class="activity-btn" aria-label="Give your pet a treat">
+                        🦴 Give Treat
+                    </button>
+                    <button class="activity-btn" aria-label="Play with a toy">
+                        🧸 Toy Time
+                    </button>
+                    <button class="activity-btn" aria-label="Brush your pet">
+                        🪮 Brush
+                    </button>
+                </div>
             </div>
         </div>
 

@@ -12,6 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/peity@3.3.0/jquery.peity.min.js"></script>
     
+    <!-- Error Handling Module -->
+    <script src="scripts/error-handler.js" defer></script>
     <!-- Scripts -->
     <script src="scripts/health.js" defer></script>
     <script src="scripts/custom.js" defer></script>
@@ -143,6 +145,7 @@
                 <div class="form-buttons import-export-buttons">
                     <button type="button" class="btn btn-secondary" data-action="export">📥 Export Pet</button>
                     <button type="button" class="btn btn-secondary" data-action="import">📤 Import Pet</button>
+                    <label for="import-file-input" style="display: none;">Import Pet File</label>
                     <input type="file" id="import-file-input" accept=".json" style="display: none;">
                 </div>
             </form>

@@ -147,7 +147,7 @@
 .speech-bubble p {
     margin: 0;
     font-size: 0.9rem;
-    color: var(--text-dark);
+    color: #000000;
 }
 
 /* Pet Info Section */
@@ -170,7 +170,6 @@
 
 .pet-info span {
     font-weight: bold;
-    color: var(--nav-active);
 }
 
 /* ===================================
