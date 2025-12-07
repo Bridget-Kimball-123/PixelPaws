@@ -25,11 +25,11 @@ const WEATHER_MOODS = {
     },
     RAINY: {
         mood: 'sad',
-        background: 'linear-gradient(to bottom, #003e80ff 0%, #003facff 100%)',
+        background: 'linear-gradient(to bottom, #005fc4ff 0%, #005effff 100%)',
         icon: '💧',
         cheersUpWith: ['fetch', 'toy-time'],
         night: {
-            background: 'linear-gradient(to bottom, #243d8eff 0%, #3982a2ff 100%)',
+            background: 'linear-gradient(to bottom, #192f79ff 0%, #1856adff 100%)',
             icon: '🌙💧'
         }
     },
@@ -57,7 +57,7 @@ const WEATHER_MOODS = {
     },
     CLOUDY: {
         mood: 'content',
-        background: 'linear-gradient(to bottom, #a9b2bcff 0%, #929eafff 100%)',
+        background: 'linear-gradient(to bottom, #e0e0e0 0%, #f8f8f8 100%)',
         icon: '☁️'
     },
     NIGHT: {
@@ -68,7 +68,7 @@ const WEATHER_MOODS = {
     },
     TORNADO: {
         mood: 'anxious',
-        background: 'linear-gradient(to bottom, #a67c52 0%, #c2b280 100%)', // brown
+        background: 'linear-gradient(to bottom, #b2885eff 0%, #c2b280 100%)', // brown
         icon: '🌪️',
         windEffect: true,
         cheersUpWith: ['pet', 'treat', 'toy-time'],
@@ -79,12 +79,12 @@ const WEATHER_MOODS = {
     },
     HURRICANE: {
         mood: 'anxious',
-        background: 'linear-gradient(to bottom, #084c61 0%, #177e89 100%)', // dark cerulean
+        background: 'linear-gradient(to bottom, #1f819fff 0%, #3eb4c2ff 100%)', // dark cerulean
         icon: '🌀',
         windEffect: true,
         cheersUpWith: ['pet', 'treat', 'toy-time'],
         night: {
-            background: 'linear-gradient(to bottom, #052c3a 0%, #084c61 100%)',
+            background: 'linear-gradient(to bottom, #0f4255ff 0%, #33788dff 100%)',
             icon: '🌙🌀'
         }
     },
@@ -114,7 +114,7 @@ const WEATHER_MOODS = {
         icon: '🥶',
         cheersUpWith: ['fetch'],
         night: {
-            background: 'linear-gradient(to bottom, #243d8eff 0%, #3982a2ff 100%)',
+            background: 'linear-gradient(to bottom, #243d8eff 0%, #3485a7ff 100%)',
             icon: '🌙🥶'
         }
     }
