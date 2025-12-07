@@ -15,12 +15,21 @@
 
 .star {
     position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
+    width: 4px;
+    height: 4px;
+    background-color: white;
     border-radius: 50%;
-    opacity: 0.8;
-    box-shadow: 0 0 6px 2px #fff;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 /* Snowflakes - static like stars but bigger */

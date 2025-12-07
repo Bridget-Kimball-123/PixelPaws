@@ -147,6 +147,8 @@ const weatherSystem = {
     apiKey: 'd75401fa67edb5c4f5e2689ef918636d', // OpenWeatherMap API key
     userLocation: null,
     actionsCompleted: [],
+    sunsetTime: null, // Sunset time in Unix timestamp
+    sunriseTime: null, // Sunrise time in Unix timestamp
     
     // Initialize weather system
     init() {
@@ -162,8 +164,15 @@ const weatherSystem = {
         }, 30 * 60 * 1000);
     },
     
-    // Check if it's night time (between 8 PM and 6 AM)
+    // Check if it's night time (between 8 PM and 6 AM) - fallback if sunset data unavailable
     isNightTime() {
+        // If we have sunset/sunrise data, use it
+        if (this.sunsetTime && this.sunriseTime) {
+            const currentTime = Date.now() / 1000; // Convert to Unix timestamp in seconds
+            return currentTime > this.sunsetTime || currentTime < this.sunriseTime;
+        }
+        
+        // Fallback to time-based check (between 8 PM and 6 AM)
         const hour = new Date().getHours();
         return hour >= 20 || hour < 6;
     },
@@ -221,6 +230,13 @@ const weatherSystem = {
     
     // Process weather data from API
     processWeatherData(data) {
+        // Extract sunset and sunrise times
+        if (data.sys && data.sys.sunset && data.sys.sunrise) {
+            this.sunsetTime = data.sys.sunset;
+            this.sunriseTime = data.sys.sunrise;
+            console.log('Sunset time:', new Date(this.sunsetTime * 1000), 'Sunrise time:', new Date(this.sunriseTime * 1000));
+        }
+        
         const tempK = data.main.temp;
         const tempF = (tempK - 273.15) * 9/5 + 32;
         this.currentTemperature = tempF; // Store temperature for use in other functions
@@ -447,26 +463,46 @@ const weatherSystem = {
         }
         // Set background
         petDisplay.style.background = weather.background;
-        // Set weather icon
-        weatherEffects.innerHTML = `<div class="weather-icon">${weather.icon}</div>`;
+        
+        // Set weather icon - but preserve the star-bg div
+        const starBg = weatherEffects.querySelector('.star-bg');
+        
+        // Only update weather icon, don't clear the entire weatherEffects
+        const existingIcon = weatherEffects.querySelector('.weather-icon');
+        if (existingIcon) {
+            existingIcon.remove();
+        }
+        
+        // Add new weather icon
+        const weatherIcon = document.createElement('div');
+        weatherIcon.className = 'weather-icon';
+        weatherIcon.textContent = weather.icon;
+        weatherEffects.appendChild(weatherIcon);
 
-        // Remove previous stars, rain, snow, storm, wind, hail effects
-        const starBg = document.querySelector('.star-bg');
-        if (starBg) starBg.innerHTML = '';
+        // Remove previous rain, snow, storm, wind, hail effects
         document.querySelectorAll('.rain-emoji, .snow-emoji, .lightning-emoji, .wind-emoji, .hail-emoji, .sleet-emoji').forEach(e => e.remove());
         petDisplay.classList.remove('mist-effect');
+
+        // Clear previous stars if any
+        if (starBg) starBg.innerHTML = '';
 
         // Show stars whenever it's nighttime, regardless of weather
         if (this.isNightTime()) {
             if (starBg) {
-                for (let i = 0; i < 50; i++) {
+                console.log('Creating stars...');
+                for (let i = 0; i < 200; i++) {
                     const star = document.createElement('div');
                     star.className = 'star';
                     star.style.top = Math.random() * 100 + '%';
                     star.style.left = Math.random() * 100 + '%';
                     star.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+                    // Add random animation delay so stars twinkle at different times
+                    star.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
                     starBg.appendChild(star);
                 }
+                console.log('Stars created successfully');
+            } else {
+                console.error('Star-bg container not found within weather-effects');
             }
         }
 
