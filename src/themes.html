@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 PixelPaws - Themes</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/pet.css">
+    <link rel="stylesheet" href="styles/themes.css">
+    
+    <!-- jQuery and Peity for health bar -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/peity@3.3.0/jquery.peity.min.js"></script>
+    
+    <!-- Error Handling Module -->
+    <script src="scripts/error-handler.js" defer></script>
+    <!-- Scripts -->
+    <script src="scripts/health.js" defer></script>
+    <script src="scripts/theme.js" defer></script>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header with logo and navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="../design/logo.png" alt="PixelPaws logo with a cute pixelated pet icon">
+                <h1>PixelPaws</h1>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="customize.html">Customize</a></li>
+                    <li><a href="play.html">Play</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="themes.html" class="active">Themes</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Resources</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main id="main-content" class="themes-page">
+        <h1>Theme Collection</h1>
+
+        <!-- Loyalty Rewards Calendar -->
+        <section class="loyalty-section">
+            <h2>Your Loyalty Calendar</h2>
+            <p class="loyalty-description">Visit your pet each day to unlock new themes!</p>
+            
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar days will be generated here -->
+            </div>
+
+            <div class="theme-counter">
+                <p><strong>Themes Unlocked:</strong> <span id="themesUnlockedCount">0</span>/7</p>
+            </div>
+
+            <div class="checkin-section">
+                <button id="checkInBtn" class="btn-checkin">✓ Check In Today</button>
+                <p class="checkin-message" id="checkinMessage"></p>
+            </div>
+        </section>
+
+        <!-- Reset to Default Button -->
+        <section class="reset-section">
+            <button id="resetThemeBtn" class="btn-reset-theme">Reset to Default Purple Theme</button>
+        </section>
+
+        <!-- Theme Showcase -->
+        <section class="themes-showcase">
+            <h2>Available Themes</h2>
+            
+            <div class="themes-grid" id="themesGrid">
+                <!-- Theme cards will be generated here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 PixelPaws by Bridget Kimball</p>
+    </footer>
+
+    <!-- Notification container -->
+    <div id="notification" class="notification"></div>
+
+    <script src="scripts/themes-page.js" defer></script>
+</body>
+</html>

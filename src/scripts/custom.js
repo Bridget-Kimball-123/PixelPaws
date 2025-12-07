@@ -224,6 +224,12 @@ function performReset() {
     // Re-render accessories to remove them from display immediately
     renderAccessories();
     
+    // Reset theme and loyalty progress
+    if (window.petTheme) {
+        window.petTheme.resetTheme();
+        console.log('Theme reset to default');
+    }
+    
     // Reset health stats to 100%
     console.log('Checking for window.petHealth:', window.petHealth);
     if (window.petHealth) {
@@ -237,7 +243,7 @@ function performReset() {
         window.petHealth.updateHealthDisplay();
         
         console.log('After reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
-        showNotification('Pet appearance, health, and shop purchases have been reset!');
+        showNotification('Pet appearance, health, shop purchases, and theme have been reset!');
     } else {
         console.error('ERROR: window.petHealth is not available on customize page!');
         showNotification('Pet appearance has been reset!');

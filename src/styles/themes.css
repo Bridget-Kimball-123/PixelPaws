@@ -1,0 +1,438 @@
+/* ===================================
+   PixelPaws - Themes Page Stylesheet
+   Author: Bridget Kimball
+   =================================== */
+
+/* Theme unlock notification modal */
+#theme-unlock-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.theme-unlock-content {
+    background-color: white;
+    border: 4px solid var(--border-purple);
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.theme-unlock-header {
+    padding: 1.5rem;
+    color: white;
+    text-align: center;
+}
+
+.theme-unlock-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.theme-unlock-body {
+    padding: 2rem;
+    text-align: center;
+}
+
+.theme-unlock-preview {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 2px dashed rgba(0, 0, 0, 0.2);
+}
+
+.theme-unlock-body h3 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-dark);
+}
+
+.theme-unlock-body p {
+    color: #666;
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.theme-unlock-body strong {
+    color: var(--primary-purple);
+}
+
+.theme-unlock-close {
+    background-color: var(--primary-purple);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.theme-unlock-close:hover {
+    background-color: var(--nav-active);
+}
+
+.theme-unlock-close:active {
+    transform: scale(0.98);
+}
+
+main.themes-page {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+main.themes-page h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+    font-family: var(--font-heading);
+}
+
+/* Health bar section */
+.health-section {
+    background-color: var(--light-purple);
+    border: 2px solid var(--border-purple);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.health-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.health-info label {
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.health-display {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Loyalty section */
+.loyalty-section {
+    background-color: var(--light-purple);
+    border: 2px solid var(--border-purple);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.loyalty-section h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.loyalty-description {
+    text-align: center;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.calendar-day {
+    background-color: white;
+    border: 2px solid var(--border-purple);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.calendar-day.visited {
+    background-color: #E6F3E6;
+    border-color: #66CC66;
+    box-shadow: 0 0 8px rgba(102, 204, 102, 0.3);
+}
+
+.calendar-day.unvisited {
+    background-color: #F5F5F5;
+    color: #999;
+}
+
+.day-number {
+    font-weight: bold;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.day-status {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.calendar-day.visited .day-status {
+    color: #66CC66;
+}
+
+.theme-counter {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+/* Check-in section */
+.checkin-section {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+}
+
+.btn-checkin {
+    background-color: #66CC66;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.btn-checkin:hover {
+    background-color: #55BB55;
+}
+
+.btn-checkin:active {
+    transform: scale(0.98);
+}
+
+.checkin-message {
+    margin-top: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Reset section */
+.reset-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.btn-reset-theme {
+    background-color: #FF6666;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.btn-reset-theme:hover {
+    background-color: #FF3333;
+}
+
+.btn-reset-theme:active {
+    transform: scale(0.98);
+}
+
+/* Themes showcase section */
+.themes-showcase {
+    background-color: var(--light-purple);
+    border: 2px solid var(--border-purple);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.themes-showcase h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.themes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.theme-card {
+    background-color: white;
+    border: 2px solid var(--border-purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.theme-card:hover:not(.locked) {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(102, 115, 166, 0.2);
+}
+
+.theme-card.active {
+    border: 3px solid var(--primary-purple);
+    background-color: var(--light-purple);
+}
+
+.theme-card.locked {
+    opacity: 0.6;
+    background-color: #f9f9f9;
+}
+
+.theme-color-preview {
+    width: 100%;
+    height: 80px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border: 2px solid var(--border-purple);
+}
+
+.theme-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.theme-day {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.lock-badge {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.locked-message {
+    font-size: 0.85rem;
+    color: #FF6666;
+    font-weight: bold;
+}
+
+.active-badge {
+    display: inline-block;
+    background-color: #66CC66;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.btn-select-theme {
+    background-color: var(--primary-purple);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    width: 100%;
+}
+
+.btn-select-theme:hover {
+    background-color: var(--nav-active);
+}
+
+.btn-select-theme:active {
+    transform: scale(0.98);
+}
+
+/* Notification styling */
+#notification {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #66CC66;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    main.themes-page h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .loyalty-section,
+    .themes-showcase {
+        padding: 1.5rem;
+    }
+
+    .themes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .theme-card {
+        padding: 1rem;
+    }
+
+    .theme-color-preview {
+        height: 60px;
+    }
+
+    .health-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .health-display {
+        width: 100%;
+    }
+}
