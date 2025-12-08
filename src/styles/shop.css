@@ -301,7 +301,7 @@
 
 .item-cost {
     font-weight: bold;
-    color: var(--nav-active);
+    color: var(--text-dark);
     font-size: 1.1rem;
 }
 
