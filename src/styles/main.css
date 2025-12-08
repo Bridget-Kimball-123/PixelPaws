@@ -17,10 +17,11 @@
     /* Color Palette - Based on Design Images */
     --primary-purple: #660066;
     --light-purple: #DFCDE7;
-    --border-purple: #9673A6;
+    --border-purple: #D6C1D7;
     --background-white: #FBF4FF;
     --text-dark: #660066;
     --nav-active: #4B0082;
+    --info-section-text: #660066;
     
     /* Pet Colors */
     --pet-gray: #C0C0C0;
@@ -438,8 +439,8 @@ input:focus {
     position: absolute;
     top: -40px;
     left: 0;
-    background: var(--primary-purple);
-    color: white;
+    background: white;
+    color: black;
     padding: 8px;
     text-decoration: none;
     z-index: 9999;
@@ -477,7 +478,7 @@ input:focus {
    =================================== */
 
 .health-bar {
-    background-color: var(--background-white);
+    background-color: white;
     border: 2px solid var(--border-purple);
     border-radius: 10px;
     padding: var(--spacing-medium);
@@ -613,3 +614,390 @@ input:focus {
     margin: 0;
     font-size: 0.95rem;
 }
+
+/* ===================================
+   DARK MODE STYLES
+   =================================== */
+
+html[data-dark-mode="true"] {
+    --primary-purple: #BD9CDE;
+    --light-purple: #35244C;
+    --border-purple: #AB81D5;
+    --background-white: #1A1325;
+    --text-dark: #643BA0;
+    
+    /* Additional purple shades for dark mode */
+    --nav-purple: #BD9CDE;
+    --info-section-text: #BD9CDE;
+    --btn-action-purple: #260647;
+    --nav-active: #671cb7;
+}
+
+html[data-dark-mode="true"] body {
+    background-color: var(--background-white);
+    color: var(--text-dark);
+}
+
+/* Header & Navigation */
+html[data-dark-mode="true"] header {
+    background-color: var(--light-purple);
+    border-bottom-color: var(--nav-active);
+}
+
+html[data-dark-mode="true"] nav ul li a {
+    color: var(--nav-purple);
+}
+
+html[data-dark-mode="true"] nav ul li a:hover {
+    color: #E9D5FF;
+}
+
+html[data-dark-mode="true"] nav ul li a.active {
+    background-color: var(--nav-active);
+    color: white;
+}
+
+/* Main Content */
+html[data-dark-mode="true"] main {
+    background-color: var(--background-white);
+}
+
+html[data-dark-mode="true"] h1, 
+html[data-dark-mode="true"] h2, 
+html[data-dark-mode="true"] h3, 
+html[data-dark-mode="true"] h4, 
+html[data-dark-mode="true"] h5, 
+html[data-dark-mode="true"] h6 {
+    color: var(--primary-purple);
+}
+
+/* Section Backgrounds */
+html[data-dark-mode="true"] .loyalty-section,
+html[data-dark-mode="true"] .dark-mode-section,
+html[data-dark-mode="true"] .themes-showcase,
+html[data-dark-mode="true"] .health-section,
+html[data-dark-mode="true"] .customize-pet-container,
+html[data-dark-mode="true"] .item-grid {
+    background-color: var(--light-purple);
+    border-color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] .loyalty-section p,
+/* html[data-dark-mode="true"] .dark-mode-section p, */
+html[data-dark-mode="true"] .health-section label,
+html[data-dark-mode="true"] .control-group label {
+    color: var(--primary-purple);
+}
+
+/* Cards */
+html[data-dark-mode="true"] .calendar-day {
+    background-color: #2A1F42;
+    border-color: var(--border-purple);
+    color: var(--light-purple);
+}
+
+html[data-dark-mode="true"] .calendar-day.unvisited {
+    background-color: #1F1630;
+    color: #999;
+}
+
+html[data-dark-mode="true"] .accessory-card,
+html[data-dark-mode="true"] .customize-section {
+    background-color: var(--btn-action-purple);
+    border-color: var(--border-purple);
+    color: var(--light-purple);
+}
+
+html[data-dark-mode="true"] .theme-card {
+    color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] .theme-card h3,
+html[data-dark-mode="true"] .accessory-card h3 {
+    color: var(--light-purple);
+}
+
+/* Shop page dark mode - use primary purple for shop items */
+html[data-dark-mode="true"] .shop-item {
+    background-color: var(--border-purple);
+    border-color: var(--border-purple);
+    color: var(--light-purple);
+}
+
+html[data-dark-mode="true"] .shop-item h3 {
+    color: var(--light-purple);
+}
+
+html[data-dark-mode="true"] .item-type {
+    color: var(--light-purple);
+}
+
+html[data-dark-mode="true"] .item-description {
+    color: var(--light-purple);
+}
+
+/* Buttons */
+html[data-dark-mode="true"] .btn-checkin {
+    background-color: var(--dark-health-green);
+}
+
+html[data-dark-mode="true"] .btn-checkin:hover {
+    background-color: var(--dark-health-green-hover);
+}
+
+html[data-dark-mode="true"] .btn-reset-theme {
+    background-color: #8B4545;
+}
+
+html[data-dark-mode="true"] .btn-reset-theme:hover {
+    background-color: #C45555;
+}
+
+html[data-dark-mode="true"] .btn-save-dark-mode,
+html[data-dark-mode="true"] .btn-select-theme,
+html[data-dark-mode="true"] .btn-equip,
+html[data-dark-mode="true"] .btn-purchase,
+html[data-dark-mode="true"] button[class*="btn"] {
+    background-color: var(--btn-action-purple);
+    color: var(--primary-purple);
+    border-color: var(--primary-purple);
+}
+
+html[data-dark-mode="true"] .btn-save-dark-mode:hover,
+html[data-dark-mode="true"] .btn-select-theme:hover,
+html[data-dark-mode="true"] .btn-equip:hover,
+html[data-dark-mode="true"] .btn-purchase:hover {
+    background-color: var(--border-purple);
+}
+
+/* Form Elements */
+html[data-dark-mode="true"] select,
+html[data-dark-mode="true"] input[type="text"],
+html[data-dark-mode="true"] input[type="number"],
+html[data-dark-mode="true"] textarea {
+    background-color: var(--light-purple);
+    color: var(--info-section-text);
+    border-color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] select:focus,
+html[data-dark-mode="true"] input:focus,
+html[data-dark-mode="true"] textarea:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 4px rgba(153, 102, 204, 0.5);
+}
+
+/* Footer */
+html[data-dark-mode="true"] footer {
+    background-color: var(--light-purple);
+    border-top-color: var(--border-purple);
+    color: var(--text-dark);
+}
+
+/* Notification */
+html[data-dark-mode="true"] #notification,
+html[data-dark-mode="true"] .custom-notification {
+    background-color: var(--primary-purple);
+    color: var(--light-purple);
+}
+
+/* Health Bar */
+html[data-dark-mode="true"] .health-bar {
+    background-color: #352055;
+    border-color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] .health-bar h3 {
+    color: var(--primary-purple);
+}
+
+/* Modal/Popup */
+html[data-dark-mode="true"] .theme-unlock-content {
+    background-color: #2A1F42;
+    border-color: var(--primary-purple);
+    color: var(--text-dark);
+}
+
+html[data-dark-mode="true"] .theme-unlock-body p {
+    color: var(--text-dark);
+}
+
+/* Info Section */
+html[data-dark-mode="true"] .info-section {
+    background-color: #2A1F42;
+    border-color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] .info-section h2 {
+    color: var(--primary-purple);
+}
+
+html[data-dark-mode="true"] .info-section p {
+    color: var(--info-section-text);
+}
+
+/* Quick Actions Buttons */
+html[data-dark-mode="true"] .quick-actions .btn-primary {
+    background-color: var(--btn-action-purple);
+    border-color: var(--btn-action-purple);
+    color: white;
+}
+
+html[data-dark-mode="true"] .quick-actions .btn-primary:hover {
+    background-color: var(--nav-purple);
+    border-color: var(--nav-purple);
+}
+
+/* Peity health bar - ensure it uses dark mode green */
+html[data-dark-mode="true"] .peity-bar-wrapper {
+    border-color: var(--dark-health-green);
+    background: linear-gradient(to right, #2A1F42 0%, #2A1F42 100%);
+}
+
+html[data-dark-mode="true"] .peity-bar svg rect {
+    fill: var(--dark-health-green) !important;
+}
+
+/* ===================================
+   DARK MODE THEME ALTERNATES
+   =================================== */
+
+/* BLUE THEME - Dark Mode */
+html[data-dark-mode="true"] .themes-page[data-active-theme="blue"],
+html[data-dark-mode="true"][data-active-theme="blue"] {
+    --primary-purple: #5A9FFF;
+    --light-purple: #1A2D4D;
+    --border-purple: #3A6DB3;
+    --background-white: #0F1823;
+    --text-dark: #7EB3FF;
+    --nav-active: #2E5A99;
+}
+
+/* GREEN THEME - Dark Mode */
+html[data-dark-mode="true"] .themes-page[data-active-theme="green"],
+html[data-dark-mode="true"][data-active-theme="green"] {
+    --primary-purple: #5FCC6B;
+    --light-purple: #1F3D23;
+    --border-purple: #3D7D47;
+    --background-white: #0F1E13;
+    --text-dark: #7FE08F;
+    --nav-active: #2E6B37;
+}
+
+/* YELLOW THEME - Dark Mode */
+html[data-dark-mode="true"] .themes-page[data-active-theme="yellow"],
+html[data-dark-mode="true"][data-active-theme="yellow"] {
+    --primary-purple: #FFD966;
+    --light-purple: #3D3820;
+    --border-purple: #B8A04D;
+    --background-white: #1A1710;
+    --text-dark: #FFE699;
+    --nav-active: #8B7920;
+}
+
+/* ORANGE THEME - Dark Mode */
+html[data-dark-mode="true"] .themes-page[data-active-theme="orange"],
+html[data-dark-mode="true"][data-active-theme="orange"] {
+    --primary-purple: #FF9944;
+    --light-purple: #3D2818;
+    --border-purple: #B8753D;
+    --background-white: #1A0F08;
+    --text-dark: #FFAA66;
+    --nav-active: #8B5220;
+}
+
+/* RED THEME - Dark Mode */
+html[data-dark-mode="true"] .themes-page[data-active-theme="red"],
+html[data-dark-mode="true"][data-active-theme="red"] {
+    --primary-purple: #FF6666;
+    --light-purple: #3D1818;
+    --border-purple: #B8393D;
+    --background-white: #1A0808;
+    --text-dark: #FF9999;
+    --nav-active: #8B2020;
+}
+
+/* PINK THEME - Dark Mode */
+html[data-dark-mode="true"] .themes-page[data-active-theme="pink"],
+html[data-dark-mode="true"][data-active-theme="pink"] {
+    --primary-purple: #FF66CC;
+    --light-purple: #3D1E33;
+    --border-purple: #B84D99;
+    --background-white: #1A0D17;
+    --text-dark: #FF99DD;
+    --nav-active: #8B2E66;
+}
+
+/* ===================================
+   DARK MODE CUSTOMIZATION PAGE
+   =================================== */
+
+/* Customize page containers */
+html[data-dark-mode="true"] .customize-page,
+html[data-dark-mode="true"] .customize-container,
+html[data-dark-mode="true"] .customization-area {
+    color: var(--text-dark);
+}
+
+html[data-dark-mode="true"] .customize-title {
+    color: var(--primary-purple);
+}
+
+/* Control buttons and labels */
+html[data-dark-mode="true"] .arrow-btn {
+    background-color: var(--primary-purple);
+    color: white;
+    border: 2px solid var(--primary-purple);
+}
+
+html[data-dark-mode="true"] .arrow-btn:hover {
+    background-color: var(--border-purple);
+    border-color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] .control-label {
+    color: var(--primary-purple);
+}
+
+/* Name input styling */
+html[data-dark-mode="true"] .name-input-group label {
+    color: var(--primary-purple);
+}
+
+html[data-dark-mode="true"] .name-input-group input {
+    background-color: #FAF8FC;
+    color: var(--text-dark);
+    border-color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] .name-input-group input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 4px rgba(153, 102, 204, 0.5);
+}
+
+/* Buttons styling */
+html[data-dark-mode="true"] .form-buttons .btn,
+html[data-dark-mode="true"] .import-export-buttons .btn {
+    background-color: var(--primary-purple);
+    color: #25173A;
+    border-color: var(--border-purple);
+}
+
+html[data-dark-mode="true"] .form-buttons .btn:hover,
+html[data-dark-mode="true"] .import-export-buttons .btn:hover {
+    background-color: var(--border-purple);
+}
+
+/* Pet preview and display styling */
+html[data-dark-mode="true"] .pet-preview {
+    background-color: transparent;
+}
+
+/* Accessibility - disabled button state */
+html[data-dark-mode="true"] .btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+

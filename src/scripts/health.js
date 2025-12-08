@@ -260,7 +260,7 @@ const petHealth = {
         }
         
         // Otherwise, return green (HEALTHY - both 50%+)
-        return '#367C3C'; // Green
+        return '#3A833C'; // Green
     },
     
     // Update health bar display

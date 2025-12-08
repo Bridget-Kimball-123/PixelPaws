@@ -88,7 +88,11 @@ To Do Checklist:
     ✅ Implement loyalty points: the more a user comes back the more they will gain (rewards = themes?)
     ✅ Sound effects
     ✅ Undo/redo recent customization changes
+    ✅ Dark mode alternate for all themes:
+        User has option to choose when dark mode goes into effect
+        Dark mode can be automatic based on system settings or user preference
     
+    Fix loyalty rewards: not registering another day
     Fix snow:
         ✅ For desktop: make the snow look similar to stars
         ✅ For all views: make the snow appear behind the pet, make the night snow gradient darker
@@ -104,9 +108,6 @@ Ideas:
     Pet breeding
     Daily quests
     Pomodoro method: study buddy timer
-    Dark mode alternate for all themes:
-        User has option to choose when dark mode goes into effect
-        Dark mode can be automatic based on system settings or user preference
     Implement favorites:
         Accessories
         Themes

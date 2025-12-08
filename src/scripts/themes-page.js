@@ -63,6 +63,9 @@ function renderThemesGrid() {
 
 // Setup event listeners
 function setupEventListeners() {
+    console.log('\n=== [SETUP] setupEventListeners starting ===');
+    console.log('[SETUP] window.petTheme.darkMode:', JSON.stringify(window.petTheme.darkMode));
+    
     // Check-in button
     const checkInBtn = document.getElementById('checkInBtn');
     if (checkInBtn) {
@@ -126,6 +129,107 @@ function setupEventListeners() {
             }
         });
     }
+
+    // Dark mode dropdown
+    const darkModeSelect = document.getElementById('dark-mode-mode');
+    const darkModeDescription = document.getElementById('dark-mode-description');
+    const saveDarkModeBtn = document.getElementById('saveDarkModeBtn');
+    
+    if (darkModeSelect) {
+        // Set current value on page load
+        console.log('[DROPDOWN_INIT] ========================================');
+        console.log('[DROPDOWN_INIT] Setting dropdown initial value');
+        console.log('[DROPDOWN_INIT] window.petTheme.darkMode.mode:', window.petTheme.darkMode.mode);
+        console.log('[DROPDOWN_INIT] window.petTheme.darkMode:', JSON.stringify(window.petTheme.darkMode));
+        console.log('[DROPDOWN_INIT] darkModeSelect element exists?', !!darkModeSelect);
+        
+        if (darkModeSelect) {
+            console.log('[DROPDOWN_INIT] Available options:');
+            Array.from(darkModeSelect.options).forEach((opt, idx) => {
+                console.log(`  [${idx}] value="${opt.value}" text="${opt.text}"`);
+            });
+            
+            darkModeSelect.value = window.petTheme.darkMode.mode;
+            console.log('[DROPDOWN_INIT] Set darkModeSelect.value to:', darkModeSelect.value);
+            console.log('[DROPDOWN_INIT] Dropdown value now shows:', darkModeSelect.value);
+            console.log('[DROPDOWN_INIT] Does it match petTheme.mode?', darkModeSelect.value === window.petTheme.darkMode.mode);
+            
+            // Add one more verification immediately after
+            setTimeout(() => {
+                console.log('[DROPDOWN_INIT_VERIFY] After setupEventListeners, dropdown.value is still:', darkModeSelect.value);
+            }, 100);
+        }
+        updateDarkModeDescription();
+        console.log('[DROPDOWN_INIT] ========================================\n');
+        
+        // Listen for changes - PREVIEW dark mode without saving
+        darkModeSelect.addEventListener('change', function() {
+            const selectedMode = this.value;
+            console.log('Dropdown changed to:', selectedMode);
+            console.log('Applying PREVIEW of dark mode (not saving yet)');
+            
+            // Create a temporary copy to preview
+            const tempMode = selectedMode;
+            let tempEnabled = false;
+            
+            if (tempMode === 'on') {
+                tempEnabled = true;
+            } else if (tempMode === 'off') {
+                tempEnabled = false;
+            } else if (tempMode === 'auto') {
+                tempEnabled = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+            
+            console.log('Preview: mode=' + tempMode + ', enabled=' + tempEnabled);
+            
+            // Apply preview visually
+            if (tempEnabled) {
+                document.documentElement.setAttribute('data-dark-mode', 'true');
+            } else {
+                document.documentElement.removeAttribute('data-dark-mode');
+            }
+            
+            // Update description
+            updateDarkModeDescription();
+        });
+    }
+    
+    // Save button for dark mode - this is where we actually save
+    if (saveDarkModeBtn) {
+        saveDarkModeBtn.addEventListener('click', function() {
+            console.log('\n[SAVE_BTN] === Save button clicked ===');
+            const selectedMode = darkModeSelect.value;
+            console.log('[SAVE_BTN] Selected mode from dropdown:', selectedMode);
+            console.log('[SAVE_BTN] Calling window.petTheme.setDarkModeMode(' + selectedMode + ')');
+            window.petTheme.setDarkModeMode(selectedMode);
+            
+            // Show confirmation
+            const modeLabels = {
+                'auto': 'Automatic (System Default)',
+                'on': 'Always On',
+                'off': 'Always Off'
+            };
+            showNotification(`✓ Dark mode settings saved: ${modeLabels[selectedMode]}`);
+            console.log('[SAVE_BTN] === Save button processing complete ===\n');
+        });
+    }
+    console.log('=== [SETUP] setupEventListeners complete ===\n');
+    console.log('Final darkModeSelect.value:', darkModeSelect?.value);
+}
+
+// Update dark mode description text
+function updateDarkModeDescription() {
+    const description = document.getElementById('dark-mode-description');
+    if (!description) return;
+    
+    const mode = window.petTheme.darkMode.mode;
+    const descriptions = {
+        'auto': 'Your device\'s dark mode setting will be used.',
+        'on': 'Dark mode is always enabled.',
+        'off': 'Dark mode is always disabled.'
+    };
+    
+    description.textContent = descriptions[mode] || 'Unknown setting';
 }
 
 // Update themes unlocked count

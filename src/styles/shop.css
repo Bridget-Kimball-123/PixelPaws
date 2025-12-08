@@ -192,7 +192,7 @@
     background-repeat: no-repeat;
     background-position: right 10px center;
     padding-right: 35px;
-    color: var(--text-dark);
+    color: var(--info-section-text);
     font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -301,7 +301,7 @@
 
 .item-cost {
     font-weight: bold;
-    color: var(--text-dark);
+    color: var(--btn-action-purple);
     font-size: 1.1rem;
 }
 

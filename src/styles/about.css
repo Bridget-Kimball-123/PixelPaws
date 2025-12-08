@@ -8,11 +8,12 @@
 }
 
 .about-section {
-    background-color: white;
+    background-color: var(--light-purple);
     border: 2px solid var(--border-purple);
     border-radius: 15px;
     padding: var(--spacing-large);
     margin-bottom: var(--spacing-large);
+    color: var(--primary-purple);
 }
 
 .about-section h2 {
@@ -24,6 +25,7 @@
 .about-section ul {
     margin-left: var(--spacing-large);
     margin-top: var(--spacing-medium);
+    /* color: var(--border-purple); */
 }
 
 .about-section li {

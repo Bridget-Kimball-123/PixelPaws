@@ -74,6 +74,27 @@
             <button id="resetThemeBtn" class="btn-reset-theme">Reset to Default Purple Theme</button>
         </section>
 
+        <!-- Dark Mode Settings -->
+        <section class="dark-mode-section">
+            <h2>Dark Mode Settings</h2>
+            <div class="dark-mode-controls">
+                <div class="control-group">
+                    <label for="dark-mode-mode">Dark Mode:</label>
+                    <select id="dark-mode-mode" aria-label="Select dark mode setting">
+                        <option value="auto">🔄 Automatic (System Default)</option>
+                        <option value="on">🌙 Always On</option>
+                        <option value="off">☀️ Always Off</option>
+                    </select>
+                </div>
+                <p class="dark-mode-description" id="dark-mode-description">
+                    Your device's dark mode setting will be used.
+                </p>
+                <div class="dark-mode-buttons">
+                    <button id="saveDarkModeBtn" class="btn-save-dark-mode">💾 Save Settings</button>
+                </div>
+            </div>
+        </section>
+
         <!-- Theme Showcase -->
         <section class="themes-showcase">
             <h2>Available Themes</h2>
