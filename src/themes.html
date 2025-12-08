@@ -48,6 +48,10 @@
 
     <!-- Main content area -->
     <main id="main-content" class="themes-page">
+        <div class="wip-notice">
+            <p>⚠️ <strong>Work in Progress:</strong> The themes page is still being developed. Some features may change.</p>
+        </div>
+
         <h1>Theme Collection</h1>
 
         <!-- Loyalty Rewards Calendar -->
@@ -67,11 +71,6 @@
                 <button id="checkInBtn" class="btn-checkin">✓ Check In Today</button>
                 <p class="checkin-message" id="checkinMessage"></p>
             </div>
-        </section>
-
-        <!-- Reset to Default Button -->
-        <section class="reset-section">
-            <button id="resetThemeBtn" class="btn-reset-theme">Reset to Default Purple Theme</button>
         </section>
 
         <!-- Dark Mode Settings -->
@@ -95,6 +94,15 @@
             </div>
         </section>
 
+        <!-- Theme Management Buttons -->
+        <section class="theme-management-section">
+            <div class="theme-buttons-container">
+                <button id="saveThemeBtn" class="btn-save-theme">💾 Save Theme</button>
+                <button id="resetThemeBtn" class="btn-reset-theme">🔄 Reset Theme</button>
+            </div>
+            <p id="themeStatusMessage" class="theme-status-message"></p>
+        </section>
+
         <!-- Theme Showcase -->
         <section class="themes-showcase">
             <h2>Available Themes</h2>
@@ -112,6 +120,18 @@
 
     <!-- Notification container -->
     <div id="notification" class="notification"></div>
+
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmationModal" class="confirmation-modal" style="display: none;">
+        <div class="confirmation-content">
+            <h2 id="confirmationTitle">Confirm Action</h2>
+            <p id="confirmationMessage">Are you sure?</p>
+            <div class="confirmation-buttons">
+                <button id="confirmBtn" class="btn-confirm">Yes, Confirm</button>
+                <button id="cancelBtn" class="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <script src="scripts/themes-page.js" defer></script>
 </body>

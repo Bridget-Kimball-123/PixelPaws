@@ -3,6 +3,67 @@
 // Author: Bridget Kimball
 // ===================================
 
+// Show custom confirmation modal
+function showCustomConfirmation(title, message, onConfirm) {
+    const modal = document.getElementById('confirmationModal');
+    const titleEl = document.getElementById('confirmationTitle');
+    const messageEl = document.getElementById('confirmationMessage');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    
+    if (!modal) {
+        console.error('Confirmation modal not found');
+        return;
+    }
+    
+    // Set content
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    
+    // Show modal
+    modal.style.display = 'flex';
+    
+    // Handle confirm
+    const handleConfirm = function() {
+        closeModal();
+        if (onConfirm) {
+            onConfirm();
+        }
+    };
+    
+    // Handle cancel
+    const handleCancel = function() {
+        closeModal();
+    };
+    
+    // Close modal and cleanup
+    const closeModal = function() {
+        modal.style.display = 'none';
+        // Clone and replace to remove all event listeners
+        confirmBtn.replaceWith(confirmBtn.cloneNode(true));
+        cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+    };
+    
+    // Clone buttons to remove old listeners
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    confirmBtn.replaceWith(newConfirmBtn);
+    cancelBtn.replaceWith(newCancelBtn);
+    
+    // Attach new event listeners
+    document.getElementById('confirmBtn').addEventListener('click', handleConfirm);
+    document.getElementById('cancelBtn').addEventListener('click', handleCancel);
+    
+    // Close on background click (single listener with removal)
+    const handleBackgroundClick = function(e) {
+        if (e.target === modal) {
+            modal.removeEventListener('click', handleBackgroundClick);
+            handleCancel();
+        }
+    };
+    modal.addEventListener('click', handleBackgroundClick);
+}
+
 // Initialize themes page when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     renderCalendar();
@@ -27,6 +88,47 @@ function renderCalendar() {
         `;
         calendarGrid.appendChild(dayElement);
     }
+}
+
+// Variable to store selected theme for saving
+let selectedThemeForSaving = null;
+
+// Attach event listeners to theme select buttons
+function attachThemeSelectListeners() {
+    document.querySelectorAll('.btn-select-theme').forEach(btn => {
+        // Remove existing listeners to prevent duplicates
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        newBtn.addEventListener('click', function() {
+            const themeKey = this.getAttribute('data-theme');
+            if (window.petTheme.isThemeUnlocked(themeKey)) {
+                // Play theme selection sound effect
+                if (typeof soundManager !== 'undefined') {
+                    soundManager.play('theme');
+                }
+                // Store the selected theme but don't save yet
+                selectedThemeForSaving = themeKey;
+                
+                // Show preview by applying theme temporarily
+                window.petTheme.applyTheme(themeKey);
+                renderThemesGrid();
+                
+                // Enable save button
+                const saveBtn = document.getElementById('saveThemeBtn');
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.style.opacity = '1';
+                    console.log('Save button enabled for:', themeKey);
+                    const statusMsg = document.getElementById('themeStatusMessage');
+                    if (statusMsg) {
+                        statusMsg.textContent = `Preview: ${window.petTheme.themes[themeKey].name} - Click Save to confirm`;
+                        statusMsg.style.color = 'var(--primary-purple)';
+                    }
+                }
+            }
+        });
+    });
 }
 
 // Render themes grid
@@ -59,6 +161,9 @@ function renderThemesGrid() {
         themeCard.innerHTML = cardContent;
         themesGrid.appendChild(themeCard);
     }
+    
+    // Re-attach event listeners to all select theme buttons
+    attachThemeSelectListeners();
 }
 
 // Setup event listeners
@@ -70,10 +175,11 @@ function setupEventListeners() {
     const checkInBtn = document.getElementById('checkInBtn');
     if (checkInBtn) {
         checkInBtn.addEventListener('click', function() {
-            const result = window.petTheme.checkDailyVisit();
+            // Use the theme that was unlocked during page load init
+            const result = window.petTheme.lastUnlockedTheme;
             
             if (result) {
-                // New theme was unlocked
+                // New theme was unlocked during this visit
                 // Play unlock sound effect
                 if (typeof soundManager !== 'undefined') {
                     soundManager.play('unlock');
@@ -81,7 +187,7 @@ function setupEventListeners() {
                 showNotification(`Welcome back! You unlocked ${result.name}!`);
                 window.petTheme.showThemeUnlockNotification(result);
             } else {
-                // No new theme today
+                // No new theme today (already checked in earlier)
                 // Play check-in sound effect
                 if (typeof soundManager !== 'undefined') {
                     soundManager.play('checkin');
@@ -96,36 +202,62 @@ function setupEventListeners() {
         });
     }
 
-    // Select theme buttons
-    document.querySelectorAll('.btn-select-theme').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const themeKey = this.getAttribute('data-theme');
-            if (window.petTheme.isThemeUnlocked(themeKey)) {
-                // Play theme selection sound effect
-                if (typeof soundManager !== 'undefined') {
-                    soundManager.play('theme');
-                }
-                window.petTheme.applyTheme(themeKey);
-                renderThemesGrid();
-                showNotification(`Theme changed to ${window.petTheme.themes[themeKey].name}!`);
-            }
-        });
-    });
+    // Attach theme selection listeners
+    attachThemeSelectListeners();
 
     // Reset theme button
     const resetThemeBtn = document.getElementById('resetThemeBtn');
     if (resetThemeBtn) {
         resetThemeBtn.addEventListener('click', function() {
-            if (confirm('Are you sure you want to reset your theme to the default purple? This will also reset your loyalty progress.')) {
-                // Play reset sound effect
-                if (typeof soundManager !== 'undefined') {
-                    soundManager.play('reset');
+            showCustomConfirmation(
+                'Reset Theme?',
+                'Are you sure you want to reset your theme to the default purple? This will also reset your loyalty progress.',
+                function() {
+                    // On confirm
+                    if (typeof soundManager !== 'undefined') {
+                        soundManager.play('reset');
+                    }
+                    window.petTheme.resetTheme();
+                    renderCalendar();
+                    renderThemesGrid();
+                    updateThemesUnlockedCount();
+                    showNotification('Theme reset to default purple!');
                 }
-                window.petTheme.resetTheme();
-                renderCalendar();
+            );
+        });
+    }
+
+    // Save theme button
+    const saveThemeBtn = document.getElementById('saveThemeBtn');
+    if (saveThemeBtn) {
+        saveThemeBtn.addEventListener('click', function() {
+            if (selectedThemeForSaving) {
+                const themeData = window.petTheme.themes[selectedThemeForSaving];
+                // Ensure theme is saved to localStorage
+                window.petTheme.applyTheme(selectedThemeForSaving);
                 renderThemesGrid();
-                updateThemesUnlockedCount();
-                showNotification('Theme reset to default purple!');
+                
+                const statusMsg = document.getElementById('themeStatusMessage');
+                if (statusMsg) {
+                    statusMsg.textContent = `✓ ${themeData.name} theme saved successfully!`;
+                    statusMsg.style.color = 'green';
+                }
+                
+                showNotification(`${themeData.name} theme saved!`);
+                
+                // Reset selected theme
+                selectedThemeForSaving = null;
+                
+                // Hide save button after saving
+                setTimeout(() => {
+                    saveThemeBtn.style.opacity = '0.5';
+                    saveThemeBtn.disabled = true;
+                    if (statusMsg) {
+                        statusMsg.textContent = '';
+                    }
+                }, 2000);
+            } else {
+                showNotification('Please select a theme first!');
             }
         });
     }

@@ -93,6 +93,9 @@ const petTheme = {
     // Current active theme
     activeTheme: 'purple',
 
+    // Track the theme unlocked during this session's init
+    lastUnlockedTheme: null,
+
     // Dark mode settings - SIMPLIFIED
     darkMode: {
         enabled: false,
@@ -154,9 +157,14 @@ const petTheme = {
         // Load other theme data
         this.loadThemeData();
         const newThemeUnlocked = this.checkDailyVisit();
+        
+        // Store the unlocked theme so the check-in button can access it
+        this.lastUnlockedTheme = newThemeUnlocked;
+        
         this.applyTheme(this.activeTheme);
         
         console.log('[INIT] Complete. darkMode:', JSON.stringify(this.darkMode));
+        console.log('[INIT] lastUnlockedTheme:', this.lastUnlockedTheme);
         console.log('=== [INIT] init() finished ===\n');
         
         // Show notification if a new theme was unlocked
@@ -271,6 +279,16 @@ const petTheme = {
         }
     },
 
+    // Save theme data to localStorage
+    saveThemeData() {
+        const data = {
+            activeTheme: this.activeTheme,
+            visitDays: this.visitDays,
+            lastVisitDate: this.lastVisitDate
+        };
+        localStorage.setItem('petThemeData', JSON.stringify(data));
+    },
+
     // Get today's date at midnight (00:00:00)
     getTodayAtMidnight() {
         const today = new Date();
@@ -361,7 +379,7 @@ const petTheme = {
         const theme = this.themes[themeKey];
         const root = document.documentElement;
 
-        // Apply CSS variables
+        // Apply light mode CSS variables
         root.style.setProperty('--primary-purple', theme.primary);
         root.style.setProperty('--light-purple', theme.light);
         root.style.setProperty('--border-purple', theme.border);
@@ -369,11 +387,67 @@ const petTheme = {
         root.style.setProperty('--text-dark', theme.text);
         root.style.setProperty('--nav-active', theme.navActive);
 
+        // Calculate and apply dark mode versions of the colors for better contrast
+        // Dark mode backgrounds: very dark (almost black but with color tint)
+        const darkModeBackground = this.adjustBrightness(theme.background, 0.15);
+        // Dark mode light sections: darker but visible
+        const darkModeLight = this.adjustBrightness(theme.light, 0.30);
+        // Dark mode primary: keep vibrant for visibility
+        const darkModePrimary = this.adjustBrightness(theme.primary, 0.70);
+        // Dark mode border: medium darkness
+        const darkModeBorder = this.adjustBrightness(theme.border, 0.50);
+        // Dark mode text: light and readable
+        const darkModeText = this.adjustBrightness(theme.text, 1.8);
+        // Dark mode nav active: visible against dark background
+        const darkModeNavActive = this.adjustBrightness(theme.navActive, 0.80);
+
+        // Store dark mode colors in CSS custom properties that dark mode CSS can use
+        root.style.setProperty('--dark-primary', darkModePrimary);
+        root.style.setProperty('--dark-light', darkModeLight);
+        root.style.setProperty('--dark-border', darkModeBorder);
+        root.style.setProperty('--dark-background', darkModeBackground);
+        root.style.setProperty('--dark-text', darkModeText);
+        root.style.setProperty('--dark-nav-active', darkModeNavActive);
+
         // Set data attribute for dark mode theme detection
         root.setAttribute('data-active-theme', themeKey);
 
         this.activeTheme = themeKey;
         this.saveThemeData();
+    },
+
+    // Helper function to adjust color brightness
+    // brightness > 1 lightens, brightness < 1 darkens
+    adjustBrightness(color, brightness) {
+        const num = parseInt(color.replace('#', ''), 16);
+        let r = Math.round((num >> 16) * brightness);
+        let g = Math.round(((num >> 8) & 0x00FF) * brightness);
+        let b = Math.round((num & 0x0000FF) * brightness);
+        
+        // Clamp values between 0 and 255
+        r = Math.min(255, Math.max(0, r));
+        g = Math.min(255, Math.max(0, g));
+        b = Math.min(255, Math.max(0, b));
+        
+        return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    },
+
+    // DEPRECATED - old color helper functions kept for reference
+    darkenColor(color, factor) {
+        const num = parseInt(color.replace('#', ''), 16);
+        const r = Math.max(0, (num >> 16) - Math.round(255 * factor));
+        const g = Math.max(0, ((num >> 8) & 0x00FF) - Math.round(255 * factor));
+        const b = Math.max(0, (num & 0x0000FF) - Math.round(255 * factor));
+        return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    },
+
+    // DEPRECATED - old color helper functions kept for reference
+    lightenColor(color, factor) {
+        const num = parseInt(color.replace('#', ''), 16);
+        const r = Math.min(255, (num >> 16) + Math.round(255 * factor));
+        const g = Math.min(255, ((num >> 8) & 0x00FF) + Math.round(255 * factor));
+        const b = Math.min(255, (num & 0x0000FF) + Math.round(255 * factor));
+        return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
     },
 
     // Reset theme to default
@@ -454,5 +528,50 @@ if (typeof window !== 'undefined') {
         console.log('2. Run: window.testDarkModePersistence()');
         console.log('3. Refresh the page');
         console.log('4. Run: window.testDarkModePersistence() again\n');
+    };
+
+    // Test function for loyalty/theme rewards - advance to next day
+    window.testAdvanceDay = function() {
+        console.log('\n=== Testing Theme Loyalty System ===');
+        let data = localStorage.getItem('petThemeData');
+        
+        if (!data) {
+            console.log('No existing petThemeData found. Creating initial data...');
+            data = {
+                activeTheme: 'purple',
+                visitDays: { day1: true, day2: false, day3: false, day4: false, day5: false, day6: false, day7: false },
+                lastVisitDate: new Date(Date.now() - 86400000).getTime() // Yesterday
+            };
+        } else {
+            data = JSON.parse(data);
+            console.log('Current visitDays:', data.visitDays);
+            console.log('Moving lastVisitDate back 1 more day...');
+            // Keep moving back past days to test progression
+            data.lastVisitDate = new Date(data.lastVisitDate - 86400000).getTime();
+        }
+        
+        localStorage.setItem('petThemeData', JSON.stringify(data));
+        console.log('✓ Updated localStorage. Triggering daily visit check...');
+        
+        // Reload theme data and check for new day
+        petTheme.loadThemeData();
+        const unlockedTheme = petTheme.checkDailyVisit();
+        
+        // Update the calendar display if this is the themes page
+        if (typeof updateLoyaltyCalendar === 'function') {
+            updateLoyaltyCalendar();
+            console.log('✓ Calendar updated');
+        }
+        
+        // Show notification if theme was unlocked
+        if (unlockedTheme) {
+            console.log(`🎉 Unlocked: ${unlockedTheme.key} theme`);
+            if (typeof showNotification === 'function') {
+                showNotification(`🎉 You unlocked the ${unlockedTheme.key.toUpperCase()} theme!`);
+            }
+        }
+        
+        console.log('✓ Day advanced! Current visitDays:', petTheme.visitDays);
+        console.log('Ready for another advancement. Run window.testAdvanceDay() again!\n');
     };
 }

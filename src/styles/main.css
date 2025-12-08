@@ -631,21 +631,29 @@ html[data-dark-mode="true"] {
     --info-section-text: #BD9CDE;
     --btn-action-purple: #260647;
     --nav-active: #671cb7;
+    
+    /* Dynamic dark mode colors (will be set by JavaScript per theme) */
+    --dark-primary: #BD9CDE;
+    --dark-light: #35244C;
+    --dark-border: #AB81D5;
+    --dark-background: #1A1325;
+    --dark-text: #643BA0;
+    --dark-nav-active: #671cb7;
 }
 
 html[data-dark-mode="true"] body {
-    background-color: var(--background-white);
-    color: var(--text-dark);
+    background-color: var(--dark-background);
+    color: var(--dark-text);
 }
 
 /* Header & Navigation */
 html[data-dark-mode="true"] header {
-    background-color: var(--light-purple);
-    border-bottom-color: var(--nav-active);
+    background-color: var(--dark-light);
+    border-bottom-color: var(--dark-nav-active);
 }
 
 html[data-dark-mode="true"] nav ul li a {
-    color: var(--nav-purple);
+    color: var(--dark-primary);
 }
 
 html[data-dark-mode="true"] nav ul li a:hover {
@@ -653,13 +661,13 @@ html[data-dark-mode="true"] nav ul li a:hover {
 }
 
 html[data-dark-mode="true"] nav ul li a.active {
-    background-color: var(--nav-active);
+    background-color: var(--dark-nav-active);
     color: white;
 }
 
 /* Main Content */
 html[data-dark-mode="true"] main {
-    background-color: var(--background-white);
+    background-color: var(--dark-background);
 }
 
 html[data-dark-mode="true"] h1, 
@@ -668,7 +676,7 @@ html[data-dark-mode="true"] h3,
 html[data-dark-mode="true"] h4, 
 html[data-dark-mode="true"] h5, 
 html[data-dark-mode="true"] h6 {
-    color: var(--primary-purple);
+    color: var(--dark-primary);
 }
 
 /* Section Backgrounds */
@@ -678,62 +686,61 @@ html[data-dark-mode="true"] .themes-showcase,
 html[data-dark-mode="true"] .health-section,
 html[data-dark-mode="true"] .customize-pet-container,
 html[data-dark-mode="true"] .item-grid {
-    background-color: var(--light-purple);
-    border-color: var(--border-purple);
+    background-color: var(--dark-light);
+    border-color: var(--dark-border);
 }
 
 html[data-dark-mode="true"] .loyalty-section p,
-/* html[data-dark-mode="true"] .dark-mode-section p, */
 html[data-dark-mode="true"] .health-section label,
 html[data-dark-mode="true"] .control-group label {
-    color: var(--primary-purple);
+    color: var(--dark-primary);
 }
 
 /* Cards */
 html[data-dark-mode="true"] .calendar-day {
-    background-color: #2A1F42;
-    border-color: var(--border-purple);
-    color: var(--light-purple);
+    background-color: var(--dark-light);
+    border-color: var(--dark-border);
+    color: var(--dark-primary);
 }
 
 html[data-dark-mode="true"] .calendar-day.unvisited {
-    background-color: #1F1630;
+    background-color: var(--dark-background);
     color: #999;
 }
 
 html[data-dark-mode="true"] .accessory-card,
 html[data-dark-mode="true"] .customize-section {
-    background-color: var(--btn-action-purple);
-    border-color: var(--border-purple);
-    color: var(--light-purple);
+    background-color: var(--dark-light);
+    border-color: var(--dark-border);
+    color: var(--dark-primary);
 }
 
 html[data-dark-mode="true"] .theme-card {
-    color: var(--border-purple);
+    color: var(--dark-border);
 }
 
 html[data-dark-mode="true"] .theme-card h3,
 html[data-dark-mode="true"] .accessory-card h3 {
-    color: var(--light-purple);
+    color: var(--dark-primary);
 }
 
-/* Shop page dark mode - use primary purple for shop items */
+/* Shop page dark mode - use primary color for shop items */
 html[data-dark-mode="true"] .shop-item {
-    background-color: var(--border-purple);
-    border-color: var(--border-purple);
-    color: var(--light-purple);
+    background-color: var(--dark-primary);
+    border-color: var(--dark-border);
+    color: var(--dark-light);
 }
 
 html[data-dark-mode="true"] .shop-item h3 {
-    color: var(--light-purple);
+    color: var(--dark-light);
 }
 
 html[data-dark-mode="true"] .item-type {
-    color: var(--light-purple);
+    color: var(--dark-light);
 }
 
 html[data-dark-mode="true"] .item-description {
-    color: var(--light-purple);
+    color: var(--dark-light);
 }
 
 /* Buttons */
@@ -746,11 +753,13 @@ html[data-dark-mode="true"] .btn-checkin:hover {
 }
 
 html[data-dark-mode="true"] .btn-reset-theme {
-    background-color: #8B4545;
+    background-color: var(--dark-primary);
+    opacity: 0.7;
 }
 
 html[data-dark-mode="true"] .btn-reset-theme:hover {
-    background-color: #C45555;
+    background-color: var(--dark-primary);
+    opacity: 1;
 }
 
 html[data-dark-mode="true"] .btn-save-dark-mode,
@@ -758,16 +767,16 @@ html[data-dark-mode="true"] .btn-select-theme,
 html[data-dark-mode="true"] .btn-equip,
 html[data-dark-mode="true"] .btn-purchase,
 html[data-dark-mode="true"] button[class*="btn"] {
-    background-color: var(--btn-action-purple);
-    color: var(--primary-purple);
-    border-color: var(--primary-purple);
+    background-color: var(--dark-primary);
+    color: var(--dark-light);
+    border-color: var(--dark-primary);
 }
 
 html[data-dark-mode="true"] .btn-save-dark-mode:hover,
 html[data-dark-mode="true"] .btn-select-theme:hover,
 html[data-dark-mode="true"] .btn-equip:hover,
 html[data-dark-mode="true"] .btn-purchase:hover {
-    background-color: var(--border-purple);
+    background-color: var(--dark-border);
 }
 
 /* Form Elements */
@@ -775,84 +784,124 @@ html[data-dark-mode="true"] select,
 html[data-dark-mode="true"] input[type="text"],
 html[data-dark-mode="true"] input[type="number"],
 html[data-dark-mode="true"] textarea {
-    background-color: var(--light-purple);
-    color: var(--info-section-text);
-    border-color: var(--border-purple);
+    background-color: var(--dark-light);
+    color: var(--dark-primary);
+    border-color: var(--dark-border);
 }
 
 html[data-dark-mode="true"] select:focus,
 html[data-dark-mode="true"] input:focus,
 html[data-dark-mode="true"] textarea:focus {
     outline: none;
-    border-color: var(--primary-purple);
+    border-color: var(--dark-primary);
     box-shadow: 0 0 4px rgba(153, 102, 204, 0.5);
 }
 
 /* Footer */
 html[data-dark-mode="true"] footer {
-    background-color: var(--light-purple);
-    border-top-color: var(--border-purple);
-    color: var(--text-dark);
+    background-color: var(--dark-light);
+    border-top-color: var(--dark-border);
+    color: var(--dark-text);
 }
 
 /* Notification */
 html[data-dark-mode="true"] #notification,
 html[data-dark-mode="true"] .custom-notification {
-    background-color: var(--primary-purple);
-    color: var(--light-purple);
+    background-color: var(--dark-primary);
+    color: var(--dark-light);
 }
 
 /* Health Bar */
 html[data-dark-mode="true"] .health-bar {
-    background-color: #352055;
-    border-color: var(--border-purple);
+    background-color: var(--dark-light);
+    border-color: var(--dark-border);
 }
 
 html[data-dark-mode="true"] .health-bar h3 {
-    color: var(--primary-purple);
+    color: var(--dark-primary);
 }
 
 /* Modal/Popup */
 html[data-dark-mode="true"] .theme-unlock-content {
-    background-color: #2A1F42;
-    border-color: var(--primary-purple);
-    color: var(--text-dark);
+    background-color: var(--dark-light);
+    border-color: var(--dark-primary);
+    color: var(--dark-text);
 }
 
 html[data-dark-mode="true"] .theme-unlock-body p {
-    color: var(--text-dark);
+    color: var(--dark-text);
 }
 
 /* Info Section */
 html[data-dark-mode="true"] .info-section {
-    background-color: #2A1F42;
-    border-color: var(--border-purple);
+    background-color: var(--dark-light);
+    border-color: var(--dark-border);
 }
 
 html[data-dark-mode="true"] .info-section h2 {
-    color: var(--primary-purple);
+    color: var(--dark-primary);
 }
 
 html[data-dark-mode="true"] .info-section p {
-    color: var(--info-section-text);
+    color: var(--dark-primary);
 }
 
 /* Quick Actions Buttons */
 html[data-dark-mode="true"] .quick-actions .btn-primary {
-    background-color: var(--btn-action-purple);
-    border-color: var(--btn-action-purple);
+    background-color: var(--dark-primary);
+    border-color: var(--dark-primary);
     color: white;
 }
 
 html[data-dark-mode="true"] .quick-actions .btn-primary:hover {
-    background-color: var(--nav-purple);
-    border-color: var(--nav-purple);
+    background-color: var(--dark-border);
+    border-color: var(--dark-border);
+}
+
+/* Theme management section dark mode */
+html[data-dark-mode="true"] .theme-management-section {
+    background-color: var(--dark-light);
+    border-color: var(--dark-border);
+}
+
+html[data-dark-mode="true"] .btn-save-theme,
+html[data-dark-mode="true"] .btn-reset-theme {
+    background-color: var(--dark-primary);
+    color: white;
+}
+
+html[data-dark-mode="true"] .btn-save-theme:hover,
+html[data-dark-mode="true"] .btn-reset-theme:hover {
+    background-color: var(--dark-border);
+}
+
+html[data-dark-mode="true"] .theme-status-message {
+    color: var(--dark-primary);
+}
+
+/* Theme save section dark mode (deprecated but keep for compatibility) */
+html[data-dark-mode="true"] .theme-save-section {
+    background-color: var(--dark-light);
+    border-color: var(--dark-border);
+}
+
+html[data-dark-mode="true"] .btn-save-theme {
+    background-color: var(--dark-primary);
+    color: white;
+}
+
+html[data-dark-mode="true"] .btn-save-theme:hover {
+    background-color: var(--dark-border);
+}
+
+html[data-dark-mode="true"] .theme-status-message {
+    color: var(--dark-primary);
 }
 
 /* Peity health bar - ensure it uses dark mode green */
 html[data-dark-mode="true"] .peity-bar-wrapper {
     border-color: var(--dark-health-green);
-    background: linear-gradient(to right, #2A1F42 0%, #2A1F42 100%);
+    background: linear-gradient(to right, var(--dark-light) 0%, var(--dark-light) 100%);
 }
 
 html[data-dark-mode="true"] .peity-bar svg rect {
@@ -999,5 +1048,12 @@ html[data-dark-mode="true"] .pet-preview {
 html[data-dark-mode="true"] .btn-disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Work in Progress Notice - Dark Mode */
+html[data-dark-mode="true"] .wip-notice {
+    background-color: #2d2416;
+    border-color: #8b6f47;
+    color: #e8d4a0;
 }
 
