@@ -525,15 +525,15 @@ const weatherSystem = {
             // Create snow animation
             if (petDisplay) {
                 // Determine snow style based on screen size
-                let snowflakeCount = 50; // Desktop - static scattered snowflakes
+                let snowflakeCount = 100; // Desktop - static scattered snowflakes
                 let isMobileView = false;
                 let isDesktop = false;
                 
                 if (window.innerWidth <= 768) {
-                    snowflakeCount = 25; // Mobile - falling
+                    snowflakeCount = 50; // Mobile - falling
                     isMobileView = true;
                 } else if (window.innerWidth <= 1024) {
-                    snowflakeCount = 35; // Tablet - falling
+                    snowflakeCount = 75; // Tablet - falling
                     isMobileView = true;
                 } else {
                     isDesktop = true; // Desktop - static scattered
