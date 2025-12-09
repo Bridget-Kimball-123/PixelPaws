@@ -30,11 +30,11 @@ const petTheme = {
         },
         blue: {
             name: 'Ocean Blue',
-            primary: '#0066CC',
+            primary: '#00458A',
             light: '#CCE5FF',
             border: '#6699CC',
             background: '#F0F5FF',
-            text: '#0066CC',
+            text: '#00458A',
             navActive: '#003D99',
             unlockedDay: 2
         },
@@ -387,30 +387,33 @@ const petTheme = {
         root.style.setProperty('--text-dark', theme.text);
         root.style.setProperty('--nav-active', theme.navActive);
 
-        // Calculate and apply dark mode versions of the colors for better contrast
-        // Dark mode backgrounds: very dark (almost black but with color tint)
-        const darkModeBackground = this.adjustBrightness(theme.background, 0.15);
-        // Dark mode light sections: darker but visible
-        const darkModeLight = this.adjustBrightness(theme.light, 0.30);
-        // Dark mode primary: keep vibrant for visibility
-        const darkModePrimary = this.adjustBrightness(theme.primary, 0.70);
-        // Dark mode border: medium darkness
-        const darkModeBorder = this.adjustBrightness(theme.border, 0.50);
-        // Dark mode text: light and readable
-        const darkModeText = this.adjustBrightness(theme.text, 1.8);
-        // Dark mode nav active: visible against dark background
-        const darkModeNavActive = this.adjustBrightness(theme.navActive, 0.80);
-
-        // Store dark mode colors in CSS custom properties that dark mode CSS can use
-        root.style.setProperty('--dark-primary', darkModePrimary);
-        root.style.setProperty('--dark-light', darkModeLight);
-        root.style.setProperty('--dark-border', darkModeBorder);
-        root.style.setProperty('--dark-background', darkModeBackground);
-        root.style.setProperty('--dark-text', darkModeText);
-        root.style.setProperty('--dark-nav-active', darkModeNavActive);
-
         // Set data attribute for dark mode theme detection
+        // This attribute is used by CSS selectors like:
+        // html[data-dark-mode="true"][data-active-theme="blue"] { ... }
         root.setAttribute('data-active-theme', themeKey);
+
+        // Check if dark mode is enabled - if so, let CSS handle the colors
+        const isDarkMode = root.getAttribute('data-dark-mode') === 'true';
+        
+        if (!isDarkMode) {
+            // If light mode, calculate dark mode colors as fallback (for when user switches to dark mode)
+            const darkModeBackground = this.adjustBrightness(theme.background, 0.15);
+            const darkModeLight = this.adjustBrightness(theme.light, 0.30);
+            const darkModePrimary = this.adjustBrightness(theme.primary, 0.70);
+            const darkModeBorder = this.adjustBrightness(theme.border, 0.50);
+            const darkModeText = this.adjustBrightness(theme.text, 1.8);
+            const darkModeNavActive = this.adjustBrightness(theme.navActive, 0.80);
+
+            // Store as fallback - these will be overridden by CSS when dark mode is on
+            root.style.setProperty('--dark-primary', darkModePrimary);
+            root.style.setProperty('--dark-light', darkModeLight);
+            root.style.setProperty('--dark-border', darkModeBorder);
+            root.style.setProperty('--dark-background', darkModeBackground);
+            root.style.setProperty('--dark-text', darkModeText);
+            root.style.setProperty('--dark-nav-active', darkModeNavActive);
+        }
+        // If dark mode is enabled, CSS will apply the correct colors via:
+        // html[data-dark-mode="true"][data-active-theme="blue"] { --primary-purple: #5A9FFF; ... }
 
         this.activeTheme = themeKey;
         this.saveThemeData();
