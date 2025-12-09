@@ -320,6 +320,16 @@ const petTheme = {
                 const nextDay = dayCount + 1;
                 this.visitDays[`day${nextDay}`] = true;
                 
+                // Check if this is day 2 (returning visitor day)
+                if (nextDay === 2) {
+                    localStorage.setItem('petHasReturned', 'true');
+                    console.log('Day 2 reached - marking user as returning visitor');
+                    // Check achievements when returning visitor status is set
+                    if (window.achievements) {
+                        window.achievements.checkAll();
+                    }
+                }
+                
                 // Get the unlocked theme for this day
                 for (const [themeKey, themeData] of Object.entries(this.themes)) {
                     if (themeData.unlockedDay === nextDay) {

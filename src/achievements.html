@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Achievements - PixelPaws</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/pet.css">
+    <link rel="stylesheet" href="styles/achievements.css">
+    <!-- jQuery (required for Peity) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Peity library for health bar -->
+    <script src="https://cdn.jsdelivr.net/npm/peity@3.3.0/jquery.peity.min.js"></script>
+    <!-- Sound Manager -->
+    <script src="scripts/sound-manager.js" defer></script>
+    <!-- Error Handling Module -->
+    <script src="scripts/error-handler.js" defer></script>
+    <script src="scripts/health.js" defer></script>
+    <script src="scripts/theme.js" defer></script>
+    <script src="scripts/custom.js" defer></script>
+    <script src="scripts/achievements.js" defer></script>
+</head>
+<body>
+    <!-- Header with logo and navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="../design/logo.png" alt="PixelPaws logo with a cute pixelated pet icon">
+                <h1>PixelPaws</h1>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="customize.html">Customize</a></li>
+                    <li><a href="play.html">Play</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="themes.html">Themes</a></li>
+                    <li><a href="achievements.html" class="active">Achievements</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Resources</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main id="main-content" class="achievements-page">
+        <h1>🏆 Achievements</h1>
+
+        <!-- Progress Summary -->
+        <div class="achievements-summary">
+            <h2>Your Progress</h2>
+            <div class="summary-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Badges Earned:</span>
+                    <span class="stat-value" id="badges-earned">0</span>
+                    <span class="stat-total">/ 5</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Progress:</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements Grid -->
+        <div class="achievements-grid">
+            <!-- First Shop Purchase Badge -->
+            <div class="achievement-badge" data-achievement="first-purchase">
+                <div class="badge-icon">🛍️</div>
+                <h3>First Purchase</h3>
+                <p class="badge-description">Buy your first accessory from the shop</p>
+                <div class="badge-status">
+                    <span class="status-text locked">Locked</span>
+                </div>
+            </div>
+
+            <!-- First Play with Pet Badge -->
+            <div class="achievement-badge" data-achievement="first-play">
+                <div class="badge-icon">🎮</div>
+                <h3>First Play</h3>
+                <p class="badge-description">Interact with your pet (feed, treat, fetch, pet, toy, or brush)</p>
+                <div class="badge-status">
+                    <span class="status-text locked">Locked</span>
+                </div>
+            </div>
+
+            <!-- First Customization Badge -->
+            <div class="achievement-badge" data-achievement="first-customization">
+                <div class="badge-icon">🎨</div>
+                <h3>First Customization</h3>
+                <p class="badge-description">Customize your pet's appearance</p>
+                <div class="badge-status">
+                    <span class="status-text locked">Locked</span>
+                </div>
+            </div>
+
+            <!-- First Favorite Badge -->
+            <div class="achievement-badge" data-achievement="first-favorite">
+                <div class="badge-icon">❤️</div>
+                <h3>Collector's Heart</h3>
+                <p class="badge-description">Add your first accessory to favorites</p>
+                <div class="badge-status">
+                    <span class="status-text locked">Locked</span>
+                </div>
+            </div>
+
+            <!-- Returning Badge -->
+            <div class="achievement-badge" data-achievement="returning">
+                <div class="badge-icon">📅</div>
+                <h3>Returning Visitor</h3>
+                <p class="badge-description">Visit on day 2 of the loyalty program</p>
+                <div class="badge-status">
+                    <span class="status-text locked">Locked</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 PixelPaws by Bridget Kimball</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts/health.js"></script>
+    <script src="scripts/custom.js"></script>
+</body>
+</html>

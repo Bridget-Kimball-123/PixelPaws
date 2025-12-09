@@ -52,7 +52,40 @@ document.addEventListener('DOMContentLoaded', function() {
     setupActivityButtons();
     updateHappinessDisplay();
     checkForToyClear();
+    initializePlayData();
 });
+
+// Initialize play data tracking
+function initializePlayData() {
+    const playData = localStorage.getItem('petPlayData');
+    if (!playData) {
+        const data = {
+            totalInteractions: 0,
+            lastInteractionDate: null,
+            interactions: {
+                pet: 0,
+                feed: 0,
+                fetch: 0,
+                treat: 0,
+                toy: 0,
+                brush: 0
+            }
+        };
+        localStorage.setItem('petPlayData', JSON.stringify(data));
+    }
+}
+
+// Save play interaction to tracking data
+function recordPlayInteraction(activityType) {
+    const playData = JSON.parse(localStorage.getItem('petPlayData') || '{}');
+    playData.totalInteractions = (playData.totalInteractions || 0) + 1;
+    playData.lastInteractionDate = new Date().toISOString();
+    if (!playData.interactions) {
+        playData.interactions = { pet: 0, feed: 0, fetch: 0, treat: 0, toy: 0, brush: 0 };
+    }
+    playData.interactions[activityType] = (playData.interactions[activityType] || 0) + 1;
+    localStorage.setItem('petPlayData', JSON.stringify(playData));
+}
 
 // Check if toys should be cleared
 function checkForToyClear() {
@@ -82,6 +115,17 @@ function setupActivityButtons() {
 function performActivity(activityType) {
     console.log('=== performActivity called with:', activityType, '===');
     if (isAnimating) return; // Prevent multiple animations at once
+    
+    // Record this interaction
+    recordPlayInteraction(activityType);
+    
+    // Mark that user has played with pet
+    localStorage.setItem('petHasPlayedWithPet', 'true');
+    
+    // Check achievements
+    if (window.achievements) {
+        window.achievements.checkAll();
+    }
     
     isAnimating = true;
     const pet = document.querySelector('.pet');

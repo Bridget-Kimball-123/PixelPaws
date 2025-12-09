@@ -124,6 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUndoRedoButtons();
 });
 
+// Store previous customization state for change detection
+let previousCustomization = {};
+
 // Load customization from localStorage
 function loadCustomization() {
     const saved = localStorage.getItem('petCustomization');
@@ -135,11 +138,41 @@ function loadCustomization() {
             nameInput.value = petCustomization.name;
         }
     }
+    // Store the initial state for change detection
+    previousCustomization = JSON.parse(JSON.stringify(petCustomization));
 }
 
-// Save customization to localStorage
-function saveCustomization() {
+// Check if customization has actually changed
+function hasCustomizationChanged() {
+    return previousCustomization.color !== petCustomization.color ||
+           previousCustomization.pattern !== petCustomization.pattern ||
+           previousCustomization.eye !== petCustomization.eye ||
+           previousCustomization.mouth !== petCustomization.mouth ||
+           previousCustomization.accessory !== petCustomization.accessory ||
+           previousCustomization.name !== petCustomization.name;
+}
+
+// Save customization to localStorage (internal - no achievement check)
+function saveCustomizationInternal() {
     localStorage.setItem('petCustomization', JSON.stringify(petCustomization));
+}
+
+// Save customization to localStorage with achievement checking (only for manual save)
+function saveCustomization() {
+    // Check if anything actually changed before saving
+    const hasChanged = hasCustomizationChanged();
+    
+    saveCustomizationInternal();
+    
+    // Only check achievements if customization actually changed AND this is a manual save
+    if (hasChanged && window.achievements) {
+        console.log('Customization changed - checking achievements');
+        // Mark that user has saved a customization
+        localStorage.setItem('petHasSavedCustomization', 'true');
+        window.achievements.checkAll();
+        // Update the previous state after checking achievements
+        previousCustomization = JSON.parse(JSON.stringify(petCustomization));
+    }
 }
 
 // Setup arrow button controls
@@ -361,7 +394,10 @@ function performReset() {
     petCustomization.name = 'Pixel';
     const nameInput = document.getElementById('pet-name');
     if (nameInput) nameInput.value = 'Pixel';
-    saveCustomization();
+    // Use internal save without achievement check
+    saveCustomizationInternal();
+    // Update previous state so achievements aren't triggered
+    previousCustomization = JSON.parse(JSON.stringify(petCustomization));
     updatePetDisplay();
     
     // Clear undo/redo history on reset
@@ -380,6 +416,10 @@ function performReset() {
     localStorage.removeItem('petOwnedItems');
     localStorage.removeItem('petEquippedItems');
     localStorage.removeItem('petFavorites');
+    localStorage.removeItem('petAchievements');
+    localStorage.removeItem('petHasSavedCustomization');
+    localStorage.removeItem('petHasPlayedWithPet');
+    localStorage.removeItem('petHasReturned');
     console.log('Owned items after reset:', localStorage.getItem('petOwnedItems'));
     
     // Re-render accessories to remove them from display immediately
@@ -407,7 +447,7 @@ function performReset() {
         showNotification('Customizations and preferences have been reset!');
     } else {
         console.error('ERROR: window.petHealth is not available on customize page!');
-        showNotification('Pet appearance has been reset!');
+        showNotification('Customizations and preferences have been reset!');
     }
 }
 
@@ -1271,7 +1311,10 @@ function importPetData(file) {
             // Import customization
             if (petData.customization) {
                 Object.assign(petCustomization, petData.customization);
-                saveCustomization();
+                // Use internal save without achievement check for imports
+                saveCustomizationInternal();
+                // Update previous state so achievements aren't triggered
+                previousCustomization = JSON.parse(JSON.stringify(petCustomization));
                 
                 // Update name input if present
                 const nameInput = document.getElementById('pet-name');

@@ -95,6 +95,7 @@ To Do Checklist:
     ✅ Implement favorites:
         Accessories
         Themes
+    ✅ Achievement/badge system: unlock for reaching milestones
 
     Fix snow:
         ✅ For desktop: make the snow look similar to stars
@@ -102,7 +103,6 @@ To Do Checklist:
         For tablet: make more snow fall
 
 Ideas:
-    Achievement/badge system: unlock for reaching milestones
     Pet personalities
     Holiday/seasonal themes
     Pet photos

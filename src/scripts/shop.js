@@ -308,6 +308,11 @@ function purchaseItem(itemId, cost) {
             }
         }
         
+        // Check achievements
+        if (window.achievements) {
+            window.achievements.checkAll();
+        }
+        
         // Update UI
         updateHappinessDisplay();
         
@@ -632,6 +637,11 @@ function toggleFavorite(itemId) {
     saveFavorites(favorites);
     updateFavoriteBtnUI();
     applyFilters();
+    
+    // Check achievements
+    if (window.achievements) {
+        window.achievements.checkAll();
+    }
 }
 
 // Update favorite button UI across all items
