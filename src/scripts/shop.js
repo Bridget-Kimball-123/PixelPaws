@@ -129,6 +129,9 @@ function initShop() {
     // Setup filter handlers
     setupFilters();
     
+    // Setup favorite button handlers
+    setupFavoriteButtons();
+    
     // Setup unequip all button
     setupUnequipAllButton();
 }
@@ -510,6 +513,7 @@ function applyFilters() {
     const shopItems = document.querySelectorAll('.shop-item');
     const owned = window.getOwnedAccessories ? window.getOwnedAccessories() : [];
     const equipped = window.getEquippedAccessories ? window.getEquippedAccessories() : [];
+    const favorites = getFavorites();
     
     let visibleCount = 0;
     
@@ -518,6 +522,7 @@ function applyFilters() {
         const itemType = SHOP_ITEMS[itemId]?.type || '';
         const isOwned = owned.includes(itemId);
         const isEquipped = equipped.includes(itemId);
+        const isFav = favorites.includes(itemId);
         
         let shouldShow = true;
         
@@ -533,6 +538,8 @@ function applyFilters() {
             } else if (filterStatus === 'owned' && !isOwned) {
                 shouldShow = false;
             } else if (filterStatus === 'equipped' && !isEquipped) {
+                shouldShow = false;
+            } else if (filterStatus === 'favorites' && !isFav) {
                 shouldShow = false;
             }
         }
@@ -591,4 +598,79 @@ function setupUnequipAllButton() {
             showNotification('All accessories have been unequipped! ✨');
         });
     });
+}
+
+// Get favorites from localStorage
+function getFavorites() {
+    const favorites = localStorage.getItem('petFavorites');
+    return favorites ? JSON.parse(favorites) : [];
+}
+
+// Save favorites to localStorage
+function saveFavorites(favorites) {
+    localStorage.setItem('petFavorites', JSON.stringify(favorites));
+}
+
+// Check if an item is favorited
+function isFavorited(itemId) {
+    return getFavorites().includes(itemId);
+}
+
+// Toggle favorite status for an item
+function toggleFavorite(itemId) {
+    const favorites = getFavorites();
+    const index = favorites.indexOf(itemId);
+    
+    if (index > -1) {
+        // Remove from favorites
+        favorites.splice(index, 1);
+    } else {
+        // Add to favorites
+        favorites.push(itemId);
+    }
+    
+    saveFavorites(favorites);
+    updateFavoriteBtnUI();
+    applyFilters();
+}
+
+// Update favorite button UI across all items
+function updateFavoriteBtnUI() {
+    const favorites = getFavorites();
+    const favoriteBtns = document.querySelectorAll('.favorite-btn');
+    
+    favoriteBtns.forEach(btn => {
+        const itemId = btn.dataset.item;
+        if (favorites.includes(itemId)) {
+            btn.classList.add('favorited');
+            btn.textContent = '♥';
+            btn.title = 'Remove from favorites';
+            btn.setAttribute('aria-label', 'Remove from favorites');
+        } else {
+            btn.classList.remove('favorited');
+            btn.textContent = '♡';
+            btn.title = 'Add to favorites';
+            btn.setAttribute('aria-label', 'Add to favorites');
+        }
+    });
+}
+
+// Setup favorite button handlers
+function setupFavoriteButtons() {
+    const favoriteBtns = document.querySelectorAll('.favorite-btn');
+    
+    favoriteBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const itemId = this.dataset.item;
+            toggleFavorite(itemId);
+            
+            // Show feedback
+            const isFav = isFavorited(itemId);
+            showNotification(isFav ? `Added to favorites! ♥` : `Removed from favorites`);
+        });
+    });
+    
+    // Initial UI update
+    updateFavoriteBtnUI();
 }

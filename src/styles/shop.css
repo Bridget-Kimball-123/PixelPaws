@@ -250,6 +250,7 @@
     border: 2px solid var(--border-purple);
     border-radius: 10px;
     padding: var(--spacing-medium);
+    padding-bottom: 50px;
     text-align: center;
     transition: all 0.3s ease;
     position: relative;
@@ -273,11 +274,19 @@
 }
 
 .item-type {
-    text-align: left;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
     color: var(--primary-purple);
     font-weight: 500;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
+    font-size: 0.85rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 5;
 }
 
 .shop-item h3 {
@@ -354,13 +363,14 @@
 .owned-badge {
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
     background-color: var(--nav-active);
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 0.8rem;
     font-weight: bold;
+    z-index: 8;
 }
 
 .shop-item.owned {
@@ -495,5 +505,58 @@
 .no-results-message p:first-child {
     font-weight: 600;
     color: var(--primary-purple);
+}
+
+/* Favorite Button */
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-medium);
+    transition: all 0.3s ease;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.favorite-btn:hover {
+    color: var(--primary-purple);
+    transform: scale(1.2);
+}
+
+.favorite-btn.favorited {
+    color: #ff1493;
+    animation: heartbeat 0.3s ease;
+}
+
+.favorite-btn.favorited:hover {
+    color: #ff69b4;
+    transform: scale(1.3);
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    75% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 

@@ -92,6 +92,9 @@ To Do Checklist:
         User has option to choose when dark mode goes into effect
         Dark mode can be automatic based on system settings or user preference
     ✅ Fix loyalty rewards: not registering another day
+    ✅ Implement favorites:
+        Accessories
+        Themes
 
     Fix snow:
         ✅ For desktop: make the snow look similar to stars
@@ -108,9 +111,6 @@ Ideas:
     Pet breeding
     Daily quests
     Pomodoro method: study buddy timer
-    Implement favorites:
-        Accessories
-        Themes
     Mini-games:
         Memory match
         Tic-tac-toe

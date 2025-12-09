@@ -379,6 +379,7 @@ function performReset() {
     console.log('Owned items before reset:', localStorage.getItem('petOwnedItems'));
     localStorage.removeItem('petOwnedItems');
     localStorage.removeItem('petEquippedItems');
+    localStorage.removeItem('petFavorites');
     console.log('Owned items after reset:', localStorage.getItem('petOwnedItems'));
     
     // Re-render accessories to remove them from display immediately
@@ -403,7 +404,7 @@ function performReset() {
         window.petHealth.updateHealthDisplay();
         
         console.log('After reset - Hunger:', window.petHealth.hunger, 'Happiness:', window.petHealth.happiness);
-        showNotification('Pet appearance, health, shop purchases, and theme have been reset!');
+        showNotification('Customizations and preferences have been reset!');
     } else {
         console.error('ERROR: window.petHealth is not available on customize page!');
         showNotification('Pet appearance has been reset!');
